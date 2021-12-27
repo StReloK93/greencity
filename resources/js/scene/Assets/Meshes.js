@@ -1,13 +1,8 @@
-import Canvas from "../Canvas"
-
 export default class {
    constructor(Camera) {
       // Camera.targetFocus()
       this.ImportMeshes()
       this.NativeMeshes()
-      scene.onReadyObservable.add(() => {
-         // this.dragDrop(['house'])
-      })
    }
 
    ImportMeshes() {
@@ -37,20 +32,27 @@ export default class {
       return mesh.clone(name + Date.now())
    }
 
-   newFruct(fructName){
+   newFruct(fructName,event){
       const clonePlant = this.$meshClone('plant',fructName)
-      // clonePlant.setEnabled(false)
-      canvas.focus()
-      scene.onAfterRenderObservable.add((event,sce) => {
-         console.log(sce,event);
-      })
-   //    scene.onPointerMove = function (evt,info) {
-   //       console.log(info);
-   //   };
-      // // clonePlant.position = new BABYLON.Vector3()
-      // setTimeout(()=>{
-      //    clonePlant.setEnabled(true)
-      // },1000)
+      clonePlant.setEnabled(false)
+      scene.activeElement = clonePlant
+      
+      scene.onPointerMove = function(pointerInfo,pickInfo){
+         scene.activeElement.position.x = pickInfo.ray.origin.x
+         scene.activeElement.position.z = pickInfo.ray.origin.z
+      }
+
+      scene.onPointerPick = function(){
+         if(scene.activeElement != null){
+            scene.activeElement = null
+            scene.onPointerMove = null
+         }
+
+      }
+      
+      clonePlant.setEnabled(true)
+      scene.simulatePointerMove(scene.pick(event.clientX, event.clientY - 64))
+
       clonePlant._children[0].material = scene.getMaterialByName(fructName)
    }
 }

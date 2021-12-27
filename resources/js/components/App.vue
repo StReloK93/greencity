@@ -10,7 +10,7 @@
 			<section class="absolute top-0 left-0 m-6">
 				<div @click="openFructsMenu()" :class="{'bg-gray-200': fructMenu}" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl relative cursor-pointer">
 					<img src="/images/tree.png" alt="">
-					<main v-if="fructMenu" class="menu absolute bg-white shadow-xl px-4 py-2 top-0 text-gray-500 ">
+					<main v-if="fructMenu" class="menu absolute bg-gray-100 shadow-xl px-4 py-2 top-0 text-gray-500 ">
 						<div v-for="fruct in fructs" :key="fruct" @click="addFruct(fruct.name)" class="flex items-center capitalize justify-between cursor-pointer hover:bg-green-500 hover:text-red-50 py-1 px-2 mb-2">
 							{{fruct.name}} <span :style="{background: fruct.color}" class="color shadow-xl"></span>
 						</div>
@@ -40,17 +40,17 @@ export default {
 		}
 	},
 	mounted() {
-		window.canvas = this.$refs.canvas;
-		window.Engine = CanvasEngine();
-		HotKeys.loaderFile(this.$refs.room);
+		window.canvas = this.$refs.canvas
+		window.Engine = CanvasEngine()
+		HotKeys.loaderFile(this.$refs.room)
 	},
 	methods: {
 		addFruct(fruct){
 			const MesheClass = Engine.Meshes
-			MesheClass.newFruct(fruct)
+			MesheClass.newFruct(fruct,event)
 		},
 		openFructsMenu(){
-			this.fructMenu = !this.fructMenu 
+			this.fructMenu = !this.fructMenu
 		},
 	},
 };
@@ -74,7 +74,7 @@ canvas{
 	position: absolute;
 	top: 9px;
 	left: -40px;
-	border: 20px solid transparent; border-right: 20px solid white;
+	border: 20px solid transparent; border-right: 20px solid #f3f4f6;
 }
 
 .color{

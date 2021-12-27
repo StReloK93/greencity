@@ -51,6 +51,7 @@ function loaderFile(file) {
             scene.debugLayer.show({
                embedMode: true,
             });
+            window.dispatchEvent(new Event('resize'));
          }
          else {
             scene.debugLayer.hide()
