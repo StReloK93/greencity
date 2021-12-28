@@ -1,5 +1,6 @@
 function onFullScreenChange() {
    var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+
    if (fullscreenElement) {
       store.state.fullscreen = true
    }
@@ -55,6 +56,7 @@ function loaderFile(file) {
          }
          else {
             scene.debugLayer.hide()
+            window.dispatchEvent(new Event('resize'));
          }
          store.state.inspector = !store.state.inspector
       }

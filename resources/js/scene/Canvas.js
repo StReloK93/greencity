@@ -1,7 +1,6 @@
 import Scene from './engine/Scene'
 import Light from './engine/Light'
 import Meshes from './Assets/Meshes'
-import Materials from './Assets/Materials'
 import Camera from './engine/Camera'
 
 export default function () {
@@ -9,7 +8,6 @@ export default function () {
    const CameraClass = new Camera()
    const MeshesClass = new Meshes(CameraClass)
    const LightClass =  new Light()
-   new Materials()
    return {
       Scene: SceneClass,
       Camera: CameraClass,

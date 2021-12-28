@@ -7,6 +7,7 @@ export default createStore({
             fullscreen: false,
             inspector: true,
             configurator: true,
+            activeMesh: false
         }
     },
     mutations: {

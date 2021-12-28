@@ -1,58 +1,43 @@
+import Native from './NativeMeshes'
+import Import from './ImportMeshes'
+import Material from './Materials'
 export default class {
-   constructor(Camera) {
-      // Camera.targetFocus()
-      this.ImportMeshes()
-      this.NativeMeshes()
+   constructor() {
+      new Native()
+      new Import()
+      new Material()
    }
 
-   ImportMeshes() {
-      BABYLON.SceneLoader.AppendAsync('./models/assets.glb', undefined, scene, function (event) {
-         const percentage = event.lengthComputable ? event.loaded / event.total * 100 : 0
-      }, ".glb")
-   }
-
-   NativeMeshes(){
-      const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 1000, height: 1000}, scene);
-
-      const material = new BABYLON.StandardMaterial("material", scene);
-      material.diffuseColor = new BABYLON.Color3(1, 1, 1);
-      material.specularColor = new BABYLON.Color3(0, 0, 0);
-      ground.material = material;
-   }
-
-   dragDrop(activeMesh){
-
-      var pointerDragBehavior = new BABYLON.PointerDragBehavior({dragPlaneNormal: new BABYLON.Vector3(0,1,0)});
-      pointerDragBehavior.useObjectOrientationForDragging = false
-      activeMesh.addBehavior(pointerDragBehavior)
-   }
-
-   $meshClone(meshName,name){
-      const mesh = scene.getNodeByName(meshName)
+   CopyMesh(target,name){
+      const mesh = scene.getNodeByName(target)
       return mesh.clone(name + Date.now())
    }
 
-   newFruct(fructName,event){
-      const clonePlant = this.$meshClone('plant',fructName)
-      clonePlant.setEnabled(false)
-      scene.activeElement = clonePlant
-      
-      scene.onPointerMove = function(pointerInfo,pickInfo){
-         scene.activeElement.position.x = pickInfo.ray.origin.x
-         scene.activeElement.position.z = pickInfo.ray.origin.z
+   newMesh(name,parent,event){
+      const mesh = this.CopyMesh(parent,name)
+      mesh.visibility = 0.5
+
+      scene.onPointerMove = function(a,pickInfo){
+         console.log(pickInfo);
+         mesh.position.x = -pickInfo.ray.origin.x
+         mesh.position.z = pickInfo.ray.origin.z
       }
 
-      scene.onPointerPick = function(){
-         if(scene.activeElement != null){
-            scene.activeElement = null
-            scene.onPointerMove = null
-         }
-
-      }
+      store.state.activeMesh = true
+      scene.simulatePointerMove(scene.pick(event.clientX, event.clientY))
+      let material = scene.getMaterialByName(name)
+      if(material) mesh.material = scene.getMaterialByName(name)
       
-      clonePlant.setEnabled(true)
-      scene.simulatePointerMove(scene.pick(event.clientX, event.clientY - 64))
 
-      clonePlant._children[0].material = scene.getMaterialByName(fructName)
+      scene.onPointerPick = () => {
+         if(!store.state.activeMesh) return
+
+         scene.onPointerMove = null
+         store.state.activeMesh = false
+         mesh.visibility = 1
+         scene.onPointerPick = null
+      }
+
    }
+
 }
