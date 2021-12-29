@@ -1,6 +1,6 @@
 <template>
 	<section class="flex-grow h-full flex">
-		<main class="h-full flex-grow relative" ref="room">
+		<main class="h-full flex-grow relative p-2 shadow-inner bg-gray-100" ref="room">
 			<section class="absolute top-0 left-0 m-4">
 				<div @click="openFructsMenu()" :class="{'bg-gray-200': fructMenu}" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl relative cursor-pointer hover:bg-gray-200">
 					<img src="/images/tree.png" alt="">
@@ -14,10 +14,11 @@
 					<img src="/images/build.png" alt="">
 				</div>
 				<div @click="openMeshBuilder" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl cursor-pointer hover:bg-gray-200">
-					<img src="/images/plus.png" alt="">
+					<img src="/images/plus.png" style="transform: scale(0.5)" alt="">
 				</div>
 			</section>
 			<canvas ref="canvas" class="w-full h-full" :class="{'cursor-move': $store.state.activeMesh}" />
+			<MeshBuilder @close="builderToggle = false" v-if="builderToggle" />
 		</main>
 		<main class="w-1/6 p-5">
 			<router-view></router-view>
@@ -33,19 +34,22 @@
 
 <script>
 import HotKeys from "../hotkeys";
-import CanvasEngine from "../scene/Canvas";
+import CanvasEngine from "../scene/Mainscene/Canvas";
 import fructColor from "../fructColor"
+
+import MeshBuilder from "./MeshBuilder.vue"
 export default {
 	data() {
 		return {
 			fructs: fructColor,
-			fructMenu: false
+			fructMenu: false,
+			builderToggle: false
 		}
 	},
 	mounted() {
 		window.canvas = this.$refs.canvas
 		window.Engine = CanvasEngine()
-		// HotKeys.loaderFile(this.$refs.room)
+		HotKeys.loaderFile(this.$refs.room)
 	},
 	methods: {
 		addFruct(fruct,plant){
@@ -61,9 +65,12 @@ export default {
 			this.fructMenu = !this.fructMenu
 		},
 		openMeshBuilder(){
-			console.log('building');
+			this.builderToggle = !this.builderToggle
 		}
 	},
+	components:{
+		MeshBuilder
+	}
 };
 </script>
 
