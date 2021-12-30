@@ -43,7 +43,7 @@ export default {
 		return {
 			fructs: fructColor,
 			fructMenu: false,
-			builderToggle: false
+			builderToggle: true
 		}
 	},
 	mounted() {

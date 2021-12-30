@@ -7,7 +7,10 @@ export default class {
    MeshBuilderScene(canvas) {
       const engine = new BABYLON.Engine(canvas, true)
       this.scene = new BABYLON.Scene(engine)
-
+      this.scene.debugLayer.show({
+         embedMode: true,
+      });
+      console.log('earcut');
       engine.runRenderLoop(() => { this.scene.render() })
       window.addEventListener("resize", () => { engine.resize() })
    }
