@@ -1,5 +1,5 @@
 export default class {
-   camera = new BABYLON.ArcRotateCamera("camera", Math.PI/2, 0, 40, new BABYLON.Vector3(0, 0, 0))
+   camera = new BABYLON.ArcRotateCamera("camera", -Math.PI/2, 0, 40, new BABYLON.Vector3(0, 0, 0))
    constructor() {
       this.createCamera()
       this.limits()

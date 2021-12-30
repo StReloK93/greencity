@@ -6,11 +6,6 @@ export default class {
       new Native()
       new Import()
       new Material()
-
-
-
-      let ground = scene.getNodeByName('ground')
-      ground.actionManager = new BABYLON.ActionManager(scene);
    }
 
    numRound(num, precision) {
