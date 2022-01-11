@@ -4,12 +4,13 @@ export default class {
    }
 
    MeshBuilderScene(canvas) {
-      const engine = new BABYLON.Engine(canvas, true)
-      this.scene = new BABYLON.Scene(engine)
+      BABYLON.Scene.DoubleClickDelay = 600
+      this.engine = new BABYLON.Engine(canvas, true)
+      this.scene = new BABYLON.Scene(this.engine)
       // this.scene.debugLayer.show({
       //    embedMode: true,
       // });
-      engine.runRenderLoop(() => { this.scene.render() })
-      window.addEventListener("resize", () => { engine.resize() })
+      this.engine.runRenderLoop(() => { this.scene.render() })
+      window.addEventListener("resize", () => { this.engine.resize() })
    }
 }

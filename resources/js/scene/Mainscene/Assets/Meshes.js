@@ -1,11 +1,9 @@
 import Native from './NativeMeshes'
 import Import from './ImportMeshes'
-import Material from './Materials'
 export default class {
    constructor() {
-      new Native()
+      this.native = new Native()
       new Import()
-      new Material()
    }
 
    numRound(num, precision) {

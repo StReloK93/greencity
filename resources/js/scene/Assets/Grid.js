@@ -1,7 +1,7 @@
 export default class {
-   constructor() {
-      this.Lines()
-      this.Grid()
+   constructor({lines = false, grid = false}) {
+      if(lines) this.Lines()
+      if(grid) this.Grid()
    }
 
    Lines() {
@@ -11,8 +11,8 @@ export default class {
       ]
 
       const colorsX = [
-         new BABYLON.Color4(0.5, 0, 0, 1),
-         new BABYLON.Color4(0.5, 0, 0, 1),
+         new BABYLON.Color4(0.5, 0, 0, 0.3),
+         new BABYLON.Color4(0.5, 0, 0, 0.3),
       ]
       let linex = BABYLON.MeshBuilder.CreateLines("lineX", { points: pointsX, colors: colorsX });
       linex.isPickable = false
@@ -23,8 +23,8 @@ export default class {
       ]
 
       const colorZ = [
-         new BABYLON.Color4(0, 0, 0.5, 1),
-         new BABYLON.Color4(0, 0, 0.5, 1),
+         new BABYLON.Color4(0, 0, 0.5, 0.3),
+         new BABYLON.Color4(0, 0, 0.5, 0.3),
       ]
       let linez = BABYLON.MeshBuilder.CreateLines("lineZ", { points: pointsZ, colors: colorZ });
       linez.isPickable = false

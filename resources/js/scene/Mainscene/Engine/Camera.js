@@ -31,6 +31,12 @@ export default class {
 
       this.camera.lowerRadiusLimit = 25 
       this.camera.upperRadiusLimit = 120 
+
+      // this.camera.lowerAlphaLimit = -Math.PI/2
+      // this.camera.upperAlphaLimit = -Math.PI/2
+
+      // this.camera.lowerBetaLimit = 0
+      // this.camera.upperBetaLimit = 0
       // upperRadiusLimit
       this.camera.inputs.attached.keyboard.detachControl();
       // this.camera.inputs.attached.mousewheel.detachControl();

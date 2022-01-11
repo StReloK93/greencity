@@ -10,7 +10,7 @@
 						</div>
 					</main>
 				</div>
-				<div @click="addBuilding('build','house')" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl cursor-pointer hover:bg-gray-200">
+				<div @click="addBuilding('building','house')" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl cursor-pointer hover:bg-gray-200">
 					<img src="/images/build.png" alt="">
 				</div>
 				<div @click="openMeshBuilder" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl cursor-pointer hover:bg-gray-200">
@@ -18,7 +18,7 @@
 				</div>
 			</section>
 			<canvas ref="canvas" class="w-full h-full" :class="{'cursor-move': $store.state.activeMesh}" />
-			<MeshBuilder @close="builderToggle = false" v-if="builderToggle" />
+			<MeshBuilder @newmesh="reloadMeshes" @close="builderToggle = false" v-if="builderToggle" />
 		</main>
 		<main class="w-1/6 p-5">
 			<router-view></router-view>
@@ -43,29 +43,36 @@ export default {
 		return {
 			fructs: fructColor,
 			fructMenu: false,
-			builderToggle: true
+			builderToggle: false
 		}
 	},
 	mounted() {
 		window.canvas = this.$refs.canvas
 		window.Engine = CanvasEngine()
 		HotKeys.loaderFile(this.$refs.room)
+
+		this.reloadMeshes()
 	},
 	methods: {
 		addFruct(fruct,plant){
 			this.fructMenu = false
-			const MesheClass = Engine.Meshes
-			MesheClass.newMesh(fruct,plant,event)
+			const meshClass = Engine.Meshes
+			meshClass.newMesh(fruct,plant,event)
 		},
 		addBuilding(build,house){
-			const MesheClass = Engine.Meshes
-			MesheClass.newMesh(build,house,event)
+			const meshClass = Engine.Meshes
+			meshClass.newMesh(build,house,event)
 		},
 		openFructsMenu(){
 			this.fructMenu = !this.fructMenu
 		},
 		openMeshBuilder(){
 			this.builderToggle = !this.builderToggle
+		},
+		async reloadMeshes(){
+			const {data} = await axios.get('/api/getmeshes')
+			const Native = Engine.Meshes.native
+			Native.createMesh(data)
 		}
 	},
 	components:{

@@ -8,13 +8,21 @@ export default class {
       const engine = new BABYLON.Engine(canvas, true)
       window.scene = new BABYLON.Scene(engine)
 
-      engine.runRenderLoop(function () {scene.render()})
+      this.PickingMesh()
+      engine.runRenderLoop(function () { scene.render() })
       window.addEventListener("resize", () => { engine.resize() })
    }
 
-   setEnvironment(){
+
+   PickingMesh() {
+      scene.onPointerDown = (event, pick) => {
+         console.log(pick.pickedMesh.name);
+      }
+   }
+
+   setEnvironment() {
       let hdr = BABYLON.CubeTexture.CreateFromPrefilteredData("./textures/hdrmini.env", scene)
       scene.environmentTexture = hdr
-      scene.clearColor = new BABYLON.Color3(0.8,0.8,0.8,1)
+      scene.clearColor = new BABYLON.Color3(0.8, 0.8, 0.8, 1)
    }
 }

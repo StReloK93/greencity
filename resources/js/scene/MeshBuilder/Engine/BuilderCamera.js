@@ -14,7 +14,6 @@ export default class {
 
       //listener for resize orthographic camera
       window.addEventListener("resize", ()=> {
-         console.log('resize');
          this.orthographic(canvas)
       });
    }
@@ -32,6 +31,13 @@ export default class {
 
       this.camera.lowerRadiusLimit = 5 
       this.camera.upperRadiusLimit = 50 
+
+
+      this.camera.lowerAlphaLimit = -Math.PI/2
+      this.camera.upperAlphaLimit = -Math.PI/2
+
+      this.camera.lowerBetaLimit = 0
+      this.camera.upperBetaLimit = 0
       // upperRadiusLimit
       this.camera.inputs.attached.keyboard.detachControl();
       // this.camera.inputs.attached.mousewheel.detachControl();

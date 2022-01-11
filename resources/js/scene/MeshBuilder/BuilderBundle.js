@@ -9,7 +9,11 @@ export default function (canvas) {
    const CameraClass = new Camera(canvas)
    const MeshesClass = new Meshes(SceneClass.scene)
    const LightClass =  new Light()
-   new Grid()
+
+   //grid
+   
+   new Grid({lines: false, grid: true})
+
    return {
       Scene: SceneClass,
       Camera: CameraClass,
