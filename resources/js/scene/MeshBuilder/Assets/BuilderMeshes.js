@@ -1,11 +1,9 @@
 import Actions from '../../Assets/Actions'
-
 export default class {
    points = []
    finishedPoints = []
    actions = new Actions()
    constructor(scene) {
-
       this.scene = scene
       this.createGround()
       this.onKeyboard()
@@ -14,12 +12,18 @@ export default class {
    }
 
    onClick() {
+
       this.scene.onPointerDown = (event, pickInfo) => {
+
          //picked active point
          if (pickInfo.pickedMesh.type == 'linepoint') {
-         //mishkani ong tomonini bosganda active elementni ochiramiz
+            const mesh = pickInfo.pickedMesh
+            
+            
+            mesh.material = this.scene.getMaterialByName('animated')
 
-            if (this.scene.activeMesh && this.scene.activeMesh.type == 'linepoint') {
+            // mishkani ong tomonini bosganda active elementni ochiramiz
+            if (this.scene.activeMesh && mesh != this.scene.activeMesh) {
                this.clearActiveMesh()
             }
 
@@ -28,14 +32,14 @@ export default class {
                { frame: 60, value: new BABYLON.Color3(0, 0, 0) }
             ])
 
-            this.scene.activeMesh = pickInfo.pickedMesh
-            this.actions.animateTarget(this.scene.activeMesh)
-            this.actions.animatePlay()
+
+            this.scene.activeMesh = mesh
+            this.actions.animatePlay(mesh)
             return
          }
 
          //mishkani ong tomonini bosganda active elementni ochiramiz
-         if (event.button == 2 && this.scene.activeMesh && this.scene.activeMesh.type == 'linepoint') {
+         if (event.button == 2 && this.scene.activeMesh) {
             this.clearActiveMesh()
          }
       }
@@ -47,17 +51,14 @@ export default class {
             var pickedPoint = this.gridCoords(click.pickInfo)
 
             //agar active element bolsa nima qilamiz ?
-            if (this.scene.activeMesh && this.scene.activeMesh.type == 'linepoint') {
+            if (this.scene.activeMesh) {
 
                let index = this.points.findIndex(point => point.mesh === this.scene.activeMesh);
                this.points[index].mesh.position = pickedPoint
                this.points[index].coordinate = pickedPoint
 
                this.meshBuilder(this.points)
-
-               this.actions.animateStop()
-               this.scene.activeMesh.material.diffuseColor = BABYLON.Color3.FromHexString('#3268D1')
-               this.scene.activeMesh = null
+               this.clearActiveMesh()
                return
             }
 
@@ -68,16 +69,16 @@ export default class {
       });
    }
 
-   clearActiveMesh(){
+   clearActiveMesh() {
       this.actions.animateStop()
-      this.scene.activeMesh.material.diffuseColor = BABYLON.Color3.FromHexString('#3268D1')
+      this.scene.activeMesh.material = this.scene.getMaterialByName('BluePoints')
       this.scene.activeMesh = null
    }
 
    onKeyboard() {
       this.scene.onPreKeyboardObservable.add((press) => {
          if (press.type == 2 && press.event.code == "KeyX") {
-            if (this.scene.activeMesh && this.scene.activeMesh.type == 'linepoint') {
+            if (this.scene.activeMesh) {
                let index = this.points.findIndex(point => point.mesh === this.scene.activeMesh);
                this.points[index].mesh.dispose()
                this.points.splice(index, 1);
@@ -89,20 +90,16 @@ export default class {
    }
 
    createCube(coordinate) {
-      const box = BABYLON.MeshBuilder.CreateBox("cubicpoints", { height: 1, width: 1, size: 1 }, this.scene)
+      const box = BABYLON.MeshBuilder.CreateBox("cubicpoints", { height: 0.4, width: 0.4, size: 0.4 }, this.scene)
       this.points.push({ mesh: box, coordinate: coordinate })
       box.type = 'linepoint'
-      box.actionManager = new BABYLON.ActionManager(this.scene)
 
-
-      const material = new BABYLON.StandardMaterial('BluePoints', this.scene)
-      material.diffuseColor = BABYLON.Color3.FromHexString('#3268D1')
-      material.specularColor = new BABYLON.Color3(0, 0, 0)
-      box.material = material
+      box.material = this.scene.getMaterialByName('BluePoints')
       box.position = coordinate
       box.position.y = 1
 
-      this.actions.hover(box)
+      box.actionManager = new BABYLON.ActionManager(this.scene)
+      this.actions.hover(box, this.scene)
    }
 
    meshBuilder(points) {
@@ -121,6 +118,9 @@ export default class {
    }
 
 
+
+
+
    createGround() {
       const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 1000, height: 1000 }, this.scene)
       ground.actionManager = new BABYLON.ActionManager(this.scene)
@@ -130,7 +130,6 @@ export default class {
       material.specularColor = new BABYLON.Color3(0, 0, 0)
       ground.material = material
    }
-
 
    numRound(num, precision) {
       return Math.round(num / precision) * precision
@@ -142,12 +141,11 @@ export default class {
       return new BABYLON.Vector3(coorX, 1, coorZ)
    }
 
-   getPoints(){
+   getPoints() {
       const points = []
       this.finishedPoints.forEach(point => {
-         points.push({x: point.x,y: point.y,z: point.z})
+         points.push({ x: point.x, y: point.y, z: point.z })
       })
       return points
    }
-
 }

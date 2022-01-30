@@ -8,17 +8,10 @@ export default class {
       const engine = new BABYLON.Engine(canvas, true)
       window.scene = new BABYLON.Scene(engine)
 
-      this.PickingMesh()
       engine.runRenderLoop(function () { scene.render() })
       window.addEventListener("resize", () => { engine.resize() })
    }
 
-
-   PickingMesh() {
-      scene.onPointerDown = (event, pick) => {
-         console.log(pick.pickedMesh.name);
-      }
-   }
 
    setEnvironment() {
       let hdr = BABYLON.CubeTexture.CreateFromPrefilteredData("./textures/hdrmini.env", scene)

@@ -1,14 +1,13 @@
 export default class {
-	hover(mesh) {
+	hover(mesh, scene) {
 		var material = mesh.material
-		var oldDiffuse = material.diffuseColor
 		mesh.actionManager.registerAction(
 			new BABYLON.ExecuteCodeAction(
 				{
 					trigger: BABYLON.ActionManager.OnPointerOverTrigger,
 				},
 				() => {
-					material.diffuseColor = new BABYLON.Color3(1, 1, 0)
+					if (scene.activeMesh != mesh) mesh.material = scene.getMaterialByName('hover')
 				}
 			)
 		);
@@ -18,7 +17,7 @@ export default class {
 					trigger: BABYLON.ActionManager.OnPointerOutTrigger,
 				},
 				() => {
-					material.diffuseColor = oldDiffuse
+					if (scene.activeMesh != mesh) mesh.material = material
 				}
 			)
 		);
@@ -30,11 +29,8 @@ export default class {
 		this.animationGroup = new BABYLON.AnimationGroup(`newBlinkGroup`)
 	}
 
-	animateTarget(mesh) {
+	animatePlay(mesh) {
 		this.animationGroup.addTargetedAnimation(this.animation, mesh)
-	}
-
-	animatePlay() {
 		this.animationGroup.play(true)
 	}
 

@@ -14,7 +14,9 @@ class PointController extends Controller
     {
         return DB::table('meshes')->insert([
             'user_id' => 1,
-            'points' => json_encode($req->all())
+            'points' => json_encode($req['points']),
+            'clientname' => $req['clientname'],
+            'name' => $req['name'],
         ]);
     }
 }

@@ -6,10 +6,12 @@ import Grid from '../Assets/Grid'
 import Materials from '../Assets/Materials'
 export default function () {
    const SceneClass = new Scene()
-   new Materials()
    const CameraClass = new Camera()
    const MeshesClass = new Meshes(CameraClass)
    const LightClass =  new Light()
+
+   
+   new Materials(scene)
    new Grid({lines: true,grid: true})
    return {
       Scene: SceneClass,
@@ -18,6 +20,31 @@ export default function () {
       Meshes: MeshesClass,
    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // scene.onDataLoadedObservable.add(function(){

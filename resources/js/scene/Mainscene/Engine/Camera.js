@@ -8,6 +8,7 @@ export default class {
    createCamera() {
       this.camera.attachControl(canvas, true)
       this.camera.mode = 1
+      this.camera.minZ = 0
       this.camera.onViewMatrixChangedObservable.add(()=>{
          this.orthographic()
       })
@@ -37,11 +38,11 @@ export default class {
 
       // this.camera.lowerBetaLimit = 0
       // this.camera.upperBetaLimit = 0
+      
       // upperRadiusLimit
       this.camera.inputs.attached.keyboard.detachControl();
       // this.camera.inputs.attached.mousewheel.detachControl();
 
       this.camera.inputs.attached.pointers.buttons = [1, 2]
-      // console.log(this.camera.inputs.attached.mousewheel);
    }
 }

@@ -1,42 +1,58 @@
+import Actions from '../../Assets/Actions'
+
 import Native from './NativeMeshes'
 import Import from './ImportMeshes'
+import axios from 'axios';
+
+
 export default class {
+   actions = new Actions()
    constructor() {
       this.native = new Native()
       new Import()
+      this.PickingMesh()
    }
 
    numRound(num, precision) {
       return Math.round(num / precision) * precision;
    }
 
-   CopyMesh(target, name) {
-      const mesh = scene.getNodeByName(target)
-      return mesh.clone(name + Date.now())
-   }
-
    newMesh(name, parent, event) {
-      const mesh = this.CopyMesh(parent, name)
-      mesh.visibility = 0.5
-      scene.onPointerMove = (a, pickInfo) => {
-         let coorX = this.numRound(-pickInfo.pickedPoint.x,0.5)
-         let coorZ = this.numRound(pickInfo.pickedPoint.z,0.5)
-         mesh.position.x = coorX
-         mesh.position.z = coorZ
-      }
+      const getmesh = scene.getNodeByName(parent)
+      const mesh = getmesh.clone(name + Date.now())
 
-      store.state.activeMesh = true
-      scene.simulatePointerMove(scene.pick(event.clientX, event.clientY))
       let material = scene.getMaterialByName(name)
       if (material) mesh.material = scene.getMaterialByName(name)
+      store.state.activeMesh = true
 
+      
+
+      this.dragnDrop(mesh, parent, event)
+   }
+
+
+   dragnDrop(mesh,parent,event){
+      mesh.visibility = 0.5
+      
+      scene.onPointerMove = (a, pickInfo) => {
+         if (pickInfo.pickedPoint) {
+            let coorX = this.numRound(pickInfo.pickedPoint.x, 0.5)
+            let coorZ = this.numRound(pickInfo.pickedPoint.z, 0.5)
+            mesh.setAbsolutePosition(coorX, mesh.position.y, coorZ)
+         }
+      }
+
+      scene.simulatePointerMove(scene.pick(event.clientX, event.clientY))
 
       scene.onPointerPick = (event) => {
          if (!store.state.activeMesh) return
-         if(event.button == 0){
+         if (event.button == 0) {
             mesh.visibility = 1
+            mesh.actionManager = new BABYLON.ActionManager(scene)
+            this.actions.hover(mesh,scene)
+            this.saveMeshProperties(mesh, parent)
          }
-         if(event.button == 2){
+         if (event.button == 2) {
             mesh.dispose()
          }
 
@@ -44,7 +60,24 @@ export default class {
          store.state.activeMesh = false
          scene.onPointerPick = null
       }
-
    }
 
+   async saveMeshProperties(mesh, parent) {
+      const name = mesh.name
+      const material = mesh.material.name
+      const position = mesh.absolutePosition
+      await axios.post('/api/savemeshes', {
+         name: name,
+         position: position,
+         material: material,
+         parent: parent,
+      })
+   }
+
+
+   PickingMesh() {
+      scene.onPointerDown = (event, pick) => {
+         if(pick.pickedMesh) console.log(pick.pickedMesh.name);
+      }
+   }
 }

@@ -1,11 +1,12 @@
 export default class {
-   constructor() {
+   constructor(canvas) {
+      this.canvas = canvas
       this.createScene()
       this.setEnvironment()
    }
 
    createScene() {
-      const engine = new BABYLON.Engine(canvas, true)
+      const engine = new BABYLON.Engine(this.canvas, true)
       window.scene = new BABYLON.Scene(engine)
 
       engine.runRenderLoop(function () {scene.render()})

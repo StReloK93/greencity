@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMeshesTable extends Migration
+class CreateActivemeshes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateMeshesTable extends Migration
      */
     public function up()
     {
-        Schema::create('meshes', function (Blueprint $table) {
+        Schema::create('activemeshes', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->json('position');
+            $table->text('parentname');
             $table->text('name');
-            $table->text('clientname');
-            $table->json('points');
+            $table->string('materialname');
         });
     }
 
@@ -29,6 +30,6 @@ class CreateMeshesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meshes');
+        Schema::dropIfExists('activemeshes');
     }
 }
