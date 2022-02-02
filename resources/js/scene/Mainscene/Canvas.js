@@ -2,8 +2,8 @@ import Scene from './engine/Scene'
 import Light from './engine/Light'
 import Meshes from './Assets/Meshes'
 import Camera from './engine/Camera'
-import Grid from '../Assets/Grid'
-import Materials from '../Assets/Materials'
+import Grid from '../Addons/Grid'
+import Materials from '../Addons/Materials'
 export default function () {
    const SceneClass = new Scene()
    const CameraClass = new Camera()

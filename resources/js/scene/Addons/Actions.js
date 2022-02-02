@@ -1,5 +1,14 @@
 export default class {
-	hover(mesh, scene) {
+	keysArr = [
+		{ frame: 0, value: new BABYLON.Color3(0, 1, 0) },
+		{ frame: 20, value: new BABYLON.Color3(1, 1, 1) },
+		{ frame: 20, value: new BABYLON.Color3(1, 1, 1) },
+		{ frame: 40, value: new BABYLON.Color3(0, 1, 0) }
+	]
+	constructor(scene){
+		this.scene = scene
+	}
+	hover(mesh) {
 		var material = mesh.material
 		mesh.actionManager.registerAction(
 			new BABYLON.ExecuteCodeAction(
@@ -7,7 +16,7 @@ export default class {
 					trigger: BABYLON.ActionManager.OnPointerOverTrigger,
 				},
 				() => {
-					if (scene.activeMesh != mesh) mesh.material = scene.getMaterialByName('hover')
+					if (this.scene.activeMesh != mesh) mesh.material = this.scene.getMaterialByName('hover')
 				}
 			)
 		);
@@ -17,19 +26,26 @@ export default class {
 					trigger: BABYLON.ActionManager.OnPointerOutTrigger,
 				},
 				() => {
-					if (scene.activeMesh != mesh) mesh.material = material
+					if (this.scene.activeMesh != mesh) {
+						mesh.material = material
+					}
+
 				}
 			)
 		);
 	}
 
-	animate(parametr, property, keysArr) {
+	animate(parametr, property, keysArr = this.keysArr) {
 		this.animation = new BABYLON.Animation(`newBlink`, parametr, 60, property, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE)
 		this.animation.setKeys(keysArr)
 		this.animationGroup = new BABYLON.AnimationGroup(`newBlinkGroup`)
 	}
 
-	animatePlay(mesh) {
+	animatePlay(mesh, select = false) {
+		if(select){
+			this.animate('material.diffuseColor', BABYLON.Animation.ANIMATIONTYPE_COLOR3)
+		}
+		mesh.material = this.scene.getMaterialByName('animated')
 		this.animationGroup.addTargetedAnimation(this.animation, mesh)
 		this.animationGroup.play(true)
 	}

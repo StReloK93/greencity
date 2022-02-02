@@ -1,8 +1,6 @@
 <template>
-   <section
-      class="h-full flex items-center justify-center bg-gradient text-white"
-   >
-      <main class="py-16 w-1/2 shadow-xl flex border border-blue-600">
+   <section class="h-full w-full flex items-center justify-center bg-gradient text-white">
+      <main class="py-12 w-1/2 shadow-xl flex border border-green-600">
          <div class="w-1/2 text-center pr-28 flex items-center">
             <aside class="flex flex-col items-center">
                <img src="/images/lotus.png"  class="inline w-1/3">
@@ -10,16 +8,17 @@
             </aside>
          </div>
          <div class="w-1/2 px-16">
-            <form @submit.prevent="logined">
+         <h3 class="text-3xl text-center mb-6 uppercase">Tizimga kirish</h3>
+            <form @submit.prevent="$store.dispatch('login', data)">
                <label for="login">Login</label>
                <div class="my-2">
-                  <input id="login" type="text" v-model="login" class="text-gray-600 outline-none py-2 px-3 rounded-sm w-full" placeholder="Login" />
+                  <input id="login" type="text" v-model="data.email" class="text-gray-600 outline-none py-2 px-3 rounded-sm w-full" placeholder="Login"  required/>
                </div>
                <label for="parol">Parol</label>
                <div  class="my-2">
-                  <input id="parol" type="password" v-model="password" class="text-gray-600 outline-none py-2 px-3 rounded-sm w-full" placeholder="Parol" />
+                  <input id="parol" type="password" v-model="data.password" class="text-gray-600 outline-none py-2 px-3 rounded-sm w-full" placeholder="Parol" required/>
                </div>
-               <button type="submit" class="shadow p-2 bg-blue-500 w-full rounded-sm mt-4 uppercase font-bold">Kirish</button>
+               <button type="submit" class="text-white shadow p-2 bg-green-700 w-full rounded-sm mt-4 uppercase font-bold">Kirish</button>
             </form>
          </div>
       </main>
@@ -29,22 +28,8 @@
 export default {
    data() {
       return {
-         login: null,
-         password: null,
+         data: {}
       };
-   },
-   methods: {
-      logined() {},
    },
 };
 </script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
-.bg-gradient {
-   background: linear-gradient(105deg, #e3e3e3 45%, #1c53a0 45.1%);
-}
-.text-blue{
-   font-family: 'Dancing Script', cursive;
-   color: #1c53a0;
-}
-</style>

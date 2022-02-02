@@ -20,6 +20,8 @@ class CreateActivemeshes extends Migration
             $table->text('parentname');
             $table->text('name');
             $table->string('materialname');
+            $table->string('username')->nullable();
+            $table->double('height', 15, 8)->default(1);
         });
     }
 

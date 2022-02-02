@@ -1,10 +1,12 @@
-import Actions from '../../Assets/Actions'
+import Actions from '../../Addons/Actions'
 export default class {
    points = []
    finishedPoints = []
-   actions = new Actions()
+
    constructor(scene) {
       this.scene = scene
+      this.actions = new Actions(scene)
+
       this.createGround()
       this.onKeyboard()
       this.onDoubleClick()
@@ -18,23 +20,14 @@ export default class {
          //picked active point
          if (pickInfo.pickedMesh.type == 'linepoint') {
             const mesh = pickInfo.pickedMesh
-            
-            
-            mesh.material = this.scene.getMaterialByName('animated')
 
             // mishkani ong tomonini bosganda active elementni ochiramiz
             if (this.scene.activeMesh && mesh != this.scene.activeMesh) {
                this.clearActiveMesh()
             }
 
-            this.actions.animate('material.diffuseColor', BABYLON.Animation.ANIMATIONTYPE_COLOR3, [
-               { frame: 0, value: new BABYLON.Color3(0, 1, 0) },
-               { frame: 60, value: new BABYLON.Color3(0, 0, 0) }
-            ])
-
-
             this.scene.activeMesh = mesh
-            this.actions.animatePlay(mesh)
+            this.actions.animatePlay(mesh, true)
             return
          }
 
@@ -99,7 +92,7 @@ export default class {
       box.position.y = 1
 
       box.actionManager = new BABYLON.ActionManager(this.scene)
-      this.actions.hover(box, this.scene)
+      this.actions.hover(box)
    }
 
    meshBuilder(points) {

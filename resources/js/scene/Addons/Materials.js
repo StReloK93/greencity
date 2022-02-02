@@ -14,7 +14,7 @@ export default class Materials {
 
         //hover
         const hover = new BABYLON.StandardMaterial("hover", scene);
-        hover.diffuseColor = new BABYLON.Color3(1, 1, 0)
+        hover.diffuseColor = BABYLON.Color3.FromHexString('#C8F5FF').toLinearSpace()
         hover.specularColor = new BABYLON.Color3(0, 0, 0);
 
         //fructColor
@@ -27,6 +27,7 @@ export default class Materials {
         BluePoints.diffuseColor = BABYLON.Color3.FromHexString('#3268D1')
         BluePoints.specularColor = new BABYLON.Color3(0, 0, 0)
   
-        new BABYLON.StandardMaterial("animated", this.scene);
+        const animated = new BABYLON.StandardMaterial("animated", this.scene);
+        animated.specularColor = new BABYLON.Color3(0, 0, 0)
     }
 }

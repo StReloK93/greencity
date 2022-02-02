@@ -1,10 +1,11 @@
 window.axios = require('axios');
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.withCredentials = true;
+
 import * as BABYLON from '@babylonjs/core';
 import { GridMaterial } from '@babylonjs/materials';
 import "@babylonjs/loaders/glTF";
 import earcut from 'earcut'
-
 
 
 //FOR VUE 3
@@ -14,11 +15,21 @@ import router from './router';
 import store from './store';
 
 window.store = store
+window.router = router
 window.BABYLON = BABYLON;
 window.BABYLON.GridMaterial = GridMaterial;
 window.earcut = earcut
 
-createApp(mainApp)
+
+store.dispatch('getUser').then(() => {
+    createApp(mainApp)
     .use(router)
     .use(store)
     .mount("#app");
+}).catch(() => {
+    console.clear();
+    createApp(mainApp)
+    .use(router)
+    .use(store)
+    .mount("#app");
+})

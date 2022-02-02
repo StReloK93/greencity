@@ -2,8 +2,8 @@ import Scene from './Engine/BuilderScene'
 import Light from './Engine/BuilderLight'
 import Meshes from './Assets/BuilderMeshes'
 import Camera from './Engine/BuilderCamera'
-import Grid from '../Assets/Grid'
-import Materials from '../Assets/Materials'
+import Grid from '../Addons/Grid'
+import Materials from '../Addons/Materials'
 
 export default function (canvas) {
    const SceneClass = new Scene(canvas)

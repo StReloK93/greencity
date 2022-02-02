@@ -1,0 +1,85 @@
+<template>
+	<main class="w-1/6 flex flex-col h-full p-1 bg-gray-200">
+		<aside class="h-full px-3 pt-3">
+			<div v-if="$store.state.mesh.info">
+				<h3
+					class="text-center font-bold uppercase text-white py-2 bg-green-600 mb-4 rounded"
+				>Tanlangan obyekt</h3>
+				<main>
+					<label for="names" class="text-sm text-gray-400">Obyektga nom berish</label>
+					<input
+						placeholder="Nomlang"
+						id="names"
+						class="rounded border-b border-green-600 my-1 outline-none p-2 w-full"
+						type="text"
+						v-model="$store.state.mesh.info.username"
+						@change="change"
+						@keyup="edit"
+					/>
+				</main>
+				<main v-if="$store.state.mesh.info.parentname != 'plant'">
+					<label for="height" class="text-sm text-gray-400">Bino Balandligi</label>
+					<input
+						placeholder="Bino Balandligi"
+						id="height"
+						class="rounded border-b border-green-600 my-1 outline-none p-2 w-full"
+						type="text"
+						v-model="$store.state.mesh.info.height"
+						@change="change(true)"
+						@keyup="edit"
+					/>
+				</main>
+				<main v-if="$store.state.mesh.info.parentname == 'plant'">
+					<aside></aside>
+					<Uploader />
+				</main>
+			</div>
+		</aside>
+		<aside class="flex-grow">
+			<button
+				class="rounded uppercase shadow-xl w-full p-3 py-2 text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white"
+				@click="$store.dispatch('logout')"
+			>Chiqish</button>
+		</aside>
+	</main>
+</template>
+<script>
+import Uploader from "../components/UploadImage.vue";
+export default {
+	data() {
+		return {
+			interval: null,
+		};
+	},
+	mounted() {
+		this.engine = Engine.Meshes;
+	},
+	methods: {
+		edit() {
+			store.state.mesh.active.scaling.y = store.state.mesh.info.height;
+			if (this.interval) clearTimeout(this.interval);
+
+			this.interval = setTimeout(() => {
+				if (store.state.mesh.active) {
+					this.engine.editMesh({
+						name: store.state.mesh.active.name,
+						height: store.state.mesh.info.height,
+						username: store.state.mesh.info.username,
+					});
+				}
+			}, 800);
+		},
+
+		change() {
+			this.engine.editMesh({
+				name: store.state.mesh.active.name,
+				height: store.state.mesh.info.height,
+				username: store.state.mesh.info.username,
+			});
+		},
+	},
+	components: {
+		Uploader,
+	},
+};
+</script>

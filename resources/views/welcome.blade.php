@@ -6,6 +6,6 @@
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <title>Laravel</title>
     </head>
-    <body class="h-full flex flex-col" id="app"></body>
+    <body class="h-full flex overflow-hidden" id="app"></body>
     <script src="{{mix('js/app.js')}}"></script>
 </html>

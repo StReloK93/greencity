@@ -2,7 +2,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\User;
+use Validator;
+use Auth;
+use Hash;
 class UserController extends Controller
 {
 
@@ -10,32 +13,28 @@ class UserController extends Controller
     {
         $credentials = $request->validate([
             'email' => 'required',
-            'password' => 'required',
+            'password' => 'required'
         ]);
 
         if (!$this->guard()->attempt($credentials)) {
             return response()->json([
-                'message' => 'The provided credentials are incorrect.',
+                'message' => 'The provided credentials are incorrect.'
             ], 500);
         }
 
+        $token = $this->guard()->user()->createToken('auth-token')->plainTextToken;
         return response()->json([
-            'token' => $this->guard()->user()->createToken('auth-token')->plainTextToken,
+            'access_token' => $token,
+            'token_type' => 'Bearer',
         ], 200);
     }
 
 
-    public function register($res)
+    public function register(Request $res)
     {
-		$this->CreateUser($res);
-
-        return 'Bearer ' . $userOrVal->createToken('electron', ['user'])->plainTextToken;
-    }
-
-    public function CreateUser($res){
 
         $validate = Validator::make($res->all(),[
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|unique:users',
             'password' => 'required|min:6|max:255|confirmed',
         ],$messages = [
             'required' => ":attribute bo'sh bo'lmasligi kerak.",
@@ -52,26 +51,22 @@ class UserController extends Controller
             return response()->json($validate->errors(),299);
         }
         
-        return User::create([
-            'name' => $res['name'],
+        $user = User::create([
             'email' => $res['email'],
-            'city' => $res['city'],
             'password' => Hash::make($res['password']),
-            'role' => $res['shop'],
-            'shop_id' => $shopId,
         ]);
+
+        return response()->json([
+            'token' => $user->createToken('auth-token')->plainTextToken,
+        ], 200);
     }
-
-
-
-
-
 
     public function logout(Request $request)
     {
-        $user = $request->user();
-        $user->tokens()->delete();
+        $request->user()->tokens()->delete();
+
         $this->guard()->logout();
+        
         return response()->json([
             'message' => 'logout',
         ], 200);
@@ -80,5 +75,10 @@ class UserController extends Controller
     public function guard($guard = 'web')
     {
         return Auth::guard($guard);
+    }
+
+
+    public function getUser(Request $req){
+        return $req->user();
     }
 }

@@ -5,7 +5,6 @@
          <button @click="$emit('close')" class="absolute flex items-center justify-center top-0 right-0 bg-red-500 p-2 px-4 m-3  shadow-xl  hover:bg-red-700">
             <img src="/images/close.png" class="imgwhite w-4">
          </button>
-
          <div class="absolute bottom-0 right-0 m-3 ">
             <input type="text" v-model="clientname" class="p-2 outline-none" placeholder="Nomi" required>
             <button type="submit" class="bg-green-600 p-2 px-4 text-white shadow-xl  hover:bg-gray-700">
@@ -40,8 +39,3 @@ export default {
    },
 }
 </script>
-<style>
-   .imgwhite{
-      filter: brightness(0) invert(1);
-   }
-</style>

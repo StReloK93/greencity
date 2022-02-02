@@ -1,31 +1,50 @@
 <template>
-   <section>
-      <form @submit.prevent="registered">
-         <div>
-            <input type="text" v-model="login" placeholder="login"/>
+   <section
+      class="h-full w-full flex items-center justify-center bg-gradient text-white"
+   >
+      <main class="py-12 w-1/2 shadow-xl flex border border-green-600">
+         <div class="w-1/2 text-center pr-28 flex items-center">
+            <aside class="flex flex-col items-center">
+               <img src="/images/lotus.png"  class="inline w-1/3">
+               <h3 class="text-blue text-3xl font-bold uppercase" @click="getUser()">Yashil makon</h3>
+            </aside>
          </div>
-         <div>
-            <input type="password" v-model="password" placeholder="parol" />
+         <div class="w-1/2 px-16">
+            <h3 class="text-3xl text-center mb-6 uppercase">Ro'yhatdan o'tish</h3>
+            <form @submit.prevent="$store.dispatch('register', data)">
+               <label for="login">Login</label>
+               <div class="my-2">
+                  <input id="login" type="text" v-model="data.email" class="text-gray-600 outline-none py-2 px-3 rounded-sm w-full" placeholder="Login"  required/>
+               </div>
+               <label for="parol">Parol</label>
+               <div  class="my-2">
+                  <input id="parol" type="password" v-model="data.password" class="text-gray-600 outline-none py-2 px-3 rounded-sm w-full" placeholder="Parol" required/>
+               </div>
+               <label for="parol">Parolni qaytadan tering</label>
+               <div  class="my-2">
+                  <input id="parol" type="password" v-model="data.password_confirmation" class="text-gray-600 outline-none py-2 px-3 rounded-sm w-full" placeholder="Parolni qaytadan tering" required/>
+               </div>
+               <button type="submit" class="shadow p-2 bg-green-700 w-full rounded-sm mt-4 uppercase font-bold">Kirish</button>
+            </form>
          </div>
-         <div>
-            <input type="password" v-model="password" placeholder="parolni qaytadan tering" />
-         </div>
-         <button type="submit">ro'yhatdan otish</button>
-      </form>
+      </main>
    </section>
 </template>
 <script>
 export default {
    data() {
       return {
-         login: null,
-         password: null,
+         data : {
+            email: null,
+            password: null,
+            password_confirmation: null,
+         }
       };
    },
    methods: {
-      registered() {},
+      getUser(){
+         axios.get('/api/user', this.data);
+      }
    },
 };
 </script>
-<style>
-</style>
