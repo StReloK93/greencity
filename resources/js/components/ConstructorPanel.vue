@@ -1,6 +1,7 @@
 <template>
 	<main class="w-1/6 flex flex-col h-full p-1 bg-gray-200">
 		<aside class="h-full px-3 pt-3">
+			<transition name="opacity" mode="out-in">
 			<div v-if="$store.state.mesh.info">
 				<h3
 					class="text-center font-bold uppercase text-white py-2 bg-green-600 mb-4 rounded"
@@ -23,17 +24,17 @@
 						placeholder="Bino Balandligi"
 						id="height"
 						class="rounded border-b border-green-600 my-1 outline-none p-2 w-full"
-						type="text"
+						type="number"
 						v-model="$store.state.mesh.info.height"
 						@change="change(true)"
 						@keyup="edit"
 					/>
 				</main>
 				<main v-if="$store.state.mesh.info.parentname == 'plant'">
-					<aside></aside>
-					<Uploader />
+					<Uploader v-if="$store.state.mesh.images" />
 				</main>
 			</div>
+			</transition>
 		</aside>
 		<aside class="flex-grow">
 			<button
@@ -53,6 +54,9 @@ export default {
 	},
 	mounted() {
 		this.engine = Engine.Meshes;
+	},
+	unmounted() {
+		this.engine.clearActiveMesh()
 	},
 	methods: {
 		edit() {
@@ -83,3 +87,20 @@ export default {
 	},
 };
 </script>
+<style>
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+    width: 6px; /* ширина для вертикального скролла */
+    height: 6px; /* высота для горизонтального скролла */
+    background-color: #aaa;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+    background-color: #05ae23;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #253861;
+}
+</style>

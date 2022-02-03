@@ -15,7 +15,7 @@ export default class {
    hideMeshes(meshNames){
       meshNames.forEach(meshname => {
          const mesh = scene.getNodeByName(meshname)
-         mesh.setAbsolutePosition(1000,mesh.position.y,1000)
+         mesh.setAbsolutePosition(40000,mesh.position.y,40000)
       });
    }
 }

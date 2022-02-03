@@ -31,7 +31,7 @@ export default class {
       this.camera.useBouncingBehavior = true;
 
       this.camera.lowerRadiusLimit = 25 
-      this.camera.upperRadiusLimit = 120 
+      this.camera.upperRadiusLimit = 240 
 
       // this.camera.lowerAlphaLimit = -Math.PI/2
       // this.camera.upperAlphaLimit = -Math.PI/2

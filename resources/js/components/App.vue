@@ -19,11 +19,15 @@
 	width: 40px;
 	height: 40px;
 }
-.allphotos_images{
-	/* width: 80px;
-	height: 80px; */
-	object-fit: cover;
+
+.opacity-enter-active, .opacity-leave-active {
+  transition: opacity 0.1s;
+  opacity: 1;
 }
+.opacity-enter-from ,.opacity-leave-to  {
+  opacity: 0;
+}
+
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .2s ,transform .2s;
@@ -65,5 +69,16 @@ canvas{
 	height: 20px;
 	width: 50px;
 	display: inline-block;
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
+	appearance: textfield;
+}
+ 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+	display: none;
 }
 </style>

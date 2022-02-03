@@ -104,7 +104,7 @@ var _hoisted_13 = {
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
-  "class": "shadow p-2 bg-green-700 w-full rounded-sm mt-4 uppercase font-bold"
+  "class": "shadow p-2 bg-green-700 w-full rounded-sm mt-4 uppercase font-bold text-white"
 }, "Kirish", -1
 /* HOISTED */
 );

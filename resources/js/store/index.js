@@ -10,7 +10,8 @@ export default createStore({
             activeMesh: null,
             mesh: {
                 active: null,
-                info: null
+                info: null,
+                images: null
             },
             drag: null,
         }

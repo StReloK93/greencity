@@ -49,7 +49,6 @@ export default {
 		window.canvas = this.$refs.canvas
 		window.Engine = CanvasEngine()
 		HotKeys.loaderFile();
-		
 		scene.onDataLoadedObservable.add(() => {
 			this.onload = true
 			const Native = Engine.Meshes.native;

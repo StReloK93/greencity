@@ -33,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/editmeshes', [MeshesController::class, 'editMeshProperties']);
     Route::post('/deletemesh', [MeshesController::class, 'deletemesh']);
 
+   
+
     Route::post('/getmesh', [MeshesController::class, 'getMesh']);
     Route::post('/editmesh', [MeshesController::class, 'editMesh']);
 
@@ -49,6 +51,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::post('/upload', [ImageController::class, 'UploadImage']);
+
+    Route::post('/getimages', [ImageController::class, 'getImages']);
+    Route::post('/deleteimages', [ImageController::class, 'deleteImages']);
 });
 
 

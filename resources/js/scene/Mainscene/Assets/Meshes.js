@@ -40,7 +40,6 @@ export default class {
             }
             else if (event.button == 0) {
                this.getMesh(mesh)
-
                store.state.mesh.active = mesh
                scene.activeMesh = mesh
 
@@ -135,13 +134,28 @@ export default class {
       })
    }
 
+
+   //GetMesh
    async getMesh(mesh) {
+      store.state.mesh.images = null
       const name = mesh.name
       const { data } = await axios.post('/api/getmesh', {
          name: name,
       })
       store.state.mesh.info = data
+
+
+      if(data.parentname == 'plant'){
+         const images = await axios.post('/api/getimages', {
+            name: name,
+         })
+         store.state.mesh.images = images.data
+      }
+      else store.state.mesh.images = []
+
    }
+   //GetMesh End
+
 
    async editMesh({ name, height, username }) {
       await axios.post('/api/editmesh', {

@@ -24,7 +24,7 @@
                <div  class="my-2">
                   <input id="parol" type="password" v-model="data.password_confirmation" class="text-gray-600 outline-none py-2 px-3 rounded-sm w-full" placeholder="Parolni qaytadan tering" required/>
                </div>
-               <button type="submit" class="shadow p-2 bg-green-700 w-full rounded-sm mt-4 uppercase font-bold">Kirish</button>
+               <button type="submit" class="shadow p-2 bg-green-700 w-full rounded-sm mt-4 uppercase font-bold text-white">Kirish</button>
             </form>
          </div>
       </main>

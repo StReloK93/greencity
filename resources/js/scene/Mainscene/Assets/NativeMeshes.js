@@ -31,8 +31,8 @@ export default class {
       customMesh.mainmaterial = scene.getMaterialByName('building')
       customMesh.position.y = 0.01
 
-      customMesh.position.x = 1000
-      customMesh.position.z = 1000
+      customMesh.position.x = 40000
+      customMesh.position.z = 40000
       customMesh.rotation.x = Math.PI
    }
 

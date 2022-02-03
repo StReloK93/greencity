@@ -1,9 +1,9 @@
 export default class {
 	keysArr = [
-		{ frame: 0, value: new BABYLON.Color3(0, 1, 0) },
+		{ frame: 0, value: BABYLON.Color3.FromHexString('#C8F5FF').toLinearSpace() },
 		{ frame: 20, value: new BABYLON.Color3(1, 1, 1) },
 		{ frame: 20, value: new BABYLON.Color3(1, 1, 1) },
-		{ frame: 40, value: new BABYLON.Color3(0, 1, 0) }
+		{ frame: 40, value: BABYLON.Color3.FromHexString('#C8F5FF').toLinearSpace() }
 	]
 	constructor(scene){
 		this.scene = scene

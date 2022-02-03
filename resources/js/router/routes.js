@@ -31,8 +31,8 @@ export default [
 		path: '/user/:id',
 		component: () => import('../views/Userprofile.vue'),
 	},
-	// {
-	// 	path: '/:pathMatch(.*)*',
-	// 	redirect: '/',
-	// }
+	{
+		path: '/:pathMatch(.*)*',
+		redirect: '/',
+	}
 ];
