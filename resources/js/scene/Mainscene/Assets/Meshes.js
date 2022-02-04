@@ -60,7 +60,8 @@ export default class {
       }
    }
 
-   newMesh(name, parent, event) {
+   newMesh(name, parent, event,id) {
+      this.id = id
       this.clearActiveMesh()
       scene.onPointerPick = null
 
@@ -94,7 +95,7 @@ export default class {
       if (simulate) scene.simulatePointerMove(scene.pick(event.clientX, event.clientY))
    }
 
-   drop(mesh, parent = null, position) {
+   drop(mesh, parent = null) {
       scene.onPointerPick = (event) => {
          if (store.state.mesh.active == null) return
          if (event.button == 0) {
@@ -131,6 +132,7 @@ export default class {
          position: position,
          material: material,
          parent: parent,
+         id: this.id
       })
    }
 
@@ -140,6 +142,7 @@ export default class {
       store.state.mesh.images = null
       const name = mesh.name
       const { data } = await axios.post('/api/getmesh', {
+         // id: this.id,
          name: name,
       })
       store.state.mesh.info = data
@@ -157,11 +160,12 @@ export default class {
    //GetMesh End
 
 
-   async editMesh({ name, height, username }) {
+   async editMesh({ name, height, username , plantTime}) {
       await axios.post('/api/editmesh', {
          name: name,
          height: height,
-         username: username
+         username: username,
+         plantTime: plantTime,
       })
    }
 

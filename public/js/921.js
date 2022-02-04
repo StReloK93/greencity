@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[921],{921:(e,n,s)=>{s.r(n),s.d(n,{default:()=>c});var t=s(821);const u={};const c=(0,s(744).Z)(u,[["render",function(e,n,s,u,c,r){return(0,t.wg)(),(0,t.iD)("section",null," Home Page ")}]])}}]);

@@ -1,10 +1,11 @@
-import Native from './NativeMeshes'
+import Actions from '../../Addons/Actions'
+
 import Import from './ImportMeshes'
+
+
 export default class {
-   constructor() {
-      new Native()
-      new Import()
+   constructor(scene) {
+      this.actions = new Actions(scene)
+      new Import(scene)
    }
-
-
 }

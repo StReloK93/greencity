@@ -22,7 +22,7 @@
 			</div>
 		</section>
 		<canvas ref="canvas" class="w-full h-full" :class="{'cursor-move': $store.state.drag}" />
-		<MeshBuilder @newmesh="reloadMeshes" @close="builderToggle = false" v-if="builderToggle" />
+		<MeshBuilder :id="id" @newmesh="reloadMeshes" @close="builderToggle = false" v-if="builderToggle" />
 	</main>
 	<ConstructorPanel v-if="onload" />
 </template>
@@ -34,6 +34,7 @@ import fructColor from "../fructColor";
 import MeshBuilder from "./../components/MeshBuilder.vue";
 import ConstructorPanel from "./../components/ConstructorPanel.vue";
 export default {
+	props: ['id'],
 	data() {
 		return {
 			fructs: fructColor,
@@ -48,11 +49,11 @@ export default {
 	mounted() {
 		window.canvas = this.$refs.canvas
 		window.Engine = CanvasEngine()
-		HotKeys.loaderFile();
+		HotKeys.loaderFile(scene);
 		scene.onDataLoadedObservable.add(() => {
 			this.onload = true
 			const Native = Engine.Meshes.native;
-			Native.getMeshes();
+			Native.getMeshes(this.id);
 		});
 		this.reloadMeshes();
 	},
@@ -60,13 +61,13 @@ export default {
 		addFruct(fruct, plant) {
 			this.fructMenu = false;
 			const meshClass = Engine.Meshes;
-			meshClass.newMesh(fruct, plant, event);
+			meshClass.newMesh(fruct, plant, event, this.id);
 		},
 
 		addBuilding(build, house) {
 			this.customMenu = false;
 			const meshClass = Engine.Meshes;
-			meshClass.newMesh(build, house, event);
+			meshClass.newMesh(build, house, event, this.id);
 		},
 
 		openMeshBuilder() {
@@ -74,7 +75,7 @@ export default {
 		},
 		async reloadMeshes() {
 			this.customMeshes = [];
-			const { data } = await axios.get("/api/getmeshes");
+			const { data } = await axios.get(`/api/getmeshes/${this.id}`);
 			const Native = Engine.Meshes.native;
 			data.forEach((element) => {
 				Native.createMesh(element);

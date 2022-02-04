@@ -15,7 +15,7 @@ export default class {
 
 
    setEnvironment() {
-      let hdr = BABYLON.CubeTexture.CreateFromPrefilteredData("./textures/hdrmini.env", this.scene)
+      let hdr = BABYLON.CubeTexture.CreateFromPrefilteredData("/textures/hdrmini.env", this.scene)
       this.scene.environmentTexture = hdr
       this.scene.clearColor = new BABYLON.Color3(0.8, 0.8, 0.8, 1)
    }

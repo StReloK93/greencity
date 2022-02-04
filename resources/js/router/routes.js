@@ -20,9 +20,18 @@ export default [
 		}
 	},
 	{
-		path: '/constructor',
+		path: '/constructor/:id',
 		component: () => import('../views/Constructor.vue'),
 		name: 'constructor',
+		meta: {
+			guard: 'auth'
+		},
+		props: true
+	},
+	{
+		path: '/territories',
+		component: () => import('../views/Territory.vue'),
+		name: 'territories',
 		meta: {
 			guard: 'auth'
 		}
@@ -30,6 +39,7 @@ export default [
 	{
 		path: '/user/:id',
 		component: () => import('../views/Userprofile.vue'),
+		props: true
 	},
 	{
 		path: '/:pathMatch(.*)*',

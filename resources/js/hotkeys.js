@@ -1,4 +1,4 @@
-function loaderFile() {
+function loaderFile(scene) {
    window.onkeyup = (event) => {
       if (event.keyCode == 107) {
          if (store.state.inspector) {

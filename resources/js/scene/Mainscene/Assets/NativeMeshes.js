@@ -36,9 +36,9 @@ export default class {
       customMesh.rotation.x = Math.PI
    }
 
-   async getMeshes() {
-      const meshes = await axios.get('/api/getactivemeshes')
-
+   async getMeshes(id) {
+      const meshes = await axios.get(`/api/getactivemeshes/${id}`)
+      console.log(meshes);
       meshes.data.forEach(mesh => {
          const position = JSON.parse(mesh.position)
          const getmesh = scene.getNodeByName(mesh.parentname)

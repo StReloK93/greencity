@@ -17,21 +17,23 @@
 <script>
 import canvas3D from '../scene/MeshBuilder/BuilderBundle' 
 export default {
+   props: ['id'],
    data() {
       return {
          clientname: "",
       }
    },
    mounted(){
+      console.log(this.id);
       this.MeshBuilder = canvas3D(this.$refs.BuilderCanvas)
    },
    methods: {
       async insertPoints(){
          const points = this.MeshBuilder.Meshes.getPoints()
-         const {data} = await axios.get('/api/getmeshes')
+         const {data} = await axios.get(`/api/getmeshes/${this.id}`)
          const meshName = 'createdMesh' + data.length
          if(points.length > 2){
-            await axios.post('/api/savepoints', {points:points, name: meshName,clientname: this.clientname})
+            await axios.post(`/api/savepoints`, {points:points, name: meshName,clientname: this.clientname,id: this.id})
             this.$emit('newmesh')
             this.$emit('close')
          }

@@ -7,9 +7,9 @@
 					class="text-center font-bold uppercase text-white py-2 bg-green-600 mb-4 rounded"
 				>Tanlangan obyekt</h3>
 				<main>
-					<label for="names" class="text-sm text-gray-400">Obyektga nom berish</label>
+					<label for="names" class="text-sm text-gray-400">Obyekt nomi</label>
 					<input
-						placeholder="Nomlang"
+						placeholder="Obyekt nomi"
 						id="names"
 						class="rounded border-b border-green-600 my-1 outline-none p-2 w-full"
 						type="text"
@@ -26,7 +26,19 @@
 						class="rounded border-b border-green-600 my-1 outline-none p-2 w-full"
 						type="number"
 						v-model="$store.state.mesh.info.height"
-						@change="change(true)"
+						@change="change"
+						@keyup="edit"
+					/>
+				</main>
+				<main v-if="$store.state.mesh.info.parentname == 'plant'">
+					<label for="height" class="text-sm text-gray-400">Ekilgan sana</label>
+					<input
+						placeholder="Bino Balandligi"
+						id="height"
+						class="rounded border-b border-green-600 my-1 outline-none p-2 w-full"
+						type="date"
+						v-model="$store.state.mesh.info.plantTime"
+						@change="change"
 						@keyup="edit"
 					/>
 				</main>
@@ -69,6 +81,7 @@ export default {
 						name: store.state.mesh.active.name,
 						height: store.state.mesh.info.height,
 						username: store.state.mesh.info.username,
+						plantTime: store.state.mesh.info.plantTime,
 					});
 				}
 			}, 800);
@@ -79,6 +92,7 @@ export default {
 				name: store.state.mesh.active.name,
 				height: store.state.mesh.info.height,
 				username: store.state.mesh.info.username,
+				plantTime: store.state.mesh.info.plantTime,
 			});
 		},
 	},

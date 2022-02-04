@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MeshesController;
 use App\Http\Controllers\ImageController;
 
+use App\Http\Controllers\MeshController;
+use App\Http\Controllers\TerritoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +22,8 @@ use App\Http\Controllers\ImageController;
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 
+Route::get('/getparent/{id}', [MeshController::class, 'getParentMeshes']);
+Route::get('/getactive/{id}', [MeshController::class, 'getActiveMeshes']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
@@ -40,10 +44,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     //ActiveMeshlar yani qoyilgan daraxtlar va zdaniyalar bu MainScene ---> NativeMeshes.js da chaqirilgan
-    Route::get('/getactivemeshes', [MeshesController::class, 'getmeshes']);
+    Route::get('/getactivemeshes/{id}', [MeshesController::class, 'getmeshes']);
 
     //getMeshes bu constructorda qilingan meshlarni royhati qoyish uchun
-    Route::get('/getmeshes', [PointController::class, 'getMeshes']);
+    Route::get('/getmeshes/{id}', [PointController::class, 'getMeshes']);
 
     //Nuqtalar orqali mesh yasaganimizda uni saqlash
     Route::post('/savepoints', [PointController::class, 'savepoints']);
@@ -54,6 +58,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/getimages', [ImageController::class, 'getImages']);
     Route::post('/deleteimages', [ImageController::class, 'deleteImages']);
+
+
+
+
+
+
+    //Territories routes
+    Route::get('/territories/getforuser', [TerritoryController::class, 'getForUser']);
 });
 
 

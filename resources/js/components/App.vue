@@ -8,8 +8,11 @@
    background: linear-gradient(105deg, #e3e3e3 45%, #59b89a  45.1%);
 }
 .text-blue{
-   font-family: 'Dancing Script', cursive;
    color: #59b89a ;
+}
+
+.font-dancing{
+	font-family: 'Dancing Script', cursive;
 }
 
 .imageadd{

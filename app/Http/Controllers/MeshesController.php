@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use Carbon\Carbon;
 class MeshesController extends Controller
 {
     public function saveMeshes(Request $req){
         DB::table('activemeshes')->insert([
-            'user_id' => Auth::user()->id,
+            'territory_id' => $req['id'],
             'position' => json_encode($req['position']),
             'parentname' => $req['parent'],
             'name' => $req['name'],
@@ -22,46 +23,49 @@ class MeshesController extends Controller
     public function editMeshProperties(Request $req){
         DB::table('activemeshes')
             ->where([
-                ['user_id', Auth::user()->id],
+                ['territory_id', Auth::user()->id],
                 ['name', $req['name']],
             ])
             ->update(['position' => json_encode($req['position'])]);
     }
 
-    public function getMeshes(){
-        return DB::table('activemeshes')->where('user_id' , Auth::user()->id)->get();
+    public function getMeshes($id){
+        return DB::table('activemeshes')->where('territory_id' , $id)->get();
     }
 
 
 
-
-
-
-
     public function getMesh(Request $req){
-        return DB::table('activemeshes')
-        ->select('username', 'height','parentname')
+
+        $mesh = DB::table('activemeshes')
+        ->select('username', 'height','parentname','plantTime')
         ->where([
-            ['user_id', Auth::user()->id],
+            ['territory_id', Auth::user()->id],
             ['name', $req['name']],
         ])->first();
+        
+        if($mesh->plantTime) {
+            $mesh->plantTime = Carbon::parse($mesh->plantTime)->format('Y-m-d');
+        }
+        return $mesh;
     }
 
     public function editMesh(Request $req){
         return DB::table('activemeshes')
         ->where([
-            ['user_id', Auth::user()->id],
+            ['territory_id', Auth::user()->id],
             ['name', $req['name']],
         ])->update([
             'username' => $req['username'],
-            'height' => $req['height']
+            'height' => $req['height'],
+            'plantTime' => $req['plantTime'],
         ]);
     }
 
     public function deletemesh(Request $req){
         DB::table('activemeshes')
             ->where([
-                ['user_id', Auth::user()->id],
+                ['territory_id', Auth::user()->id],
                 ['name', $req['name']],
             ])
             ->delete();

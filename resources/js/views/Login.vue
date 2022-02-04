@@ -4,7 +4,7 @@
          <div class="w-1/2 text-center pr-28 flex items-center">
             <aside class="flex flex-col items-center">
                <img src="/images/lotus.png"  class="inline w-1/3">
-               <h3 class="text-blue text-3xl font-bold uppercase">Yashil makon</h3>
+               <h3 class="text-blue font-dancing text-3xl font-bold uppercase">Yashil makon</h3>
             </aside>
          </div>
          <div class="w-1/2 px-16">

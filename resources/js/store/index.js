@@ -26,7 +26,7 @@ export default createStore({
             await axios.get('/sanctum/csrf-cookie')
             await axios.post('/api/login', data)
             var result = await dispatch('getUser')
-            if(result.status == 200) router.push({ name: 'constructor' })
+            if(result.status == 200) router.push({ name: 'territories' })
         },
         async register({ dispatch }, props) {
             const result = await axios.post('/api/register', props)
