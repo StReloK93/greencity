@@ -40,7 +40,7 @@ class MeshesController extends Controller
         $mesh = DB::table('activemeshes')
         ->select('username', 'height','parentname','plantTime')
         ->where([
-            ['territory_id', Auth::user()->id],
+            ['territory_id', $req['id']],
             ['name', $req['name']],
         ])->first();
         
@@ -53,7 +53,7 @@ class MeshesController extends Controller
     public function editMesh(Request $req){
         return DB::table('activemeshes')
         ->where([
-            ['territory_id', Auth::user()->id],
+            ['territory_id', $req['id']],
             ['name', $req['name']],
         ])->update([
             'username' => $req['username'],
@@ -65,7 +65,7 @@ class MeshesController extends Controller
     public function deletemesh(Request $req){
         DB::table('activemeshes')
             ->where([
-                ['territory_id', Auth::user()->id],
+                ['territory_id', $req['id']],
                 ['name', $req['name']],
             ])
             ->delete();

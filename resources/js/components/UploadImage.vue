@@ -2,7 +2,7 @@
 	<section class="my-3">
 		<label for="fileinp" class="mb-2 cursor-pointer hover:opacity-80 block shadow-lg text-center">
 			<transition name="fade" mode="out-in">
-				<img v-show="bool" class="rounded w-full h-40 object-cover inline-block" ref="imagePreview" src="images/default.jpg" />
+				<img v-show="bool" class="rounded w-full h-40 object-cover inline-block" ref="imagePreview" src="/images/default.jpg" />
 			</transition>
 		</label>
 		<input id="fileinp" type="file" multiple ref="fileInput" accept="image/png, image/gif, image/jpeg" @input="onchange" hidden />
@@ -77,10 +77,8 @@ export default {
 
 				this.mainImage(this.images[this.images.length - 1])
 				this.deleteInServer()
-				console.log('inner');
 				return
 			}
-			console.log('out');
 			this.images.splice(i, 1)
 			this.deleteInServer()
 		},
@@ -90,7 +88,7 @@ export default {
 			this.bool = false
 			setTimeout(() => {
 				imageblob == undefined
-					? (this.$refs.imagePreview.src = "images/default.jpg")
+					? (this.$refs.imagePreview.src = "/images/default.jpg")
 					: (this.$refs.imagePreview.src = imageblob);
 				this.bool = true
 			}, 200)

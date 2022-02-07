@@ -142,7 +142,7 @@ export default class {
       store.state.mesh.images = null
       const name = mesh.name
       const { data } = await axios.post('/api/getmesh', {
-         // id: this.id,
+         id: this.id,
          name: name,
       })
       store.state.mesh.info = data
@@ -150,6 +150,7 @@ export default class {
 
       if(data.parentname == 'plant'){
          const images = await axios.post('/api/getimages', {
+            id: this.id,
             name: name,
          })
          store.state.mesh.images = images.data
@@ -162,6 +163,7 @@ export default class {
 
    async editMesh({ name, height, username , plantTime}) {
       await axios.post('/api/editmesh', {
+         id: this.id,
          name: name,
          height: height,
          username: username,
@@ -173,6 +175,7 @@ export default class {
       const name = mesh.name
       const position = mesh.absolutePosition
       await axios.post('/api/editmeshes', {
+         id: this.id,
          name: name,
          position: position,
       })
@@ -184,6 +187,7 @@ export default class {
       this.clearActiveMesh()
       mesh.dispose()
       await axios.post('/api/deletemesh', {
+         id: this.id,
          name: name,
       })
    }
