@@ -1,6 +1,7 @@
 import Scene from './engine/Scene'
 import Light from './engine/Light'
 import Meshes from './Assets/Meshes'
+import Imports from './Assets/ImportMeshes'
 import Camera from './engine/Camera'
 export default function (canvas) {
    const SceneClass = new Scene(canvas)
@@ -13,5 +14,6 @@ export default function (canvas) {
       Camera: CameraClass,
       Light: LightClass,
       Meshes: MeshesClass,
+      Import: new Imports(SceneClass.scene),
    }
 }

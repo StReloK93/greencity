@@ -24,16 +24,16 @@ export default {
       }
    },
    mounted(){
-      console.log(this.id);
       this.MeshBuilder = canvas3D(this.$refs.BuilderCanvas)
    },
    methods: {
       async insertPoints(){
          const points = this.MeshBuilder.Meshes.getPoints()
-         const {data} = await axios.get(`/api/getmeshes/${this.id}`)
+         const {data} = await axios.get(`/api/getallfinal/${this.id}`)
+         console.log(data);
          const meshName = 'createdMesh' + data.length
          if(points.length > 2){
-            await axios.post(`/api/savepoints`, {points:points, name: meshName,clientname: this.clientname,id: this.id})
+            await axios.post(`/api/createparent`, {points:points, name: meshName,clientname: this.clientname,id: this.id})
             this.$emit('newmesh')
             this.$emit('close')
          }

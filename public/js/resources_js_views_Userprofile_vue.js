@@ -63,7 +63,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this2.customMeshes = [];
                 _context2.next = 3;
-                return axios.get("/api/getparent/".concat(_this2.id));
+                return axios.get("/api/getparents/".concat(_this2.id));
 
               case 3:
                 _yield$axios$get = _context2.sent;
@@ -125,7 +125,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = {
   key: 0,
-  "class": "uppercase fixed top-0 right-0 text-blue-600"
+  "class": "uppercase fixed top-0 right-0 text-green-600"
 };
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Constructor");
@@ -145,7 +145,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_ctx.$store.state.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    "class": "font-bold inline-block p-2 px-4 m-3 border-2 border-blue-600 hover:bg-blue-600 hover:text-white",
+    "class": "shadow inline-block p-2 px-4 m-3 border border-green-600 hover:bg-green-600 hover:text-white",
     to: "/constructor"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -158,9 +158,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.$store.dispatch('logout');
     }),
-    "class": "uppercase font-bold inline-block text-blue-600 p-2 px-4 m-3 border-2 border-blue-600 hover:bg-blue-600 hover:text-white"
+    "class": "shadow uppercase inline-block text-green-600 p-2 px-4 m-3 border border-green-600 hover:bg-green-600 hover:text-white"
   }, "Tizimdan chiqish")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    "class": "font-bold inline-block p-2 px-4 m-3 border-2 border-blue-600 hover:bg-blue-600 hover:text-white",
+    "class": "shadow inline-block p-2 px-4 m-3 border border-green-600 hover:bg-green-600 hover:text-white",
     to: "/login"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -505,7 +505,7 @@ var _default = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get("/api/getactive/".concat(id));
+                return axios.get("/api/getallfinal/".concat(id));
 
               case 2:
                 meshes = _context.sent;
@@ -771,13 +771,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Userprofile_vue_vue_type_template_id_92f9f7a2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Userprofile.vue?vue&type=template&id=92f9f7a2 */ "./resources/js/views/Userprofile.vue?vue&type=template&id=92f9f7a2");
 /* harmony import */ var _Userprofile_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Userprofile.vue?vue&type=script&lang=js */ "./resources/js/views/Userprofile.vue?vue&type=script&lang=js");
-/* harmony import */ var C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Userprofile_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Userprofile_vue_vue_type_template_id_92f9f7a2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Userprofile.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Userprofile_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Userprofile_vue_vue_type_template_id_92f9f7a2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Userprofile.vue"]])
 /* hot reload */
 if (false) {}
 

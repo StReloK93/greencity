@@ -127,7 +127,7 @@ export default class {
       const name = mesh.name
       const material = mesh.material.name
       const position = mesh.absolutePosition
-      await axios.post('/api/savemeshes', {
+      await axios.post('/api/createfinal', {
          name: name,
          position: position,
          material: material,
@@ -141,7 +141,7 @@ export default class {
    async getMesh(mesh) {
       store.state.mesh.images = null
       const name = mesh.name
-      const { data } = await axios.post('/api/getmesh', {
+      const { data } = await axios.post('/api/getonefinal', {
          id: this.id,
          name: name,
       })
@@ -162,7 +162,7 @@ export default class {
 
 
    async editMesh({ name, height, username , plantTime}) {
-      await axios.post('/api/editmesh', {
+      await axios.post('/api/editfinalprops', {
          id: this.id,
          name: name,
          height: height,
@@ -174,7 +174,7 @@ export default class {
    async editMeshProps(mesh) {
       const name = mesh.name
       const position = mesh.absolutePosition
-      await axios.post('/api/editmeshes', {
+      await axios.post('/api/editfinalposition', {
          id: this.id,
          name: name,
          position: position,
@@ -186,7 +186,7 @@ export default class {
       const name = mesh.name
       this.clearActiveMesh()
       mesh.dispose()
-      await axios.post('/api/deletemesh', {
+      await axios.post('/api/deleteonefinal', {
          id: this.id,
          name: name,
       })

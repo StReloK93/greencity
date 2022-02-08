@@ -71,7 +71,6 @@ export default {
 		},
 
 		deleteImage(i) {
-			console.log(this.images[i], this.$refs.imagePreview.getAttribute('src'));
 			if(this.images[i] == this.$refs.imagePreview.getAttribute('src')){
 				this.images.splice(i, 1)
 
@@ -83,14 +82,18 @@ export default {
 			this.deleteInServer()
 		},
 		mainImage(imageblob) {
+			if(imageblob == null) return
+			console.log(this.$refs.imagePreview.getAttribute('src') ,imageblob);
 			if(this.$refs.imagePreview.getAttribute('src') == imageblob) return
-
 			this.bool = false
+
 			setTimeout(() => {
-				imageblob == undefined
-					? (this.$refs.imagePreview.src = "/images/default.jpg")
-					: (this.$refs.imagePreview.src = imageblob);
-				this.bool = true
+				if(this.$refs.imagePreview){
+					imageblob == undefined
+						? (this.$refs.imagePreview.src = "/images/default.jpg")
+						: (this.$refs.imagePreview.src = imageblob);
+					this.bool = true
+				}
 			}, 200)
 		},
 	}

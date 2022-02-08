@@ -2,12 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PointController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\MeshesController;
 use App\Http\Controllers\ImageController;
 
-use App\Http\Controllers\MeshController;
+
+use App\Http\Controllers\FinalController;
+use App\Http\Controllers\ParentController;
 use App\Http\Controllers\TerritoryController;
 /*
 |--------------------------------------------------------------------------
@@ -22,50 +22,37 @@ use App\Http\Controllers\TerritoryController;
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 
-Route::get('/getparent/{id}', [MeshController::class, 'getParentMeshes']);
-Route::get('/getactive/{id}', [MeshController::class, 'getActiveMeshes']);
+Route::get('/getparents/{id}', [ParentController::class, 'getParents']);
+Route::get('/getallfinal/{id}', [FinalController::class, 'getAllFinal']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    //api/savepoint
+    Route::post('/createparent', [ParentController::class, 'createParent']);
+    
     Route::get('/user', [UserController::class, 'getUser']);
     Route::get('/logout', [UserController::class, 'logout']);
 
 
     //Bu MainScene ---> Meshes.js da chaqirilgan
-    Route::post('/savemeshes', [MeshesController::class, 'savemeshes']);
+    Route::post('/createfinal', [FinalController::class, 'createFinal']); //savemeshes
+    Route::post('/editfinalposition', [FinalController::class, 'editFinalPosition']); //editmeshes
+    Route::post('/deleteonefinal', [FinalController::class, 'deleteOneFinal']);
+
+    Route::post('/getonefinal', [FinalController::class, 'getOneFinal']); //getmesh
+    Route::post('/editfinalprops', [FinalController::class, 'editFinalProps']); //editmesh
 
 
-    Route::post('/editmeshes', [MeshesController::class, 'editMeshProperties']);
-    Route::post('/deletemesh', [MeshesController::class, 'deletemesh']);
-
-   
-
-    Route::post('/getmesh', [MeshesController::class, 'getMesh']);
-    Route::post('/editmesh', [MeshesController::class, 'editMesh']);
-
-
-    //ActiveMeshlar yani qoyilgan daraxtlar va zdaniyalar bu MainScene ---> NativeMeshes.js da chaqirilgan
-    Route::get('/getactivemeshes/{id}', [MeshesController::class, 'getmeshes']);
-
-    //getMeshes bu constructorda qilingan meshlarni royhati qoyish uchun
-    Route::get('/getmeshes/{id}', [PointController::class, 'getMeshes']);
-
-    //Nuqtalar orqali mesh yasaganimizda uni saqlash
-    Route::post('/savepoints', [PointController::class, 'savepoints']);
-
-
-
+    //images
     Route::post('/upload', [ImageController::class, 'UploadImage']);
-
     Route::post('/getimages', [ImageController::class, 'getImages']);
     Route::post('/deleteimages', [ImageController::class, 'deleteImages']);
 
 
-
-
-
-
     //Territories routes
     Route::get('/territories/getforuser', [TerritoryController::class, 'getForUser']);
+    Route::get('/territories/getone/{id}', [TerritoryController::class, 'getOneTerritory']);
+    Route::post('/territories/create', [TerritoryController::class, 'create']);
+
 });
 
 

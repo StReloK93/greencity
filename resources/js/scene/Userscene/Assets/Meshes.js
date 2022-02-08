@@ -32,7 +32,7 @@ export default class {
    }
 
    async getMeshes(id) {
-      const meshes = await axios.get(`/api/getactive/${id}`)
+      const meshes = await axios.get(`/api/getallfinal/${id}`)
 
       meshes.data.forEach(mesh => {
          const position = JSON.parse(mesh.position)

@@ -13,7 +13,7 @@ class CreateMeshesTable extends Migration
      */
     public function up()
     {
-        Schema::create('meshes', function (Blueprint $table) {
+        Schema::create('parentmeshes', function (Blueprint $table) {
             $table->id();
             $table->integer('territory_id');
             $table->text('name');
@@ -29,6 +29,6 @@ class CreateMeshesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meshes');
+        Schema::dropIfExists('parentmeshes');
     }
 }

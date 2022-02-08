@@ -86,7 +86,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   mounted: function mounted() {
-    console.log(this.id);
     this.MeshBuilder = (0,_scene_MeshBuilder_BuilderBundle__WEBPACK_IMPORTED_MODULE_1__["default"])(this.$refs.BuilderCanvas);
   },
   methods: {
@@ -102,32 +101,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 points = _this.MeshBuilder.Meshes.getPoints();
                 _context.next = 3;
-                return axios.get("/api/getmeshes/".concat(_this.id));
+                return axios.get("/api/getallfinal/".concat(_this.id));
 
               case 3:
                 _yield$axios$get = _context.sent;
                 data = _yield$axios$get.data;
+                console.log(data);
                 meshName = 'createdMesh' + data.length;
 
                 if (!(points.length > 2)) {
-                  _context.next = 11;
+                  _context.next = 12;
                   break;
                 }
 
-                _context.next = 9;
-                return axios.post("/api/savepoints", {
+                _context.next = 10;
+                return axios.post("/api/createparent", {
                   points: points,
                   name: meshName,
                   clientname: _this.clientname,
                   id: _this.id
                 });
 
-              case 9:
+              case 10:
                 _this.$emit('newmesh');
 
                 _this.$emit('close');
 
-              case 11:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -206,8 +206,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteImage: function deleteImage(i) {
-      console.log(this.images[i], this.$refs.imagePreview.getAttribute('src'));
-
       if (this.images[i] == this.$refs.imagePreview.getAttribute('src')) {
         this.images.splice(i, 1);
         this.mainImage(this.images[this.images.length - 1]);
@@ -221,11 +219,15 @@ __webpack_require__.r(__webpack_exports__);
     mainImage: function mainImage(imageblob) {
       var _this2 = this;
 
+      if (imageblob == null) return;
+      console.log(this.$refs.imagePreview.getAttribute('src'), imageblob);
       if (this.$refs.imagePreview.getAttribute('src') == imageblob) return;
       this.bool = false;
       setTimeout(function () {
-        imageblob == undefined ? _this2.$refs.imagePreview.src = "/images/default.jpg" : _this2.$refs.imagePreview.src = imageblob;
-        _this2.bool = true;
+        if (_this2.$refs.imagePreview) {
+          imageblob == undefined ? _this2.$refs.imagePreview.src = "/images/default.jpg" : _this2.$refs.imagePreview.src = imageblob;
+          _this2.bool = true;
+        }
       }, 200);
     }
   }
@@ -274,17 +276,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       onload: null
     };
   },
-  mounted: function mounted() {
+  beforeCreate: function beforeCreate() {
     var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var _yield$axios$get, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios.get("/api/territories/getone/".concat(_this.id));
+
+            case 2:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+
+              if (data == false) {
+                router.push({
+                  name: 'territories'
+                });
+              }
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  mounted: function mounted() {
+    var _this2 = this;
 
     window.canvas = this.$refs.canvas;
     window.Engine = (0,_scene_Mainscene_Canvas__WEBPACK_IMPORTED_MODULE_2__["default"])();
     _hotkeys__WEBPACK_IMPORTED_MODULE_1__["default"].loaderFile(scene);
     Engine.Meshes.id = this.id;
     scene.onDataLoadedObservable.add(function () {
-      _this.onload = true;
+      _this2.onload = true;
       var Native = Engine.Meshes["native"];
-      Native.getMeshes(_this.id);
+      Native.getMeshes(_this2.id);
     });
     this.reloadMeshes();
   },
@@ -303,27 +336,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.builderToggle = !this.builderToggle;
     },
     reloadMeshes: function reloadMeshes() {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var _yield$axios$get, data, Native;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var _yield$axios$get2, data, Native;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.customMeshes = [];
-                _context.next = 3;
-                return axios.get("/api/getmeshes/".concat(_this2.id));
+                _this3.customMeshes = [];
+                _context2.next = 3;
+                return axios.get("/api/getparents/".concat(_this3.id));
 
               case 3:
-                _yield$axios$get = _context.sent;
-                data = _yield$axios$get.data;
+                _yield$axios$get2 = _context2.sent;
+                data = _yield$axios$get2.data;
                 Native = Engine.Meshes["native"];
                 data.forEach(function (element) {
                   Native.createMesh(element);
 
-                  _this2.customMeshes.push({
+                  _this3.customMeshes.push({
                     clientname: element.clientname,
                     name: element.name
                   });
@@ -331,10 +364,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     }
   },
@@ -1333,7 +1366,7 @@ var _default = /*#__PURE__*/function () {
                 material = mesh.material.name;
                 position = mesh.absolutePosition;
                 _context.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/savemeshes', {
+                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/createfinal', {
                   name: name,
                   position: position,
                   material: material,
@@ -1369,7 +1402,7 @@ var _default = /*#__PURE__*/function () {
                 store.state.mesh.images = null;
                 name = mesh.name;
                 _context2.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/getmesh', {
+                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/getonefinal', {
                   id: this.id,
                   name: name
                 });
@@ -1425,7 +1458,7 @@ var _default = /*#__PURE__*/function () {
               case 0:
                 name = _ref.name, height = _ref.height, username = _ref.username, plantTime = _ref.plantTime;
                 _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/editmesh', {
+                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/editfinalprops', {
                   id: this.id,
                   name: name,
                   height: height,
@@ -1459,7 +1492,7 @@ var _default = /*#__PURE__*/function () {
                 name = mesh.name;
                 position = mesh.absolutePosition;
                 _context4.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/editmeshes', {
+                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/editfinalposition', {
                   id: this.id,
                   name: name,
                   position: position
@@ -1492,7 +1525,7 @@ var _default = /*#__PURE__*/function () {
                 this.clearActiveMesh();
                 mesh.dispose();
                 _context5.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/deletemesh', {
+                return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/deleteonefinal', {
                   id: this.id,
                   name: name
                 });
@@ -1603,11 +1636,10 @@ var _default = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get("/api/getactivemeshes/".concat(id));
+                return axios.get("/api/getallfinal/".concat(id));
 
               case 2:
                 meshes = _context.sent;
-                console.log(meshes);
                 meshes.data.forEach(function (mesh) {
                   var position = JSON.parse(mesh.position);
                   var getmesh = scene.getNodeByName(mesh.parentname);
@@ -1627,7 +1659,7 @@ var _default = /*#__PURE__*/function () {
                   _this2.actions.hover(mymesh);
                 });
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -2344,7 +2376,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ConstructorPanel_vue_vue_type_template_id_58d19b95__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConstructorPanel.vue?vue&type=template&id=58d19b95 */ "./resources/js/components/ConstructorPanel.vue?vue&type=template&id=58d19b95");
 /* harmony import */ var _ConstructorPanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConstructorPanel.vue?vue&type=script&lang=js */ "./resources/js/components/ConstructorPanel.vue?vue&type=script&lang=js");
 /* harmony import */ var _ConstructorPanel_vue_vue_type_style_index_0_id_58d19b95_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ConstructorPanel.vue?vue&type=style&index=0&id=58d19b95&lang=css */ "./resources/js/components/ConstructorPanel.vue?vue&type=style&index=0&id=58d19b95&lang=css");
-/* harmony import */ var C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -2352,7 +2384,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_ConstructorPanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ConstructorPanel_vue_vue_type_template_id_58d19b95__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/ConstructorPanel.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_ConstructorPanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ConstructorPanel_vue_vue_type_template_id_58d19b95__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/ConstructorPanel.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2373,13 +2405,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _MeshBuilder_vue_vue_type_template_id_d2459e5a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MeshBuilder.vue?vue&type=template&id=d2459e5a */ "./resources/js/components/MeshBuilder.vue?vue&type=template&id=d2459e5a");
 /* harmony import */ var _MeshBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MeshBuilder.vue?vue&type=script&lang=js */ "./resources/js/components/MeshBuilder.vue?vue&type=script&lang=js");
-/* harmony import */ var C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MeshBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MeshBuilder_vue_vue_type_template_id_d2459e5a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/MeshBuilder.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MeshBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MeshBuilder_vue_vue_type_template_id_d2459e5a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/MeshBuilder.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2400,13 +2432,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _UploadImage_vue_vue_type_template_id_46aa7c82__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UploadImage.vue?vue&type=template&id=46aa7c82 */ "./resources/js/components/UploadImage.vue?vue&type=template&id=46aa7c82");
 /* harmony import */ var _UploadImage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UploadImage.vue?vue&type=script&lang=js */ "./resources/js/components/UploadImage.vue?vue&type=script&lang=js");
-/* harmony import */ var C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_UploadImage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UploadImage_vue_vue_type_template_id_46aa7c82__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/UploadImage.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_UploadImage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UploadImage_vue_vue_type_template_id_46aa7c82__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/UploadImage.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2427,13 +2459,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Constructor_vue_vue_type_template_id_292f6aab__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constructor.vue?vue&type=template&id=292f6aab */ "./resources/js/views/Constructor.vue?vue&type=template&id=292f6aab");
 /* harmony import */ var _Constructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constructor.vue?vue&type=script&lang=js */ "./resources/js/views/Constructor.vue?vue&type=script&lang=js");
-/* harmony import */ var C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_amd_ospanel_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Constructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Constructor_vue_vue_type_template_id_292f6aab__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Constructor.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Constructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Constructor_vue_vue_type_template_id_292f6aab__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Constructor.vue"]])
 /* hot reload */
 if (false) {}
 

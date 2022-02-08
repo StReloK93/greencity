@@ -33,6 +33,7 @@ import fructColor from "../fructColor";
 
 import MeshBuilder from "./../components/MeshBuilder.vue";
 import ConstructorPanel from "./../components/ConstructorPanel.vue";
+
 export default {
 	props: ['id'],
 	data() {
@@ -45,6 +46,12 @@ export default {
 			engine: null,
 			onload: null
 		};
+	},
+	async beforeCreate() {
+		const {data} = await axios.get(`/api/territories/getone/${this.id}`)
+		if(data == false){
+			router.push({ name: 'territories' })
+		}
 	},
 	mounted() {
 		window.canvas = this.$refs.canvas
@@ -74,9 +81,10 @@ export default {
 		openMeshBuilder() {
 			this.builderToggle = !this.builderToggle;
 		},
+
 		async reloadMeshes() {
 			this.customMeshes = [];
-			const { data } = await axios.get(`/api/getmeshes/${this.id}`);
+			const { data } = await axios.get(`/api/getparents/${this.id}`);
 			const Native = Engine.Meshes.native;
 			data.forEach((element) => {
 				Native.createMesh(element);

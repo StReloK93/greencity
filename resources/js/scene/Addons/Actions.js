@@ -16,6 +16,7 @@ export default class {
 					trigger: BABYLON.ActionManager.OnPointerOverTrigger,
 				},
 				() => {
+
 					if (this.scene.activeMesh != mesh) mesh.material = this.scene.getMaterialByName('hover')
 				}
 			)

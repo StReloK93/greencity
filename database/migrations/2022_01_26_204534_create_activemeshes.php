@@ -13,7 +13,7 @@ class CreateActivemeshes extends Migration
      */
     public function up()
     {
-        Schema::create('activemeshes', function (Blueprint $table) {
+        Schema::create('finalmeshes', function (Blueprint $table) {
             $table->id();
             $table->integer('territory_id');
             $table->json('position');
@@ -34,6 +34,6 @@ class CreateActivemeshes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activemeshes');
+        Schema::dropIfExists('finalmeshes');
     }
 }

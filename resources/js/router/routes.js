@@ -37,7 +37,8 @@ export default [
 		}
 	},
 	{
-		path: '/user/:id',
+		path: '/territory/:id',
+		name: 'territory',
 		component: () => import('../views/Userprofile.vue'),
 		props: true
 	},
