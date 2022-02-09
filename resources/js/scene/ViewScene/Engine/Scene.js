@@ -8,7 +8,7 @@ export default class {
    createScene() {
       const engine = new BABYLON.Engine(this.canvas, true)
       this.scene = new BABYLON.Scene(engine)
-
+      // this.scene.debugLayer.show({})
       engine.runRenderLoop(() => { this.scene.render() })
       window.addEventListener("resize", () => { engine.resize() })
    }

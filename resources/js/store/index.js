@@ -8,6 +8,8 @@ export default createStore({
             inspector: true,
             configurator: true,
             activeMesh: null,
+            territories: null,
+            images: null,
             mesh: {
                 active: null,
                 info: null,

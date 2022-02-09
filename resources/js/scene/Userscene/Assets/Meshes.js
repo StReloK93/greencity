@@ -1,3 +1,5 @@
+import axios from 'axios'
+import store from '../../../store'
 import Actions from '../../Addons/Actions'
 
 import Import from './ImportMeshes'
@@ -7,6 +9,7 @@ export default class {
    constructor(scene) {
       this.scene = scene
       this.actions = new Actions(scene)
+      this.pickidMesh()
       new Import(scene)
    }
 
@@ -55,4 +58,20 @@ export default class {
    }
 
 
+   pickidMesh() {
+      this.scene.onPointerPick = (event, pick) => {
+         const mesh = pick.pickedMesh
+
+         if (mesh) {
+            this.getImages(mesh.name)
+         }
+
+      }
+   }
+
+   async getImages(name){
+      const {data} = await axios.post('/api/getimages',{name:name})
+      store.state.images = data
+      console.log(data);
+   }
 }

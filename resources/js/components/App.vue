@@ -56,7 +56,7 @@ canvas{
 
 .menu{
 	left: 80px;
-	width: 170px;
+	width: 190px;
 }
 
 .menu::after{

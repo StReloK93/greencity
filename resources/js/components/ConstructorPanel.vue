@@ -1,6 +1,11 @@
 <template>
 	<main class="w-1/6 flex flex-col h-full p-1 bg-gray-200">
 		<aside class="h-full px-3 pt-3">
+			<header class="bg-green-600 p-3 -m-5 flex justify-center  mb-5">
+				<router-link to="/" class="text-green-100 uppercase font-dancing flex items-center">
+					<img src="/images/lotus.png" class="mr-3 inline w-8" /> Yashil Makon
+				</router-link>
+			</header>
 			<transition name="opacity" mode="out-in">
 			<div v-if="$store.state.mesh.info">
 				<h3

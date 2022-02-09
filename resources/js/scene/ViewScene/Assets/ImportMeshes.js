@@ -4,12 +4,52 @@ export default class {
    constructor(scene) {
       this.scene = scene
       this.Actions = new Actions(scene)
-      // this.scene.activeMesh = null
       this.Import()
-      scene.onDataLoadedObservable.add(() => {
+
+
+      this.pickidMesh()
+      this.scene.onDataLoadedObservable.add(() => {
          this.getActiveMeshes()
+         var polMat = this.scene.getMaterialByName('pol')
+         polMat.albedoColor = new BABYLON.Color3(0.7,0.7,0.6)
       })
    }
+
+   pickidMesh() {
+      this.scene.onPointerPick = (event, pick) => {
+         const mesh = pick.pickedMesh
+         if (event.button == 0 || event.button == 2) this.clearActiveMesh()
+            console.log(mesh.name);
+         if (mesh && mesh.metadata.gltf.extras.pickable != 0) {
+            store.state.mesh.active = mesh
+            this.scene.activeMesh = mesh
+            this.Actions.animatePlay(mesh, true)
+            this.getTerritories(mesh.name)
+         }
+
+      }
+   }
+
+   clearActiveMesh() {
+      if (store.state.mesh.active) {
+         this.Actions.animateStop()
+         this.scene.activeMesh.material = this.scene.activeMesh.mainmaterial
+         this.scene.activeMesh = null
+         store.state.mesh.active = null
+         store.state.territories = null
+      }
+   }
+
+   
+   async getTerritories(name) {
+      const { data } = await axios.post("/api/territories/getall", {
+         name: name,
+      });
+      store.state.territories = data 
+   }
+
+
+
 
    Import() {
       BABYLON.SceneLoader.AppendAsync('./models/view.glb', undefined, this.scene, function (event) {
@@ -22,47 +62,8 @@ export default class {
 
       this.activeMeshes.forEach(mesh => {
          mesh.actionManager = new BABYLON.ActionManager(this.scene)
+         mesh.mainmaterial = mesh.material
          this.Actions.hover(mesh)
-         
       });
-
-      this.info(this.activeMeshes[0])
-   }
-
-
-   info(mesh) {
-      // GUI
-      var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-  
-      var cubic2 = new BABYLON.GUI.Rectangle();
-      cubic2.width = "4px";
-      cubic2.height = "4px";
-      cubic2.color = "#a5e6ff";
-      cubic2.thickness = 0;
-      cubic2.background = "rgb(47 182 182 / 40%)";
-      advancedTexture.addControl(cubic2);
-      cubic2.linkWithMesh(mesh);   
-      cubic2.linkOffsetY = -80;
-  
-
-      var cubic3 = new BABYLON.GUI.Rectangle();
-      cubic3.width = "4px";
-      cubic3.height = "4px";
-      cubic3.color = "#a5e6ff";
-      cubic3.thickness = 0;
-      cubic3.background = "rgb(47 182 182 / 40%)";
-      advancedTexture.addControl(cubic3);
-      cubic3.linkWithMesh(mesh);   
-      cubic3.linkOffsetY = 0;
-
-  
-     var line = new BABYLON.GUI.MultiLine();
-      line.color = "rgb(47 182 182 / 40%)"
-      line.lineWidth = 2
-     line.push(mesh);
-     line.push(cubic2);
-     line.push({x: 168, y: 328});
-     
-     advancedTexture.addControl(line);
    }
 }

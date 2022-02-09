@@ -66,7 +66,6 @@ class ImageController extends Controller
     }
 
 
-
     
     public function getIMG($req){
         $result = DB::table('images')->select('image')->where([

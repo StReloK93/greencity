@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Territory;
 use Auth;
+use App\Models\User;
 class TerritoryController extends Controller
 {
     public function create(Request $request){
@@ -33,5 +34,19 @@ class TerritoryController extends Controller
             ['user_id',  Auth::user()->id],
             ['id',  $id],
         ])->exists();
+    }
+
+
+    //job
+    public function getTerritories(Request $request){
+        $user = User::where('name', $request['name'] )->first();
+        if(isset($user->id)){
+            return Territory::where([
+                'user_id' => $user->id,
+            ])->get();
+        }
+        else{
+            return false;
+        }
     }
 }
