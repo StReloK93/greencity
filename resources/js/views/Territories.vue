@@ -10,13 +10,13 @@
                <main class="p-5 shadow-inner bg-gray-100 text-gray-600 inline-block rounded w-full">
                   <aside class="flex justify-between items-center">
                      <form @submit.prevent="saveName(territory, index)">
-                        <input type="text" ref="inputs" class="uppercase py-1  font-medium text-xl outline-none border-b border-green-600 bg-white p-2" disabled :value="territory.name" />
+                        <input type="text" ref="inputs" class="uppercase py-1 w-full font-medium text-xl outline-none border-b border-green-600 bg-white p-2" disabled :value="territory.name" />
                      </form>
                      <button v-if="territory.boolean" @click="editName(territory, index)" class="inline-block py-4 px-3 bg-gray-200 rounded">
                         <i class="gg-pen text-green-800"></i>
                      </button>
                      <button v-else @click="saveName(territory, index)" class="inline-block p-2 bg-gray-200 rounded">
-                        <i class="gg-clipboard text-green-800"></i>
+                        <i class="gg-clipboard text-red-800"></i>
                      </button>
                   </aside>
                   <div class="flex justify-between my-3">

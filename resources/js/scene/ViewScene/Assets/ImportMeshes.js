@@ -63,6 +63,50 @@ export default class {
          mesh.actionManager = new BABYLON.ActionManager(this.scene)
          mesh.mainmaterial = mesh.material
          this.Actions.hover(mesh)
+         this.meshSceneNames(mesh)
       });
    }
+
+
+   meshSceneNames(mesh){
+      var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+      var rect1 = new BABYLON.GUI.Rectangle();
+      rect1.width = '100px';
+      rect1.height = "36px";
+      rect1.cornerRadius = 10;
+      rect1.color = "white";
+      rect1.thickness = 0;
+      rect1.background = "#1db81d6b";
+      advancedTexture.addControl(rect1);
+      rect1.linkWithMesh(mesh);   
+      rect1.linkOffsetY = -60;
+
+      var label = new BABYLON.GUI.TextBlock();
+      label.text = mesh.name.toUpperCase();
+      label.fontSize = '14px'
+      console.log(label);
+      rect1.addControl(label);
+
+      var target = new BABYLON.GUI.Ellipse();
+      target.width = "5px";
+      target.height = "5px";
+      target.color = "#1db81d6b";
+      target.thickness = 1;
+      target.background = "#1db81d6b";
+      advancedTexture.addControl(target);
+      target.linkWithMesh(mesh);   
+
+      var line = new BABYLON.GUI.Line();
+      line.lineWidth = 2;
+      line.color = "#1db81d6b";
+      line.y2 = 18;
+      line.linkOffsetY = 0;
+      advancedTexture.addControl(line);
+      line.linkWithMesh(mesh); 
+      line.connectedControl = rect1;  
+   }
 }
+
+
+

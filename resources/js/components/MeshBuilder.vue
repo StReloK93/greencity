@@ -29,7 +29,7 @@ export default {
    methods: {
       async insertPoints(){
          const points = this.MeshBuilder.Meshes.getPoints()
-         const {data} = await axios.get(`/api/getallfinal/${this.id}`)
+         const {data} = await axios.get(`/api/getparents/${this.id}`)
          console.log(data);
          const meshName = 'createdMesh' + data.length
          if(points.length > 2){

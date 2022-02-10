@@ -10,7 +10,7 @@
                yoq <i class="gg-close ml-3"></i>
             </button>
             <button type="submit" class="p-2 ml-2 rounded uppercase flex items-center justify-center bg-green-500 text-white w-full shadow">
-               Ha <i class="gg-check ml-3"></i>
+               Ha <i class="gg-check ml-3 transform scale-150"></i>
             </button>
          </div>
       </form>
