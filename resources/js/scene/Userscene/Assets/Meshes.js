@@ -61,8 +61,7 @@ export default class {
    pickidMesh() {
       this.scene.onPointerPick = (event, pick) => {
          const mesh = pick.pickedMesh
-
-         if (mesh) {
+         if (mesh && mesh.source.name == "plant") {
             this.getImages(mesh.name)
          }
 
@@ -72,6 +71,5 @@ export default class {
    async getImages(name){
       const {data} = await axios.post('/api/getimages',{name:name})
       store.state.images = data
-      console.log(data);
    }
 }

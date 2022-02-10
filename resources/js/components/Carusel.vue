@@ -11,7 +11,7 @@
          </main>
       </aside>
 		<transition name="fades" mode="out-in">
-			<button @click="next" v-if="prosent != endItem" class="absolute right-ang w-10 py-2 bg-gray-100 rounded-full flex items-center justify-center">
+			<button @click="next" v-if="prosent != endItem && slots > itemCount" class="absolute right-ang w-10 py-2 bg-gray-100 rounded-full flex items-center justify-center">
 				<img src="/images/leftang.png" class="w-2/3">
 			</button>
 		</transition>
@@ -23,7 +23,8 @@ export default {
    data() {
       return {
 			prosent: 0,
-			endItem: null
+			endItem: null,
+			slots: null,
       };
    },
 	computed:{
@@ -37,6 +38,7 @@ export default {
 		}
 	},
 	mounted() {
+		this.slots = this.$refs.mainBlock.children.length
 		let countItem = this.$refs.mainBlock.children.length - this.itemCount //10 - 4
 		let viewItem = this.itemCount
 		this.endItem = -countItem*100/viewItem

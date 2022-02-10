@@ -19,7 +19,6 @@ export default class {
       this.scene.onPointerPick = (event, pick) => {
          const mesh = pick.pickedMesh
          if (event.button == 0 || event.button == 2) this.clearActiveMesh()
-            console.log(mesh.name);
          if (mesh && mesh.metadata.gltf.extras.pickable != 0) {
             store.state.mesh.active = mesh
             this.scene.activeMesh = mesh

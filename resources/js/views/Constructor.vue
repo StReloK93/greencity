@@ -1,8 +1,8 @@
 <template>
-	<main class="h-full w-5/6 relative p-1 shadow-inner bg-gray-100" ref="room">
+	<main class="h-full w-5/6 relative p-1  shadow-inner bg-gray-300" ref="room">
 		<section class="absolute top-0 left-0 m-4">
 			<div @click="fructMenu = !fructMenu;customMenu = false" :class="{'bg-gray-200': fructMenu}" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl relative cursor-pointer hover:bg-gray-200">
-					<img src="/images/tree.png" alt="">
+					<img src="/images/tree.png">
 					<main @click.stop="" v-if="fructMenu" class="menu absolute bg-gray-100 shadow-xl px-4 py-2 top-0 text-gray-500">
 						<div v-for="fruct in fructs" :key="fruct" @click="addFruct(fruct.name,'plant')" class="flex items-center capitalize justify-between cursor-pointer hover:bg-green-500 hover:text-red-50 py-1 px-2 mb-2">
 							{{fruct.name}} <span :style="{background: fruct.color}" class="color shadow-xl"></span>
@@ -10,16 +10,21 @@
 					</main>
 			</div>
 			<div v-if="customMeshes.length > 0" @click="customMenu = !customMenu;fructMenu = false" :class="{'bg-gray-200': customMenu}" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl relative cursor-pointer hover:bg-gray-200">
-					<img src="/images/build.png" alt="">
+					<img src="/images/build.png">
 					<main @click.stop="" v-if="customMenu" class="menu absolute bg-gray-100 shadow-xl px-4 py-2 top-0 text-gray-500">
-						<div v-for="(custom,index) in customMeshes" :key="index" @click="addBuilding('building',custom.name)" class="flex items-center capitalize justify-between cursor-pointer hover:bg-green-500 hover:text-red-50 py-1 px-2 pb-2">
+						<div v-for="(custom,index) in customMeshes" :key="index" @click="addBuilding('building',custom.name)" class="flex items-center capitalize justify-between cursor-pointer hover:bg-green-500 hover:text-red-50 py-1 px-2 mb-2">
 							{{custom.clientname}} <span  class="color shadow-xl"></span>
 						</div>
 					</main>
 			</div>
 			<div @click="openMeshBuilder" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl cursor-pointer hover:bg-gray-200">
-					<img src="/images/plus.png" style="transform: scale(0.5)" alt="">
+					<img src="/images/plus.png" style="transform: scale(0.5)">
 			</div>
+		</section>
+		<section class="absolute top-0 right-0 m-5 flex">
+			<router-link title="Ko'rish" class="custom-btn" :to="{ name: 'territory', params: { id: id }}" ><i class="gg-eye"></i></router-link>
+			<router-link title="Maydonlar" class="custom-btn ml-4" to="/territories"><i class="gg-clapper-board"></i></router-link>
+			<router-link title="Bosh sahifa" class="custom-btn ml-4" to="/" > Bosh sahifa <img src="/images/home.png" class="ml-3 w-5"></router-link>
 		</section>
 		<canvas ref="canvas" class="w-full h-full" :class="{'cursor-move': $store.state.drag}" />
 		<MeshBuilder :id="id" @newmesh="reloadMeshes" @close="builderToggle = false" v-if="builderToggle" />

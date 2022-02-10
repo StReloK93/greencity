@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Territory;
-use Auth;
 use App\Models\User;
+use Auth;
 class TerritoryController extends Controller
 {
     public function create(Request $request){
@@ -15,10 +15,11 @@ class TerritoryController extends Controller
         ]);
     }
 
-    public function update(Request $request,$id){
-        $territory = Territory::find($id);
+    public function update(Request $request){
+        $territory = Territory::find($request['id']);
         $territory->name = $request['name'];
-        return $territory;
+        $territory->save();
+        return $this->getForUser();
     }
 
     public function delete($id){

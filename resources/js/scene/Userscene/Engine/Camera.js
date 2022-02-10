@@ -8,7 +8,7 @@ export default class {
 
    createCamera() {
       this.camera.attachControl(this.canvas, true)
-      this.camera.mode = 1
+      // this.camera.mode = 1
       this.camera.minZ = 0
       this.camera.onViewMatrixChangedObservable.add(()=>{
          this.orthographic()

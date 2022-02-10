@@ -15,8 +15,11 @@
 			</main>
 		</div>
 		<main class="flex justify-end">
-			<label for="fileinp" class="imageadd  cursor-pointer  bg-green-500 shadow  hover:bg-green-700">
-				<svg class="fill-current w-5 text-white " fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="48px" height="48px" fill-rule="evenodd"><path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
+			<label for="fileinp">
+            <button @click="addForm = true" class="custom-btn m-0 shadow-sm bg-green-600 text-white hover:bg-green-800" title="Uchastka qo'shish">
+               Qo'shish
+               <i class="gg-math-plus ml-3"></i>
+            </button>
 			</label>
 		</main>
 	</section>

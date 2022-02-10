@@ -15,7 +15,6 @@
    </section>
 </template>
 <script>
-import axios from 'axios'
 export default {
    data() {
       return {
@@ -27,22 +26,8 @@ export default {
    },
    methods: {
       async addTerritory(){
-         if(this.timer){
-            const data = await axios.post('api/territories/create', this.form)
-            if(data.status == 201){
-               this.$emit('addTerritory')
-            } 
-            this.timer = false
-            
-            setTimeout(()=>{
-               this.timer = true
-            },2000)
-         }
 
       }
    },
 }
 </script>
-<style>
-   
-</style>

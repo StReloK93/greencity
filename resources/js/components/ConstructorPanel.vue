@@ -1,22 +1,23 @@
 <template>
-	<main class="w-1/6 flex flex-col h-full p-1 bg-gray-200">
+	<main class="w-1/6 flex flex-col h-full p-1 bg-gray-100">
 		<aside class="h-full px-3 pt-3">
 			<header class="bg-green-600 p-3 -m-5 flex justify-center  mb-5">
-				<router-link to="/" class="text-green-100 uppercase font-dancing flex items-center">
-					<img src="/images/lotus.png" class="mr-3 inline w-8" /> Yashil Makon
+				<router-link to="/" class="text-white uppercase font-medium flex items-center">
+					Constructor
+					<i class="gg-extension ml-5"></i>
 				</router-link>
 			</header>
 			<transition name="opacity" mode="out-in">
 			<div v-if="$store.state.mesh.info">
 				<h3
-					class="text-center font-bold uppercase text-white py-2 bg-green-600 mb-4 rounded"
+					class="text-center font-medium uppercase py-2 bg-gray-200 text-gray-600 mb-4 rounded shadow-inner"
 				>Tanlangan obyekt</h3>
 				<main>
 					<label for="names" class="text-sm text-gray-400">Obyekt nomi</label>
 					<input
 						placeholder="Obyekt nomi"
 						id="names"
-						class="rounded border-b border-green-600 my-1 outline-none p-2 w-full"
+						class="border-b border-green-600 my-1 outline-none p-2 w-full"
 						type="text"
 						v-model="$store.state.mesh.info.username"
 						@change="change"
@@ -28,7 +29,7 @@
 					<input
 						placeholder="Bino Balandligi"
 						id="height"
-						class="rounded border-b border-green-600 my-1 outline-none p-2 w-full"
+						class="border-b border-green-600 my-1 outline-none p-2 w-full"
 						type="number"
 						v-model="$store.state.mesh.info.height"
 						@change="change"
@@ -40,7 +41,7 @@
 					<input
 						placeholder="Bino Balandligi"
 						id="height"
-						class="rounded border-b border-green-600 my-1 outline-none p-2 w-full"
+						class="border-b border-green-600 my-1 outline-none p-2 w-full"
 						type="date"
 						v-model="$store.state.mesh.info.plantTime"
 						@change="change"
@@ -54,10 +55,7 @@
 			</transition>
 		</aside>
 		<aside class="flex-grow">
-			<button
-				class="rounded uppercase shadow-xl w-full p-3 py-2 text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white"
-				@click="$store.dispatch('logout')"
-			>Chiqish</button>
+			<button class="custom-btn shadow border w-full justify-center m-0" @click="$store.dispatch('logout')">Chiqish</button>
 		</aside>
 	</main>
 </template>

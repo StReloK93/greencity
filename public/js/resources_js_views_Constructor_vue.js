@@ -392,7 +392,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "w-1/6 flex flex-col h-full p-1 bg-gray-200"
+  "class": "w-1/6 flex flex-col h-full p-1 bg-gray-100"
 };
 var _hoisted_2 = {
   "class": "h-full px-3 pt-3"
@@ -401,21 +401,20 @@ var _hoisted_3 = {
   "class": "bg-green-600 p-3 -m-5 flex justify-center mb-5"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/images/lotus.png",
-  "class": "mr-3 inline w-8"
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Constructor ");
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "gg-extension ml-5"
 }, null, -1
 /* HOISTED */
 );
-
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Yashil Makon ");
 
 var _hoisted_6 = {
   key: 0
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
-  "class": "text-center font-bold uppercase text-white py-2 bg-green-600 mb-4 rounded"
+  "class": "text-center font-medium uppercase py-2 bg-gray-200 text-gray-600 mb-4 rounded shadow-inner"
 }, "Tanlangan obyekt", -1
 /* HOISTED */
 );
@@ -462,7 +461,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("header", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/",
-    "class": "text-green-100 uppercase font-dancing flex items-center"
+    "class": "text-white uppercase font-medium flex items-center"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_4, _hoisted_5];
@@ -478,7 +477,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_ctx.$store.state.mesh.info ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         placeholder: "Obyekt nomi",
         id: "names",
-        "class": "rounded border-b border-green-600 my-1 outline-none p-2 w-full",
+        "class": "border-b border-green-600 my-1 outline-none p-2 w-full",
         type: "text",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return _ctx.$store.state.mesh.info.username = $event;
@@ -494,7 +493,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.$store.state.mesh.info.username]])]), _ctx.$store.state.mesh.info.parentname != 'plant' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         placeholder: "Bino Balandligi",
         id: "height",
-        "class": "rounded border-b border-green-600 my-1 outline-none p-2 w-full",
+        "class": "border-b border-green-600 my-1 outline-none p-2 w-full",
         type: "number",
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return _ctx.$store.state.mesh.info.height = $event;
@@ -510,7 +509,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.$store.state.mesh.info.height]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$store.state.mesh.info.parentname == 'plant' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         placeholder: "Bino Balandligi",
         id: "height",
-        "class": "rounded border-b border-green-600 my-1 outline-none p-2 w-full",
+        "class": "border-b border-green-600 my-1 outline-none p-2 w-full",
         type: "date",
         "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
           return _ctx.$store.state.mesh.info.plantTime = $event;
@@ -531,7 +530,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": "rounded uppercase shadow-xl w-full p-3 py-2 text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white",
+    "class": "custom-btn shadow border w-full justify-center m-0",
     onClick: _cache[9] || (_cache[9] = function ($event) {
       return _ctx.$store.dispatch('logout');
     })
@@ -649,27 +648,22 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_8 = [_hoisted_7];
-
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", {
+var _hoisted_9 = {
   "class": "flex justify-end"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "fileinp",
-  "class": "imageadd cursor-pointer bg-green-500 shadow hover:bg-green-700"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
-  "class": "fill-current w-5 text-white",
-  fill: "#000000",
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  width: "48px",
-  height: "48px",
-  "fill-rule": "evenodd"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-  "fill-rule": "evenodd",
-  d: "M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"
-})])])], -1
+};
+var _hoisted_10 = {
+  "for": "fileinp"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Qo'shish ");
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "gg-math-plus ml-3"
+}, null, -1
 /* HOISTED */
 );
 
+var _hoisted_13 = [_hoisted_11, _hoisted_12];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
     name: "fade",
@@ -719,7 +713,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_6)]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_9]);
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.addForm = true;
+    }),
+    "class": "custom-btn m-0 shadow-sm bg-green-600 text-white hover:bg-green-800",
+    title: "Uchastka qo'shish"
+  }, _hoisted_13)])])]);
 }
 
 /***/ }),
@@ -737,7 +737,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "h-full w-5/6 relative p-1 shadow-inner bg-gray-100",
+  "class": "h-full w-5/6 relative p-1 shadow-inner bg-gray-300",
   ref: "room"
 };
 var _hoisted_2 = {
@@ -745,8 +745,7 @@ var _hoisted_2 = {
 };
 
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/images/tree.png",
-  alt: ""
+  src: "/images/tree.png"
 }, null, -1
 /* HOISTED */
 );
@@ -754,8 +753,7 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_4 = ["onClick"];
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/images/build.png",
-  alt: ""
+  src: "/images/build.png"
 }, null, -1
 /* HOISTED */
 );
@@ -772,14 +770,40 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   src: "/images/plus.png",
   style: {
     "transform": "scale(0.5)"
-  },
-  alt: ""
+  }
 }, null, -1
 /* HOISTED */
 );
 
 var _hoisted_9 = [_hoisted_8];
+var _hoisted_10 = {
+  "class": "absolute top-0 right-0 m-5 flex"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "gg-eye"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "gg-clapper-board"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Bosh sahifa ");
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "/images/home.png",
+  "class": "ml-3 w-5"
+}, null, -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+
   var _component_MeshBuilder = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MeshBuilder");
 
   var _component_ConstructorPanel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConstructorPanel");
@@ -838,7 +862,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onClick: function onClick($event) {
         return $options.addBuilding('building', custom.name);
       },
-      "class": "flex items-center capitalize justify-between cursor-pointer hover:bg-green-500 hover:text-red-50 py-1 px-2 pb-2"
+      "class": "flex items-center capitalize justify-between cursor-pointer hover:bg-green-500 hover:text-red-50 py-1 px-2 mb-2"
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(custom.clientname) + " ", 1
     /* TEXT */
     ), _hoisted_7], 8
@@ -853,7 +877,47 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.openMeshBuilder && $options.openMeshBuilder.apply($options, arguments);
     }),
     "class": "m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl cursor-pointer hover:bg-gray-200"
-  }, _hoisted_9)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", {
+  }, _hoisted_9)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    title: "Ko'rish",
+    "class": "custom-btn",
+    to: {
+      name: 'territory',
+      params: {
+        id: $props.id
+      }
+    }
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_11];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    title: "Maydonlar",
+    "class": "custom-btn ml-4",
+    to: "/territories"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_12];
+    }),
+    _: 1
+    /* STABLE */
+
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    title: "Bosh sahifa",
+    "class": "custom-btn ml-4",
+    to: "/"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_13, _hoisted_14];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", {
     ref: "canvas",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-full h-full", {
       'cursor-move': _ctx.$store.state.drag
@@ -1827,11 +1891,11 @@ var _default = /*#__PURE__*/function () {
     value: function limits() {
       this.camera.useBouncingBehavior = true;
       this.camera.lowerRadiusLimit = 25;
-      this.camera.upperRadiusLimit = 240; // this.camera.lowerAlphaLimit = -Math.PI/2
-      // this.camera.upperAlphaLimit = -Math.PI/2
-      // this.camera.lowerBetaLimit = 0
-      // this.camera.upperBetaLimit = 0
-      // upperRadiusLimit
+      this.camera.upperRadiusLimit = 240;
+      this.camera.lowerAlphaLimit = -Math.PI / 2;
+      this.camera.upperAlphaLimit = -Math.PI / 2;
+      this.camera.lowerBetaLimit = 0;
+      this.camera.upperBetaLimit = 0; // upperRadiusLimit
 
       this.camera.inputs.attached.keyboard.detachControl(); // this.camera.inputs.attached.mousewheel.detachControl();
 

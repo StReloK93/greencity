@@ -30,7 +30,7 @@ export default [
 	},
 	{
 		path: '/territories',
-		component: () => import('../views/Territory.vue'),
+		component: () => import('../views/Territories.vue'),
 		name: 'territories',
 		meta: {
 			guard: 'auth'
@@ -39,7 +39,7 @@ export default [
 	{
 		path: '/territory/:id',
 		name: 'territory',
-		component: () => import('../views/Userprofile.vue'),
+		component: () => import('../views/Territory.vue'),
 		props: true
 	},
 	{

@@ -2,8 +2,16 @@
 	<router-view></router-view>
 </template>
 <style>
+@import url('../all.css');
 
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../font.woff2') format('woff2');
+}
 .bg-gradient {
    background: linear-gradient(105deg, #e3e3e3 45%, #59b89a  45.1%);
 }

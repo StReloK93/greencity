@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+   .custom-btn {
+      @apply flex font-medium text-gray-600 bg-white px-4 py-2 items-center rounded shadow-xl cursor-pointer hover:bg-gray-200;
+   }
+}
