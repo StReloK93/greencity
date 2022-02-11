@@ -239,24 +239,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                console.log(territory, inpid);
                 input = _this3.$refs.inputs[inpid];
-                _context3.next = 3;
+                _context3.next = 4;
                 return axios.post('api/territories/update', {
                   id: territory.id,
                   name: input.value
                 });
 
-              case 3:
+              case 4:
                 _yield$axios$post = _context3.sent;
                 data = _yield$axios$post.data;
                 data.forEach(function (elem, i) {
-                  data[i]["boolean"] = true;
+                  if (inpid == i) {
+                    data[i]["boolean"] = true;
+                  } else {
+                    data[i]["boolean"] = _this3.territories[i]["boolean"];
+                  }
                 });
                 _this3.territories = data;
                 input.disabled = true;
                 territory["boolean"] = true;
 
-              case 9:
+              case 10:
               case "end":
                 return _context3.stop();
             }
@@ -822,13 +827,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _AddTerritory_vue_vue_type_template_id_355043e4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddTerritory.vue?vue&type=template&id=355043e4 */ "./resources/js/components/AddTerritory.vue?vue&type=template&id=355043e4");
 /* harmony import */ var _AddTerritory_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddTerritory.vue?vue&type=script&lang=js */ "./resources/js/components/AddTerritory.vue?vue&type=script&lang=js");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_AddTerritory_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AddTerritory_vue_vue_type_template_id_355043e4__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/AddTerritory.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_AddTerritory_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AddTerritory_vue_vue_type_template_id_355043e4__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/AddTerritory.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -849,13 +854,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _AskDeletion_vue_vue_type_template_id_04bfae68__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AskDeletion.vue?vue&type=template&id=04bfae68 */ "./resources/js/components/AskDeletion.vue?vue&type=template&id=04bfae68");
 /* harmony import */ var _AskDeletion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AskDeletion.vue?vue&type=script&lang=js */ "./resources/js/components/AskDeletion.vue?vue&type=script&lang=js");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_AskDeletion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AskDeletion_vue_vue_type_template_id_04bfae68__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/AskDeletion.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_AskDeletion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AskDeletion_vue_vue_type_template_id_04bfae68__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/AskDeletion.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -875,12 +880,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Authentication_vue_vue_type_template_id_e76b5cba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Authentication.vue?vue&type=template&id=e76b5cba */ "./resources/js/components/Authentication.vue?vue&type=template&id=e76b5cba");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 const script = {}
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__["default"])(script, [['render',_Authentication_vue_vue_type_template_id_e76b5cba__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Authentication.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__["default"])(script, [['render',_Authentication_vue_vue_type_template_id_e76b5cba__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Authentication.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -902,7 +907,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Territories_vue_vue_type_template_id_6e3d442e_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Territories.vue?vue&type=template&id=6e3d442e&scoped=true */ "./resources/js/views/Territories.vue?vue&type=template&id=6e3d442e&scoped=true");
 /* harmony import */ var _Territories_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Territories.vue?vue&type=script&lang=js */ "./resources/js/views/Territories.vue?vue&type=script&lang=js");
 /* harmony import */ var _Territories_vue_vue_type_style_index_0_id_6e3d442e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Territories.vue?vue&type=style&index=0&id=6e3d442e&scoped=true&lang=css */ "./resources/js/views/Territories.vue?vue&type=style&index=0&id=6e3d442e&scoped=true&lang=css");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -910,7 +915,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Territories_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Territories_vue_vue_type_template_id_6e3d442e_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-6e3d442e"],['__file',"resources/js/views/Territories.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Territories_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Territories_vue_vue_type_template_id_6e3d442e_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-6e3d442e"],['__file',"resources/js/views/Territories.vue"]])
 /* hot reload */
 if (false) {}
 

@@ -91,10 +91,16 @@ export default {
          input.focus();
       },
       async saveName(territory,inpid){
+         console.log(territory,inpid);
          let input = this.$refs.inputs[inpid]
          const {data} = await axios.post('api/territories/update', {id:territory.id, name: input.value})
          data.forEach((elem,i) => {
-            data[i].boolean = true
+            if(inpid == i){
+               data[i].boolean = true
+            }
+            else{
+               data[i].boolean = this.territories[i].boolean
+            }
          });
          this.territories = data
          input.disabled = true

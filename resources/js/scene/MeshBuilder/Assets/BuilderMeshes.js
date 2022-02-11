@@ -64,7 +64,6 @@ export default class {
 
    clearActiveMesh() {
       this.actions.animateStop()
-      this.scene.activeMesh.material = this.scene.getMaterialByName('BluePoints')
       this.scene.activeMesh = null
    }
 
@@ -88,6 +87,7 @@ export default class {
       box.type = 'linepoint'
 
       box.material = this.scene.getMaterialByName('BluePoints')
+      box.mainmaterial = box.material
       box.position = coordinate
       box.position.y = 1
 

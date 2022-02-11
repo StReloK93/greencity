@@ -7,13 +7,14 @@ export default class {
       this._materials()
       // this._createGround()
    }
-   
    _materials(){
       const hover = new BABYLON.StandardMaterial("hover", this.scene);
-      hover.diffuseColor = BABYLON.Color3.FromHexString('#C8F5FF').toLinearSpace()
+      hover.diffuseColor = BABYLON.Color3.FromHexString('#08e5eF').toLinearSpace()
+      hover.ambientColor = BABYLON.Color3.FromHexString('#4C4C4C')
       hover.specularColor = new BABYLON.Color3(0, 0, 0);
 
       const animated = new BABYLON.StandardMaterial("animated", this.scene);
+      animated.ambientColor = BABYLON.Color3.FromHexString('#4C4C4C')
       animated.specularColor = new BABYLON.Color3(0, 0, 0)
 
       //ground

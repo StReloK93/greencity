@@ -629,7 +629,6 @@ var _default = /*#__PURE__*/function () {
     value: function hover(mesh) {
       var _this = this;
 
-      var material = mesh.material;
       mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction({
         trigger: BABYLON.ActionManager.OnPointerOverTrigger
       }, function () {
@@ -639,9 +638,51 @@ var _default = /*#__PURE__*/function () {
         trigger: BABYLON.ActionManager.OnPointerOutTrigger
       }, function () {
         if (_this.scene.activeMesh != mesh) {
-          mesh.material = material;
+          mesh.material = mesh.mainmaterial;
         }
       }));
+    }
+  }, {
+    key: "hoverNode",
+    value: function hoverNode(node) {
+      var _this2 = this;
+
+      node.forEach(function (mesh) {
+        mesh.mainmaterial = mesh.material;
+        mesh.actionManager = new BABYLON.ActionManager(_this2.scene);
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction({
+          trigger: BABYLON.ActionManager.OnPointerOverTrigger
+        }, function () {
+          var hover = true;
+
+          if (_this2.scene.activeMesh && mesh.parent == _this2.scene.activeMesh) {
+            hover = false;
+          }
+
+          if (hover) {
+            var allMeshes = mesh.parent._children;
+            allMeshes.forEach(function (mesh) {
+              mesh.material = _this2.scene.getMaterialByName('hover');
+            });
+          }
+        }));
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction({
+          trigger: BABYLON.ActionManager.OnPointerOutTrigger
+        }, function () {
+          var hover = true;
+
+          if (_this2.scene.activeMesh && mesh.parent == _this2.scene.activeMesh) {
+            hover = false;
+          }
+
+          if (hover) {
+            var allMeshes = mesh.parent._children;
+            allMeshes.forEach(function (mesh) {
+              mesh.material = mesh.mainmaterial;
+            });
+          }
+        }));
+      });
     }
   }, {
     key: "animate",
@@ -653,15 +694,29 @@ var _default = /*#__PURE__*/function () {
     }
   }, {
     key: "animatePlay",
-    value: function animatePlay(mesh) {
+    value: function animatePlay(meshOrNode) {
+      var _this3 = this;
+
       var select = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var node = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
       if (select) {
         this.animate('material.diffuseColor', BABYLON.Animation.ANIMATIONTYPE_COLOR3);
       }
 
-      mesh.material = this.scene.getMaterialByName('animated');
-      this.animationGroup.addTargetedAnimation(this.animation, mesh);
+      if (node == true) {
+        // bu yerda meshOrNode = node
+        meshOrNode.forEach(function (element) {
+          element.material = _this3.scene.getMaterialByName('animated');
+
+          _this3.animationGroup.addTargetedAnimation(_this3.animation, element);
+        });
+      } else {
+        // bu yerda meshOrNode = mesh
+        meshOrNode.material = this.scene.getMaterialByName('animated');
+        this.animationGroup.addTargetedAnimation(this.animation, meshOrNode);
+      }
+
       this.animationGroup.play(true);
     }
   }, {
@@ -669,6 +724,14 @@ var _default = /*#__PURE__*/function () {
     value: function animateStop() {
       this.animationGroup.stop();
       this.animationGroup.dispose();
+
+      if (this.scene.activeMesh._isMesh) {
+        this.scene.activeMesh.material = this.scene.activeMesh.mainmaterial;
+      } else {
+        this.scene.activeMesh._children.forEach(function (mesh) {
+          mesh.material = mesh.mainmaterial;
+        });
+      }
     }
   }]);
 
@@ -1227,12 +1290,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Authentication_vue_vue_type_template_id_e76b5cba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Authentication.vue?vue&type=template&id=e76b5cba */ "./resources/js/components/Authentication.vue?vue&type=template&id=e76b5cba");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 const script = {}
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__["default"])(script, [['render',_Authentication_vue_vue_type_template_id_e76b5cba__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Authentication.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__["default"])(script, [['render',_Authentication_vue_vue_type_template_id_e76b5cba__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Authentication.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -1254,7 +1317,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Carusel_vue_vue_type_template_id_1bf5d304__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Carusel.vue?vue&type=template&id=1bf5d304 */ "./resources/js/components/Carusel.vue?vue&type=template&id=1bf5d304");
 /* harmony import */ var _Carusel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Carusel.vue?vue&type=script&lang=js */ "./resources/js/components/Carusel.vue?vue&type=script&lang=js");
 /* harmony import */ var _Carusel_vue_vue_type_style_index_0_id_1bf5d304_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Carusel.vue?vue&type=style&index=0&id=1bf5d304&lang=css */ "./resources/js/components/Carusel.vue?vue&type=style&index=0&id=1bf5d304&lang=css");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -1262,7 +1325,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Carusel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Carusel_vue_vue_type_template_id_1bf5d304__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Carusel.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Carusel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Carusel_vue_vue_type_template_id_1bf5d304__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Carusel.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -1283,13 +1346,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _ImageViewer_vue_vue_type_template_id_4dc3a3b2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ImageViewer.vue?vue&type=template&id=4dc3a3b2 */ "./resources/js/components/ImageViewer.vue?vue&type=template&id=4dc3a3b2");
 /* harmony import */ var _ImageViewer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ImageViewer.vue?vue&type=script&lang=js */ "./resources/js/components/ImageViewer.vue?vue&type=script&lang=js");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_ImageViewer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ImageViewer_vue_vue_type_template_id_4dc3a3b2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/ImageViewer.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_ImageViewer_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ImageViewer_vue_vue_type_template_id_4dc3a3b2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/ImageViewer.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -1310,13 +1373,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Territory_vue_vue_type_template_id_2f9045ea__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Territory.vue?vue&type=template&id=2f9045ea */ "./resources/js/views/Territory.vue?vue&type=template&id=2f9045ea");
 /* harmony import */ var _Territory_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Territory.vue?vue&type=script&lang=js */ "./resources/js/views/Territory.vue?vue&type=script&lang=js");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Territory_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Territory_vue_vue_type_template_id_2f9045ea__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Territory.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Territory_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Territory_vue_vue_type_template_id_2f9045ea__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Territory.vue"]])
 /* hot reload */
 if (false) {}
 

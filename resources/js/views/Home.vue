@@ -8,6 +8,7 @@
 <script>
 import CanvasEngine from "../scene/Viewscene/Canvas";
 import HomePanel from "../components/HomePanel.vue";
+import hot from "../hotkeys"
 import Authentication from "../components/Authentication.vue";
 export default {
 	data() {
@@ -17,9 +18,12 @@ export default {
 	},
 	mounted() {
 		this.Engine = CanvasEngine(this.$refs.BuilderCanvas);
+		hot.loaderFile(this.Engine.Scene.scene)
 	},
 	unmounted() {
-		this.Engine.Import.clearActiveMesh();
+		if(store.state.mesh.active){
+			this.Engine.Import.clearActiveMesh();
+		}
 	},
 	components: {
 		HomePanel,

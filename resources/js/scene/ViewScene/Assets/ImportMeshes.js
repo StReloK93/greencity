@@ -18,25 +18,34 @@ export default class {
    pickidMesh() {
       this.scene.onPointerPick = (event, pick) => {
          const mesh = pick.pickedMesh
-         if (event.button == 0 || event.button == 2) this.clearActiveMesh()
-         if (mesh && mesh.metadata.gltf.extras.pickable != 0) {
-            store.state.mesh.active = mesh
-            this.scene.activeMesh = mesh
-            this.Actions.animatePlay(mesh, true)
-            this.getTerritories(mesh.name)
+         if (store.state.mesh.active && (event.button == 0 || event.button == 2)) {
+            this.clearActiveMesh(event)
+         }
+
+         if(mesh.parent.metadata && mesh.parent.metadata.gltf.extras && mesh.parent.metadata.gltf.extras.pickable == 1){
+            store.state.mesh.active = mesh.parent
+            this.scene.activeMesh = mesh.parent
+            console.log(mesh.parent.name);
+            this.Actions.animatePlay(mesh.parent._children, true, true)
+            this.getTerritories(mesh.parent.name)
+         }
+         else{
+            if (mesh && mesh.metadata.gltf.extras.pickable == 1) {
+               store.state.mesh.active = mesh
+               this.scene.activeMesh = mesh
+               this.Actions.animatePlay(mesh, true)
+               this.getTerritories(mesh.name)
+            }
          }
 
       }
    }
 
    clearActiveMesh() {
-      if (store.state.mesh.active) {
-         this.Actions.animateStop()
-         this.scene.activeMesh.material = this.scene.activeMesh.mainmaterial
-         this.scene.activeMesh = null
-         store.state.mesh.active = null
-         store.state.territories = null
-      }
+      this.Actions.animateStop()
+      this.scene.activeMesh = null
+      store.state.mesh.active = null
+      store.state.territories = null
    }
 
    
@@ -48,8 +57,6 @@ export default class {
    }
 
 
-
-
    Import() {
       BABYLON.SceneLoader.AppendAsync('./models/view.glb', undefined, this.scene, function (event) {
          const percentage = event.lengthComputable ? event.loaded / event.total * 100 : 0
@@ -58,12 +65,16 @@ export default class {
 
    getActiveMeshes() {
       this.activeMeshes = this.scene.getNodeByName('active')._children
-
       this.activeMeshes.forEach(mesh => {
-         mesh.actionManager = new BABYLON.ActionManager(this.scene)
-         mesh.mainmaterial = mesh.material
-         this.Actions.hover(mesh)
          this.meshSceneNames(mesh)
+         if(mesh._isMesh){
+            mesh.actionManager = new BABYLON.ActionManager(this.scene)
+            mesh.mainmaterial = mesh.material
+            this.Actions.hover(mesh)
+         }
+         else{
+            this.Actions.hoverNode(mesh._children)
+         }
       });
    }
 
@@ -74,7 +85,7 @@ export default class {
       var rect1 = new BABYLON.GUI.Rectangle();
       rect1.width = '100px';
       rect1.height = "36px";
-      rect1.cornerRadius = 10;
+      rect1.cornerRadius = 4;
       rect1.color = "white";
       rect1.thickness = 0;
       rect1.background = "#1db81d6b";
@@ -85,7 +96,6 @@ export default class {
       var label = new BABYLON.GUI.TextBlock();
       label.text = mesh.name.toUpperCase();
       label.fontSize = '14px'
-      console.log(label);
       rect1.addControl(label);
 
       var target = new BABYLON.GUI.Ellipse();

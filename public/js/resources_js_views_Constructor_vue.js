@@ -1058,7 +1058,6 @@ var _default = /*#__PURE__*/function () {
     value: function hover(mesh) {
       var _this = this;
 
-      var material = mesh.material;
       mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction({
         trigger: BABYLON.ActionManager.OnPointerOverTrigger
       }, function () {
@@ -1068,9 +1067,51 @@ var _default = /*#__PURE__*/function () {
         trigger: BABYLON.ActionManager.OnPointerOutTrigger
       }, function () {
         if (_this.scene.activeMesh != mesh) {
-          mesh.material = material;
+          mesh.material = mesh.mainmaterial;
         }
       }));
+    }
+  }, {
+    key: "hoverNode",
+    value: function hoverNode(node) {
+      var _this2 = this;
+
+      node.forEach(function (mesh) {
+        mesh.mainmaterial = mesh.material;
+        mesh.actionManager = new BABYLON.ActionManager(_this2.scene);
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction({
+          trigger: BABYLON.ActionManager.OnPointerOverTrigger
+        }, function () {
+          var hover = true;
+
+          if (_this2.scene.activeMesh && mesh.parent == _this2.scene.activeMesh) {
+            hover = false;
+          }
+
+          if (hover) {
+            var allMeshes = mesh.parent._children;
+            allMeshes.forEach(function (mesh) {
+              mesh.material = _this2.scene.getMaterialByName('hover');
+            });
+          }
+        }));
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction({
+          trigger: BABYLON.ActionManager.OnPointerOutTrigger
+        }, function () {
+          var hover = true;
+
+          if (_this2.scene.activeMesh && mesh.parent == _this2.scene.activeMesh) {
+            hover = false;
+          }
+
+          if (hover) {
+            var allMeshes = mesh.parent._children;
+            allMeshes.forEach(function (mesh) {
+              mesh.material = mesh.mainmaterial;
+            });
+          }
+        }));
+      });
     }
   }, {
     key: "animate",
@@ -1082,15 +1123,29 @@ var _default = /*#__PURE__*/function () {
     }
   }, {
     key: "animatePlay",
-    value: function animatePlay(mesh) {
+    value: function animatePlay(meshOrNode) {
+      var _this3 = this;
+
       var select = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var node = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
       if (select) {
         this.animate('material.diffuseColor', BABYLON.Animation.ANIMATIONTYPE_COLOR3);
       }
 
-      mesh.material = this.scene.getMaterialByName('animated');
-      this.animationGroup.addTargetedAnimation(this.animation, mesh);
+      if (node == true) {
+        // bu yerda meshOrNode = node
+        meshOrNode.forEach(function (element) {
+          element.material = _this3.scene.getMaterialByName('animated');
+
+          _this3.animationGroup.addTargetedAnimation(_this3.animation, element);
+        });
+      } else {
+        // bu yerda meshOrNode = mesh
+        meshOrNode.material = this.scene.getMaterialByName('animated');
+        this.animationGroup.addTargetedAnimation(this.animation, meshOrNode);
+      }
+
       this.animationGroup.play(true);
     }
   }, {
@@ -1098,6 +1153,14 @@ var _default = /*#__PURE__*/function () {
     value: function animateStop() {
       this.animationGroup.stop();
       this.animationGroup.dispose();
+
+      if (this.scene.activeMesh._isMesh) {
+        this.scene.activeMesh.material = this.scene.activeMesh.mainmaterial;
+      } else {
+        this.scene.activeMesh._children.forEach(function (mesh) {
+          mesh.material = mesh.mainmaterial;
+        });
+      }
     }
   }]);
 
@@ -1373,7 +1436,6 @@ var _default = /*#__PURE__*/function () {
     value: function clearActiveMesh() {
       if (store.state.mesh.active) {
         this.actions.animateStop();
-        scene.activeMesh.material = scene.activeMesh.mainmaterial;
         scene.activeMesh = null;
         store.state.mesh.active = null;
         store.state.mesh.info = null;
@@ -2100,7 +2162,6 @@ var _default = /*#__PURE__*/function () {
     key: "clearActiveMesh",
     value: function clearActiveMesh() {
       this.actions.animateStop();
-      this.scene.activeMesh.material = this.scene.getMaterialByName('BluePoints');
       this.scene.activeMesh = null;
     }
   }, {
@@ -2140,6 +2201,7 @@ var _default = /*#__PURE__*/function () {
       });
       box.type = 'linepoint';
       box.material = this.scene.getMaterialByName('BluePoints');
+      box.mainmaterial = box.material;
       box.position = coordinate;
       box.position.y = 1;
       box.actionManager = new BABYLON.ActionManager(this.scene);
@@ -2480,7 +2542,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ConstructorPanel_vue_vue_type_template_id_58d19b95__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConstructorPanel.vue?vue&type=template&id=58d19b95 */ "./resources/js/components/ConstructorPanel.vue?vue&type=template&id=58d19b95");
 /* harmony import */ var _ConstructorPanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConstructorPanel.vue?vue&type=script&lang=js */ "./resources/js/components/ConstructorPanel.vue?vue&type=script&lang=js");
 /* harmony import */ var _ConstructorPanel_vue_vue_type_style_index_0_id_58d19b95_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ConstructorPanel.vue?vue&type=style&index=0&id=58d19b95&lang=css */ "./resources/js/components/ConstructorPanel.vue?vue&type=style&index=0&id=58d19b95&lang=css");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -2488,7 +2550,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_ConstructorPanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ConstructorPanel_vue_vue_type_template_id_58d19b95__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/ConstructorPanel.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_ConstructorPanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ConstructorPanel_vue_vue_type_template_id_58d19b95__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/ConstructorPanel.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2509,13 +2571,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _MeshBuilder_vue_vue_type_template_id_d2459e5a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MeshBuilder.vue?vue&type=template&id=d2459e5a */ "./resources/js/components/MeshBuilder.vue?vue&type=template&id=d2459e5a");
 /* harmony import */ var _MeshBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MeshBuilder.vue?vue&type=script&lang=js */ "./resources/js/components/MeshBuilder.vue?vue&type=script&lang=js");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MeshBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MeshBuilder_vue_vue_type_template_id_d2459e5a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/MeshBuilder.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MeshBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MeshBuilder_vue_vue_type_template_id_d2459e5a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/MeshBuilder.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2536,13 +2598,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _UploadImage_vue_vue_type_template_id_46aa7c82__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UploadImage.vue?vue&type=template&id=46aa7c82 */ "./resources/js/components/UploadImage.vue?vue&type=template&id=46aa7c82");
 /* harmony import */ var _UploadImage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UploadImage.vue?vue&type=script&lang=js */ "./resources/js/components/UploadImage.vue?vue&type=script&lang=js");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_UploadImage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UploadImage_vue_vue_type_template_id_46aa7c82__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/UploadImage.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_UploadImage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UploadImage_vue_vue_type_template_id_46aa7c82__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/UploadImage.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2563,13 +2625,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Constructor_vue_vue_type_template_id_292f6aab__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constructor.vue?vue&type=template&id=292f6aab */ "./resources/js/views/Constructor.vue?vue&type=template&id=292f6aab");
 /* harmony import */ var _Constructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constructor.vue?vue&type=script&lang=js */ "./resources/js/views/Constructor.vue?vue&type=script&lang=js");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Constructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Constructor_vue_vue_type_template_id_292f6aab__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Constructor.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Constructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Constructor_vue_vue_type_template_id_292f6aab__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Constructor.vue"]])
 /* hot reload */
 if (false) {}
 

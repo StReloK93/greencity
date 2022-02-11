@@ -17,9 +17,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       Territories: null
     };
-  },
-  mounted: function mounted() {
-    console.log(store.state.territories);
   }
 });
 
@@ -37,7 +34,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _scene_Viewscene_Canvas__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scene/Viewscene/Canvas */ "./resources/js/scene/Viewscene/Canvas.js");
 /* harmony import */ var _components_HomePanel_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/HomePanel.vue */ "./resources/js/components/HomePanel.vue");
-/* harmony import */ var _components_Authentication_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Authentication.vue */ "./resources/js/components/Authentication.vue");
+/* harmony import */ var _hotkeys__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hotkeys */ "./resources/js/hotkeys.js");
+/* harmony import */ var _components_Authentication_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Authentication.vue */ "./resources/js/components/Authentication.vue");
+
 
 
 
@@ -49,13 +48,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.Engine = (0,_scene_Viewscene_Canvas__WEBPACK_IMPORTED_MODULE_0__["default"])(this.$refs.BuilderCanvas);
+    _hotkeys__WEBPACK_IMPORTED_MODULE_2__["default"].loaderFile(this.Engine.Scene.scene);
   },
   unmounted: function unmounted() {
-    this.Engine.Import.clearActiveMesh();
+    if (store.state.mesh.active) {
+      this.Engine.Import.clearActiveMesh();
+    }
   },
   components: {
     HomePanel: _components_HomePanel_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Authentication: _components_Authentication_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Authentication: _components_Authentication_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 
@@ -244,6 +246,38 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./resources/js/hotkeys.js":
+/*!*********************************!*\
+  !*** ./resources/js/hotkeys.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function loaderFile(scene) {
+  window.onkeyup = function (event) {
+    if (event.keyCode == 107) {
+      if (store.state.inspector) {
+        scene.debugLayer.show({
+          embedMode: true
+        });
+      } else {
+        scene.debugLayer.hide();
+      }
+
+      store.state.inspector = !store.state.inspector;
+    }
+  };
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  loaderFile: loaderFile
+});
+
+/***/ }),
+
 /***/ "./resources/js/scene/Addons/Actions.js":
 /*!**********************************************!*\
   !*** ./resources/js/scene/Addons/Actions.js ***!
@@ -288,7 +322,6 @@ var _default = /*#__PURE__*/function () {
     value: function hover(mesh) {
       var _this = this;
 
-      var material = mesh.material;
       mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction({
         trigger: BABYLON.ActionManager.OnPointerOverTrigger
       }, function () {
@@ -298,9 +331,51 @@ var _default = /*#__PURE__*/function () {
         trigger: BABYLON.ActionManager.OnPointerOutTrigger
       }, function () {
         if (_this.scene.activeMesh != mesh) {
-          mesh.material = material;
+          mesh.material = mesh.mainmaterial;
         }
       }));
+    }
+  }, {
+    key: "hoverNode",
+    value: function hoverNode(node) {
+      var _this2 = this;
+
+      node.forEach(function (mesh) {
+        mesh.mainmaterial = mesh.material;
+        mesh.actionManager = new BABYLON.ActionManager(_this2.scene);
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction({
+          trigger: BABYLON.ActionManager.OnPointerOverTrigger
+        }, function () {
+          var hover = true;
+
+          if (_this2.scene.activeMesh && mesh.parent == _this2.scene.activeMesh) {
+            hover = false;
+          }
+
+          if (hover) {
+            var allMeshes = mesh.parent._children;
+            allMeshes.forEach(function (mesh) {
+              mesh.material = _this2.scene.getMaterialByName('hover');
+            });
+          }
+        }));
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction({
+          trigger: BABYLON.ActionManager.OnPointerOutTrigger
+        }, function () {
+          var hover = true;
+
+          if (_this2.scene.activeMesh && mesh.parent == _this2.scene.activeMesh) {
+            hover = false;
+          }
+
+          if (hover) {
+            var allMeshes = mesh.parent._children;
+            allMeshes.forEach(function (mesh) {
+              mesh.material = mesh.mainmaterial;
+            });
+          }
+        }));
+      });
     }
   }, {
     key: "animate",
@@ -312,15 +387,29 @@ var _default = /*#__PURE__*/function () {
     }
   }, {
     key: "animatePlay",
-    value: function animatePlay(mesh) {
+    value: function animatePlay(meshOrNode) {
+      var _this3 = this;
+
       var select = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var node = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
       if (select) {
         this.animate('material.diffuseColor', BABYLON.Animation.ANIMATIONTYPE_COLOR3);
       }
 
-      mesh.material = this.scene.getMaterialByName('animated');
-      this.animationGroup.addTargetedAnimation(this.animation, mesh);
+      if (node == true) {
+        // bu yerda meshOrNode = node
+        meshOrNode.forEach(function (element) {
+          element.material = _this3.scene.getMaterialByName('animated');
+
+          _this3.animationGroup.addTargetedAnimation(_this3.animation, element);
+        });
+      } else {
+        // bu yerda meshOrNode = mesh
+        meshOrNode.material = this.scene.getMaterialByName('animated');
+        this.animationGroup.addTargetedAnimation(this.animation, meshOrNode);
+      }
+
       this.animationGroup.play(true);
     }
   }, {
@@ -328,6 +417,14 @@ var _default = /*#__PURE__*/function () {
     value: function animateStop() {
       this.animationGroup.stop();
       this.animationGroup.dispose();
+
+      if (this.scene.activeMesh._isMesh) {
+        this.scene.activeMesh.material = this.scene.activeMesh.mainmaterial;
+      } else {
+        this.scene.activeMesh._children.forEach(function (mesh) {
+          mesh.material = mesh.mainmaterial;
+        });
+      }
     }
   }]);
 
@@ -391,28 +488,38 @@ var _default = /*#__PURE__*/function () {
 
       this.scene.onPointerPick = function (event, pick) {
         var mesh = pick.pickedMesh;
-        if (event.button == 0 || event.button == 2) _this2.clearActiveMesh();
 
-        if (mesh && mesh.metadata.gltf.extras.pickable != 0) {
-          store.state.mesh.active = mesh;
-          _this2.scene.activeMesh = mesh;
+        if (store.state.mesh.active && (event.button == 0 || event.button == 2)) {
+          _this2.clearActiveMesh(event);
+        }
 
-          _this2.Actions.animatePlay(mesh, true);
+        if (mesh.parent.metadata && mesh.parent.metadata.gltf.extras && mesh.parent.metadata.gltf.extras.pickable == 1) {
+          store.state.mesh.active = mesh.parent;
+          _this2.scene.activeMesh = mesh.parent;
+          console.log(mesh.parent.name);
 
-          _this2.getTerritories(mesh.name);
+          _this2.Actions.animatePlay(mesh.parent._children, true, true);
+
+          _this2.getTerritories(mesh.parent.name);
+        } else {
+          if (mesh && mesh.metadata.gltf.extras.pickable == 1) {
+            store.state.mesh.active = mesh;
+            _this2.scene.activeMesh = mesh;
+
+            _this2.Actions.animatePlay(mesh, true);
+
+            _this2.getTerritories(mesh.name);
+          }
         }
       };
     }
   }, {
     key: "clearActiveMesh",
     value: function clearActiveMesh() {
-      if (store.state.mesh.active) {
-        this.Actions.animateStop();
-        this.scene.activeMesh.material = this.scene.activeMesh.mainmaterial;
-        this.scene.activeMesh = null;
-        store.state.mesh.active = null;
-        store.state.territories = null;
-      }
+      this.Actions.animateStop();
+      this.scene.activeMesh = null;
+      store.state.mesh.active = null;
+      store.state.territories = null;
     }
   }, {
     key: "getTerritories",
@@ -462,12 +569,16 @@ var _default = /*#__PURE__*/function () {
 
       this.activeMeshes = this.scene.getNodeByName('active')._children;
       this.activeMeshes.forEach(function (mesh) {
-        mesh.actionManager = new BABYLON.ActionManager(_this3.scene);
-        mesh.mainmaterial = mesh.material;
-
-        _this3.Actions.hover(mesh);
-
         _this3.meshSceneNames(mesh);
+
+        if (mesh._isMesh) {
+          mesh.actionManager = new BABYLON.ActionManager(_this3.scene);
+          mesh.mainmaterial = mesh.material;
+
+          _this3.Actions.hover(mesh);
+        } else {
+          _this3.Actions.hoverNode(mesh._children);
+        }
       });
     }
   }, {
@@ -477,7 +588,7 @@ var _default = /*#__PURE__*/function () {
       var rect1 = new BABYLON.GUI.Rectangle();
       rect1.width = '100px';
       rect1.height = "36px";
-      rect1.cornerRadius = 10;
+      rect1.cornerRadius = 4;
       rect1.color = "white";
       rect1.thickness = 0;
       rect1.background = "#1db81d6b";
@@ -487,7 +598,6 @@ var _default = /*#__PURE__*/function () {
       var label = new BABYLON.GUI.TextBlock();
       label.text = mesh.name.toUpperCase();
       label.fontSize = '14px';
-      console.log(label);
       rect1.addControl(label);
       var target = new BABYLON.GUI.Ellipse();
       target.width = "5px";
@@ -549,9 +659,11 @@ var _default = /*#__PURE__*/function () {
     key: "_materials",
     value: function _materials() {
       var hover = new BABYLON.StandardMaterial("hover", this.scene);
-      hover.diffuseColor = BABYLON.Color3.FromHexString('#C8F5FF').toLinearSpace();
+      hover.diffuseColor = BABYLON.Color3.FromHexString('#08e5eF').toLinearSpace();
+      hover.ambientColor = BABYLON.Color3.FromHexString('#4C4C4C');
       hover.specularColor = new BABYLON.Color3(0, 0, 0);
       var animated = new BABYLON.StandardMaterial("animated", this.scene);
+      animated.ambientColor = BABYLON.Color3.FromHexString('#4C4C4C');
       animated.specularColor = new BABYLON.Color3(0, 0, 0); //ground
 
       var ground = new BABYLON.StandardMaterial("ground", this.scene);
@@ -647,7 +759,7 @@ var _default = /*#__PURE__*/function () {
     key: "limits",
     value: function limits() {
       this.camera.useBouncingBehavior = true;
-      this.camera.lowerRadiusLimit = 25;
+      this.camera.lowerRadiusLimit = 50;
       this.camera.upperRadiusLimit = 240; // this.camera.lowerAlphaLimit = -Math.PI/2
       // this.camera.upperAlphaLimit = -Math.PI/2
       // this.camera.lowerBetaLimit = 0
@@ -690,7 +802,7 @@ var _default = /*#__PURE__*/_createClass(function _default() {
 
   _defineProperty(this, "light", new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0)));
 
-  this.light.intensity = 0.5;
+  this.light.intensity = 0.75;
 });
 
 
@@ -728,7 +840,8 @@ var _default = /*#__PURE__*/function () {
       var _this = this;
 
       var engine = new BABYLON.Engine(this.canvas, true);
-      this.scene = new BABYLON.Scene(engine); // this.scene.debugLayer.show({})
+      this.scene = new BABYLON.Scene(engine);
+      this.scene.ambientColor = new BABYLON.Color3(1, 1, 1); // BABYLON.SceneLoader.ShowLoadingScreen = false;
 
       engine.runRenderLoop(function () {
         _this.scene.render();
@@ -816,12 +929,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Authentication_vue_vue_type_template_id_e76b5cba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Authentication.vue?vue&type=template&id=e76b5cba */ "./resources/js/components/Authentication.vue?vue&type=template&id=e76b5cba");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 const script = {}
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__["default"])(script, [['render',_Authentication_vue_vue_type_template_id_e76b5cba__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Authentication.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__["default"])(script, [['render',_Authentication_vue_vue_type_template_id_e76b5cba__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Authentication.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -842,13 +955,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _HomePanel_vue_vue_type_template_id_4e6b480a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HomePanel.vue?vue&type=template&id=4e6b480a */ "./resources/js/components/HomePanel.vue?vue&type=template&id=4e6b480a");
 /* harmony import */ var _HomePanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HomePanel.vue?vue&type=script&lang=js */ "./resources/js/components/HomePanel.vue?vue&type=script&lang=js");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_HomePanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HomePanel_vue_vue_type_template_id_4e6b480a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/HomePanel.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_HomePanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HomePanel_vue_vue_type_template_id_4e6b480a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/HomePanel.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -870,7 +983,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Home_vue_vue_type_template_id_63cd6604_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Home.vue?vue&type=template&id=63cd6604&scoped=true */ "./resources/js/views/Home.vue?vue&type=template&id=63cd6604&scoped=true");
 /* harmony import */ var _Home_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home.vue?vue&type=script&lang=js */ "./resources/js/views/Home.vue?vue&type=script&lang=js");
 /* harmony import */ var _Home_vue_vue_type_style_index_0_id_63cd6604_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Home.vue?vue&type=style&index=0&id=63cd6604&scoped=true&lang=css */ "./resources/js/views/Home.vue?vue&type=style&index=0&id=63cd6604&scoped=true&lang=css");
-/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -878,7 +991,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Home_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Home_vue_vue_type_template_id_63cd6604_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-63cd6604"],['__file',"resources/js/views/Home.vue"]])
+const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Home_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Home_vue_vue_type_template_id_63cd6604_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-63cd6604"],['__file',"resources/js/views/Home.vue"]])
 /* hot reload */
 if (false) {}
 

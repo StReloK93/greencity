@@ -53,7 +53,6 @@ export default class {
    clearActiveMesh() {
       if (store.state.mesh.active) {
          this.actions.animateStop()
-         scene.activeMesh.material = scene.activeMesh.mainmaterial
          scene.activeMesh = null
          store.state.mesh.active = null
          store.state.mesh.info = null

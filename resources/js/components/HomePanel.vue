@@ -13,8 +13,5 @@ export default {
          Territories: null
       }
    },
-   mounted() {
-      console.log(store.state.territories);
-   },
 }
 </script>
