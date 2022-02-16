@@ -8,7 +8,8 @@ import { GridMaterial } from '@babylonjs/materials';
 import "@babylonjs/loaders/glTF";
 import earcut from 'earcut'
 BABYLON.DracoCompression.Configuration.decoder.wasmBinaryUrl = "/draco_decoder_gltf.wasm";
-
+BABYLON.DracoCompression.Configuration.decoder.wasmUrl = "/draco_wasm_wrapper_gltf.js";
+BABYLON.DracoCompression.Configuration.decoder.fallbackUrl = "/draco_decoder_gltf.js";
 //FOR VUE 3
 import mainApp from './components/App.vue'
 import { createApp } from 'vue';
