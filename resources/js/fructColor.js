@@ -7,5 +7,5 @@ export default [
    {name: 'gilos',      color: '#3E4AAD'},
    {name: 'nok',        color: '#CF9D46'},
    {name: 'tut',        color: '#EEEDED'},
-   {name: 'o`rik',        color: '#FFAFAF'},
+   {name: "o'rik",        color: '#FFAFAF'},
 ]
