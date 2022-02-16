@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\FinalMesh;
+use App\Models\Image;
 use Carbon\Carbon;
-use DB;
 
+use File;
 
 class FinalController extends Controller
 {
     public function createFinal(Request $req){
-        DB::table('finalmeshes')->insert([
+        FinalMesh::insert([
             'territory_id' => $req['id'],
             'position' => json_encode($req['position']),
             'parentname' => $req['parent'],
@@ -22,23 +24,20 @@ class FinalController extends Controller
     }
 
     public function editFinalPosition(Request $req){
-        DB::table('finalmeshes')
-            ->where([
-                ['territory_id',$req['id']],
-                ['name', $req['name']],
-            ])
-            ->update(['position' => json_encode($req['position'])]);
+        FinalMesh::where([
+            ['territory_id',$req['id']],
+            ['name', $req['name']],
+        ])->update(['position' => json_encode($req['position'])]);
     }
 
     //getActiveMeshes
     public function getAllFinal($id){
-        return DB::table('finalmeshes')->where('territory_id' , $id)->get();
+        return FinalMesh::where('territory_id' , $id)->get();
     }
 
     public function getOneFinal(Request $req){
 
-        $mesh = DB::table('finalmeshes')
-        ->select('username', 'height','parentname','plantTime')
+        $mesh = FinalMesh::select('username', 'height','parentname','plantTime', 'materialname')
         ->where([
             ['territory_id', $req['id']],
             ['name', $req['name']],
@@ -51,8 +50,7 @@ class FinalController extends Controller
     }
 
     public function editFinalProps(Request $req){
-        return DB::table('finalmeshes')
-        ->where([
+        return FinalMesh::where([
             ['territory_id', $req['id']],
             ['name', $req['name']],
         ])->update([
@@ -62,12 +60,46 @@ class FinalController extends Controller
         ]);
     }
 
+    public function plantInfromation(){
+        $mevali = FinalMesh::where([
+            ['parentname' , 'plant'],
+        ])->whereNotIn('materialname', ['archa', 'qayragoch'])->count();
+
+        $manzarali = FinalMesh::where([
+            ['parentname' , 'plant'],
+        ])->whereIn('materialname', ['archa', 'qayragoch'])->count();
+
+        $all = FinalMesh::where([
+            ['parentname' , 'plant'],
+        ])->count();
+
+        return [
+            'mevali' => $mevali,
+            'manzarali' => $manzarali,
+            'all' => $all,
+        ];
+    }
+
     public function deleteOneFinal(Request $req){
-        DB::table('finalmeshes')
-            ->where([
-                ['territory_id', $req['id']],
-                ['name', $req['name']],
-            ])
-            ->delete();
+        $finalMesh = FinalMesh::where([
+            ['territory_id', $req['id']],
+            ['name', $req['name']],
+        ])->first();
+
+        $images = Image::where('mesh_name', $finalMesh->name)->get();
+
+        foreach ($images as $mesh) {
+            if(File::exists(public_path($mesh->image))){
+                File::delete(public_path($mesh->image));
+            }
+        }
+        
+        Image::where('mesh_name', $finalMesh->name)->delete();
+        $finalMesh = FinalMesh::where([
+            ['territory_id', $req['id']],
+            ['name', $req['name']],
+        ])->delete();
+
+        return $finalMesh;
     }
 }

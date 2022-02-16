@@ -190,4 +190,9 @@ export default class {
          name: name,
       })
    }
+
+   deleteInScene(name){
+      const mesh = scene.getNodeByName(name)
+      mesh.dispose()
+   }
 }

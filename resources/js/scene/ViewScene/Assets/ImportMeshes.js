@@ -83,19 +83,26 @@ export default class {
       var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
       var rect1 = new BABYLON.GUI.Rectangle();
-      rect1.width = '100px';
-      rect1.height = "36px";
+
+      rect1.adaptWidthToChildren = true;
+      rect1.height = "28px";
       rect1.cornerRadius = 4;
       rect1.color = "white";
       rect1.thickness = 0;
       rect1.background = "#1db81d6b";
       advancedTexture.addControl(rect1);
       rect1.linkWithMesh(mesh);   
-      rect1.linkOffsetY = -60;
+      rect1.linkOffsetY = -50;
 
       var label = new BABYLON.GUI.TextBlock();
+      if(mesh.name == 'TROF, AMMQ va MShML' || mesh.name == "1-sonli autokorxona"){
+         label.width = "170px";
+      }
+      else{
+         label.width = "100px";
+      }
       label.text = mesh.name.toUpperCase();
-      label.fontSize = '14px'
+      label.fontSize = '13px'
       rect1.addControl(label);
 
       var target = new BABYLON.GUI.Ellipse();
@@ -110,7 +117,7 @@ export default class {
       var line = new BABYLON.GUI.Line();
       line.lineWidth = 2;
       line.color = "#1db81d6b";
-      line.y2 = 18;
+      line.y2 = 14;
       line.linkOffsetY = 0;
       advancedTexture.addControl(line);
       line.linkWithMesh(mesh); 

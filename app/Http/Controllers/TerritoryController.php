@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ParentMesh;
 use App\Models\Territory;
+use App\Models\FinalMesh;
+
+use App\Models\Image;
+
 use App\Models\User;
 use Auth;
+use File;
 class TerritoryController extends Controller
 {
     public function create(Request $request){
@@ -23,11 +29,45 @@ class TerritoryController extends Controller
     }
 
     public function delete($id){
-        return Territory::find($id)->delete();
+        $territory = Territory::find($id);
+        $finalMeshes = FinalMesh::where('territory_id',$territory->id)->get();
+        $plants = [];
+
+
+        foreach ($finalMeshes as $key => $meshes) {
+            if($meshes->parentname == "plant"){
+                array_push($plants, $meshes->name);
+            }
+        }
+
+        $images = Image::whereIn('mesh_name', $plants)->get();
+
+
+        foreach ($images as $mesh) {
+            if(File::exists(public_path($mesh->image))){
+                File::delete(public_path($mesh->image));
+            }
+        }
+        Image::whereIn('mesh_name', $plants)->delete();
+        FinalMesh::where('territory_id',$territory->id)->delete();
+        ParentMesh::where('territory_id',$territory->id)->delete();
+        Territory::find($id)->delete();
+        return true;
     }
 
     public function getForUser(){
-        return Territory::where('user_id', Auth::user()->id)->get();
+        $territory = Territory::where('user_id', Auth::user()->id)->get();
+        foreach ($territory as $key => $value) {
+            $territory[$key]->manzarali = FinalMesh::where([
+                ['parentname' , 'plant'],
+                ['territory_id' , $value->id],
+            ])->whereIn('materialname', ['archa', 'qayragoch'])->count();
+            $territory[$key]->mevali = FinalMesh::where([
+                ['parentname' , 'plant'],
+                ['territory_id' , $value->id],
+            ])->whereNotIn('materialname', ['archa', 'qayragoch'])->count();
+        }
+        return $territory;
     }
 
     public function getOneTerritory($id){
@@ -36,7 +76,6 @@ class TerritoryController extends Controller
             ['id',  $id],
         ])->exists();
     }
-
 
     //job
     public function getTerritories(Request $request){

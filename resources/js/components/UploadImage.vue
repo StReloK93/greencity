@@ -15,11 +15,9 @@
 			</main>
 		</div>
 		<main class="flex justify-end">
-			<label for="fileinp">
-            <button @click="addForm = true" class="custom-btn m-0 shadow-sm bg-green-600 text-white hover:bg-green-800" title="Uchastka qo'shish">
+			<label for="fileinp" class="custom-btn m-0 shadow-sm bg-green-600 text-white hover:bg-green-800" title="Uchastka qo'shish">
                Qo'shish
-               <i class="gg-math-plus ml-3"></i>
-            </button>
+            <i class="gg-math-plus ml-3"></i>
 			</label>
 		</main>
 	</section>

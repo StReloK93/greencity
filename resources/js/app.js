@@ -7,7 +7,7 @@ import * as GUI from '@babylonjs/gui';
 import { GridMaterial } from '@babylonjs/materials';
 import "@babylonjs/loaders/glTF";
 import earcut from 'earcut'
-
+BABYLON.DracoCompression.Configuration.decoder.wasmBinaryUrl = "/draco_decoder_gltf.wasm";
 
 //FOR VUE 3
 import mainApp from './components/App.vue'

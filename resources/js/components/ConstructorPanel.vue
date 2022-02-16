@@ -12,8 +12,11 @@
 				<h3
 					class="text-center font-medium uppercase py-2 bg-gray-200 text-gray-600 mb-4 rounded shadow-inner"
 				>Tanlangan obyekt</h3>
+				<main v-if="$store.state.mesh.info.parentname == 'plant'" class="py-2 capitalize font-medium text-xl">
+					{{$store.state.mesh.info.materialname}}
+				</main>
 				<main>
-					<label for="names" class="text-sm text-gray-400">Obyekt nomi</label>
+					<label for="names" class="text-sm text-gray-400">Obyekt nomi (raqami)</label>
 					<input
 						placeholder="Obyekt nomi"
 						id="names"

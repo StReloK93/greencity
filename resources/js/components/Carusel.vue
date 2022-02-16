@@ -1,7 +1,7 @@
 <template>
    <section class="flex justify-between items-center relative">
 		<transition name="fades" mode="out-in">
-			<button @click="prev" v-if="prosent != 0" class="absolute left-ang top-0 left-0 w-10 py-2 bg-gray-100 rounded-full flex items-center justify-center ">
+			<button @click="prev" v-if="prosent != 0" class="absolute left-ang w-10 py-2 bg-gray-100 rounded-full flex items-center justify-center ">
 				<img src="/images/leftang.png" class="w-2/3 btns">
 			</button>
 		</transition>
@@ -45,14 +45,23 @@ export default {
 	},
    methods: {
       next() {
-			let viewItem = this.itemCount
-			if((this.endItem) < this.prosent)
-				this.prosent += -100/viewItem
+			if((this.endItem) < this.prosent){
+				console.log(this.endItem,this.prosent);
+				this.prosent -= (100/this.itemCount).toFixed(2)
+				if(Math.abs((this.prosent.toFixed(2))) > 99){
+					this.prosent = -Math.ceil(Math.abs((this.prosent.toFixed(2))));
+				}
+			}
 		},
 
 		prev(){
-			if(this.prosent < 0)
-				this.prosent += 100/this.itemCount
+			if(this.prosent < 0){
+				this.prosent += (100/this.itemCount)
+				this.prosent = +(this.prosent.toFixed(2))
+				if(this.prosent < 0 && this.prosent > -1){
+					this.prosent = 0
+				}
+			}
 		}
    },
 };

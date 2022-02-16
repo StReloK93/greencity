@@ -1,8 +1,8 @@
 <template>
 	<ImageViewer/>
 	<main class="fixed top-0 left-16 m-4">
-		<button @click="$router.go(-1)" class="custom-btn" to="/" >
-			<i class="gg-corner-up-left mr-3"></i>
+		<button @click="$router.go(-1)" class="custom-btn pl-2" to="/" >
+			<i class="gg-chevron-left mr-3"></i>
 			Orqaga
 		</button>
 	</main>
@@ -25,8 +25,11 @@ export default {
 	async mounted() {
 		this.Engine = CanvasEngine(this.$refs.BuilderCanvas);
 		HotKeys.loaderFile(this.Engine.Scene.scene);
-		await this.getParents();
-		await this.getActive();
+      this.Engine.Scene.scene.onReadyObservable.add( async ()=>{
+			await this.getParents();
+			await this.getActive();
+      })
+
 	},
 	methods: {
 		async getParents() {

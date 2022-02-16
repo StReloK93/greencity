@@ -1,5 +1,6 @@
 <template>
-	<Authentication/>
+	<InformationPanel />
+	<Authentication />
 	<canvas class="h-full w-full border-transparent" ref="BuilderCanvas"></canvas>
 	<transition name="lift">
 		<HomePanel v-if="Engine && $store.state.territories" :Engine="Engine" />
@@ -9,7 +10,10 @@
 import CanvasEngine from "../scene/Viewscene/Canvas";
 import HomePanel from "../components/HomePanel.vue";
 import hot from "../hotkeys"
+
+
 import Authentication from "../components/Authentication.vue";
+import InformationPanel from "../components/InformationPanel.vue";
 export default {
 	data() {
 		return {
@@ -27,7 +31,8 @@ export default {
 	},
 	components: {
 		HomePanel,
-		Authentication
+		Authentication,
+		InformationPanel
 	},
 };
 </script>

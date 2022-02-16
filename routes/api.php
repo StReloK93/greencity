@@ -22,9 +22,9 @@ use App\Http\Controllers\TerritoryController;
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 
-
 Route::get('/getparents/{id}', [ParentController::class, 'getParents']);
 Route::get('/getallfinal/{id}', [FinalController::class, 'getAllFinal']);
+Route::get('/plantInfromation', [FinalController::class, 'plantInfromation']);
 
 Route::post('/territories/getall', [TerritoryController::class, 'getTerritories']);
 Route::post('/getimages', [ImageController::class, 'getImages']);
@@ -33,7 +33,9 @@ Route::post('/getimages', [ImageController::class, 'getImages']);
 Route::middleware('auth:sanctum')->group(function () {
     //api/savepoint
     Route::post('/createparent', [ParentController::class, 'createParent']);
-    
+    Route::get('/deleteParent/{name}', [ParentController::class, 'deleteParent']);
+
+
     Route::get('/user', [UserController::class, 'getUser']);
     Route::get('/logout', [UserController::class, 'logout']);
 

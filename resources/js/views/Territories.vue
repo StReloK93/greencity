@@ -20,10 +20,10 @@
                      </button>
                   </aside>
                   <div class="flex justify-between my-3">
-                     <span>Mevali daraxt</span><span>10</span>
+                     <span>Mevali daraxt</span><span> {{territory.mevali}}</span>
                   </div>
                   <div class="flex justify-between my-3">
-                     <span>Manzarali daraxt</span><span>22</span>
+                     <span>Manzarali daraxt</span><span>{{territory.manzarali}}</span>
                   </div>
                   <main class="flex justify-between">
                      <button @click="openDeleteForm(territory.id)" class="custom-btn bg-gray-600 hover:bg-red-700">

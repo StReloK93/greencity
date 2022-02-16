@@ -6,9 +6,9 @@
 				Malumotlarni tiklab bo'lmaydi
 			</p>
          <div class="flex">
-            <button @click="$emit('close')" type="submit" class="p-2 mr-2 flex items-center justify-center rounded uppercase bg-red-500 text-white w-full shadow">
+            <span @click="$emit('close')" class="p-2 mr-2 flex items-center justify-center rounded uppercase bg-red-500 text-white w-full shadow">
                yoq <i class="gg-close ml-3"></i>
-            </button>
+            </span>
             <button type="submit" class="p-2 ml-2 rounded uppercase flex items-center justify-center bg-green-500 text-white w-full shadow">
                Ha <i class="gg-check ml-3 transform scale-150"></i>
             </button>
