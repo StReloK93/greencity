@@ -2,7 +2,7 @@ export default class {
    constructor() {
       this.Import()
       scene.onDataLoadedObservable.add(()=>{
-         this.hideMeshes(['plant','house'])
+         this.hideMeshes(['plant'])
       })
    }
 
