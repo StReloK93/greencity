@@ -29,10 +29,10 @@
                      <button @click="openDeleteForm(territory.id)" class="custom-btn bg-gray-600 hover:bg-red-700">
                         <i class="gg-trash text-white"></i>
                      </button>
-                     <router-link :to="{ name: 'constructor', params: { id: territory.id }}" class="custom-btn justify-center shadow-sm">
+                     <a :href="'/constructor/'+territory.id" class="custom-btn justify-center shadow-sm">
                         Constructor
                         <i class="gg-chevron-right ml-3"></i>
-                     </router-link>
+                     </a>
                   </main>
                </main>
             </aside>

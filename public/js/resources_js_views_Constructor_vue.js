@@ -2486,7 +2486,7 @@ var _default = /*#__PURE__*/function () {
 
       this.camera.inputs.attached.keyboard.detachControl(); // this.camera.inputs.attached.mousewheel.detachControl();
 
-      this.camera.inputs.attached.pointers.buttons = [1, 2]; // console.log(this.camera.inputs.attached.mousewheel);
+      this.camera.inputs.attached.pointers.buttons = [1, 2];
     }
   }]);
 

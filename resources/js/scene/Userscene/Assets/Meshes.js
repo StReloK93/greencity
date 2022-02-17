@@ -37,7 +37,6 @@ export default class {
    async getMeshes(id) {
       const meshes = await axios.get(`/api/getallfinal/${id}`)
 
-      console.log(meshes, 'beforeCLone');
       meshes.data.forEach(mesh => {
          const position = JSON.parse(mesh.position)
          const getmesh = this.scene.getNodeByName(mesh.parentname)

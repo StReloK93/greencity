@@ -1,10 +1,10 @@
 <template>
 	<main class="fixed top-0 right-16 mx-2 my-4">
 		<div v-if="$store.state.user" class="flex">
-			<router-link v-if="$route.name != 'territories'" class="custom-btn" to="/territories">
+			<a v-if="$route.name != 'territories'" class="custom-btn" href="/territories">
 				Uchastkalar
 				<i class="gg-clapper-board ml-3"></i>
-			</router-link>
+			</a>
 			<button @click="$store.dispatch('logout')" class="custom-btn ml-4 ">
 				Chiqish
 				<i class="gg-log-out ml-3 mr-1"></i>

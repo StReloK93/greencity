@@ -43,6 +43,5 @@ export default class {
       // this.camera.inputs.attached.mousewheel.detachControl();
 
       this.camera.inputs.attached.pointers.buttons = [1, 2]
-      // console.log(this.camera.inputs.attached.mousewheel);
    }
 }
