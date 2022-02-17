@@ -7,9 +7,7 @@ export default class {
       BABYLON.Scene.DoubleClickDelay = 600
       this.engine = new BABYLON.Engine(canvas, true)
       this.scene = new BABYLON.Scene(this.engine)
-      // this.scene.debugLayer.show({
-      //    embedMode: true,
-      // });
+
       this.engine.runRenderLoop(() => { this.scene.render() })
       window.addEventListener("resize", () => { this.engine.resize() })
    }

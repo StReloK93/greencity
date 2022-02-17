@@ -2144,7 +2144,6 @@ var _default = /*#__PURE__*/function () {
     _classCallCheck(this, _default);
 
     this.createScene();
-    this.setEnvironment();
   }
 
   _createClass(_default, [{
@@ -2155,16 +2154,10 @@ var _default = /*#__PURE__*/function () {
       engine.runRenderLoop(function () {
         scene.render();
       });
+      scene.clearColor = new BABYLON.Color3(0.8, 0.8, 0.8, 1);
       window.addEventListener("resize", function () {
         engine.resize();
       });
-    }
-  }, {
-    key: "setEnvironment",
-    value: function setEnvironment() {
-      var hdr = BABYLON.CubeTexture.CreateFromPrefilteredData("/textures/hdrmini.env", scene);
-      scene.environmentTexture = hdr;
-      scene.clearColor = new BABYLON.Color3(0.8, 0.8, 0.8, 1);
     }
   }]);
 
@@ -2571,10 +2564,7 @@ var _default = /*#__PURE__*/function () {
 
       BABYLON.Scene.DoubleClickDelay = 600;
       this.engine = new BABYLON.Engine(canvas, true);
-      this.scene = new BABYLON.Scene(this.engine); // this.scene.debugLayer.show({
-      //    embedMode: true,
-      // });
-
+      this.scene = new BABYLON.Scene(this.engine);
       this.engine.runRenderLoop(function () {
         _this.scene.render();
       });

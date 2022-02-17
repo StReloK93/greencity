@@ -1,7 +1,6 @@
 export default class {
    constructor() {
       this.createScene()
-      this.setEnvironment()
    }
 
    createScene() {
@@ -9,13 +8,12 @@ export default class {
       window.scene = new BABYLON.Scene(engine)
 
       engine.runRenderLoop(function () { scene.render() })
+      scene.clearColor = new BABYLON.Color3(0.8, 0.8, 0.8, 1)
       window.addEventListener("resize", () => { engine.resize() })
    }
 
 
-   setEnvironment() {
-      let hdr = BABYLON.CubeTexture.CreateFromPrefilteredData("/textures/hdrmini.env", scene)
-      scene.environmentTexture = hdr
-      scene.clearColor = new BABYLON.Color3(0.8, 0.8, 0.8, 1)
-   }
+
+      
+   
 }
