@@ -50,13 +50,21 @@ class FinalController extends Controller
     }
 
     public function editFinalProps(Request $req){
+        $data = $req->all();
+
+        if($data['height'] < 0.01){
+            $data['height'] = 0.01; 
+        }
+        else if($data['height'] > 7.01){
+            $data['height'] = 7.01;
+        }
         return FinalMesh::where([
-            ['territory_id', $req['id']],
-            ['name', $req['name']],
+            ['territory_id', $data['id']],
+            ['name', $data['name']],
         ])->update([
-            'username' => $req['username'],
-            'height' => $req['height'],
-            'plantTime' => $req['plantTime'],
+            'username' => $data['username'],
+            'height' => $data['height'],
+            'plantTime' => $data['plantTime'],
         ]);
     }
 

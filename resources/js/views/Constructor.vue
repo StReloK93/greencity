@@ -75,6 +75,8 @@ export default {
 			const Native = Engine.Meshes.native;
 			Native.getMeshes(this.id);
 		});
+		
+		
 		this.reloadMeshes();
 	},
 	methods: {

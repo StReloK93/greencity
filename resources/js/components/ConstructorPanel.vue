@@ -28,12 +28,15 @@
 					/>
 				</main>
 				<main v-if="$store.state.mesh.info.parentname != 'plant'">
-					<label for="height" class="text-sm text-gray-400">Bino Balandligi</label>
+					<label for="height" class="text-sm text-gray-400">Bino Balandligi = <span class="text-gray-500 font-medium">{{$store.state.mesh.info.height}}</span></label>
 					<input
 						placeholder="Bino Balandligi"
 						id="height"
 						class="border-b border-green-600 my-1 outline-none p-2 w-full"
-						type="number"
+						type="range"
+						min="0.01"
+						max="7.1"
+						step="0.1"
 						v-model="$store.state.mesh.info.height"
 						@change="change"
 						@keyup="edit"
