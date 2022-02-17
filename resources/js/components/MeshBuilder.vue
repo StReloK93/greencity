@@ -31,7 +31,7 @@ export default {
          const points = this.MeshBuilder.Meshes.getPoints()
          const {data} = await axios.get(`/api/getparents/${this.id}`)
          console.log(data);
-         const meshName = 'createdMesh' + data.length
+         const meshName = 'createdMesh'
          if(points.length > 2){
             await axios.post(`/api/createparent`, {points:points, name: meshName,clientname: this.clientname,id: this.id})
             this.$emit('newmesh')

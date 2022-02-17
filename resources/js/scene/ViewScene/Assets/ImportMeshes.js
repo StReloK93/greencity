@@ -12,7 +12,7 @@ export default class {
          this.getActiveMeshes()
          var polMat = this.scene.getMaterialByName('pol')
          polMat.albedoColor = new BABYLON.Color3(0.7,0.7,0.6)
-         console.log(this.scene.materials);
+         
          this.scene.materials.forEach(material => {
             material.ambientColor = new BABYLON.Color3(0.2,0.2,0.2)
          });
