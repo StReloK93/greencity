@@ -51,7 +51,7 @@ export default class {
             mymesh.scaling.y = mesh.height
          }
          mymesh.actionManager = new BABYLON.ActionManager(this.scene)
-         if(mesh.hovered){
+         if(mesh.hovered == true){
             mymesh.material = this.scene.getMaterialByName('green')
             mymesh.mainmaterial = this.scene.getMaterialByName('green')
             this.actions.hover(mymesh)
