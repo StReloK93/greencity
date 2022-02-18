@@ -80,6 +80,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Carusel: _components_Carusel_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    console.log(this.$store.state.images);
   }
 });
 
@@ -395,33 +398,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
+  "class": "absolute bottom-0 right-2 p-2 bg-gray-200 font-medium text-gray-700"
+};
+var _hoisted_2 = {
   "class": "bg-white h-96"
 };
-var _hoisted_2 = ["src"];
+var _hoisted_3 = ["src"];
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "/images/close.png",
   "class": "imgwhite w-4"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_4 = [_hoisted_3];
+var _hoisted_5 = [_hoisted_4];
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "h-96 text-4xl flex items-center justify-center font-bold uppercase text-gray-300"
 }, " Rasm kiritilmagan ", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "/images/close.png",
   "class": "imgwhite w-4"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_7 = [_hoisted_6];
+var _hoisted_8 = [_hoisted_7];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Carusel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Carusel");
 
@@ -446,13 +452,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.$store.state.images, function (image) {
             return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", {
               key: image,
-              "class": "inline-block w-1/3 px-2"
-            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-              src: image,
-              "class": "object-cover w-full h-full border-2 border-white"
+              "class": "inline-block relative w-1/3 px-2"
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(image.created), 1
+            /* TEXT */
+            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+              src: image.img,
+              "class": "object-cover w-full h-full border-2 border-gray-200"
             }, null, 8
             /* PROPS */
-            , _hoisted_2)])]);
+            , _hoisted_3)])]);
           }), 128
           /* KEYED_FRAGMENT */
           ))];
@@ -465,7 +473,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return _ctx.$store.state.images = null;
         }),
         "class": "absolute flex items-center justify-center top-0 right-0 bg-red-700 p-2 px-4 m-3 shadow-xl hover:bg-red-500"
-      }, _hoisted_4)])])) : _ctx.$store.state.images && _ctx.$store.state.images.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", {
+      }, _hoisted_5)])])) : _ctx.$store.state.images && _ctx.$store.state.images.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", {
         key: 1,
         onClick: _cache[5] || (_cache[5] = function ($event) {
           return _ctx.$store.state.images = null;
@@ -474,12 +482,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         "class": "px-20 py-8 bg-black bg-opacity-30 shadow w-full",
         onClick: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["stop"]))
-      }, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[3] || (_cache[3] = function ($event) {
           return _ctx.$store.state.images = null;
         }),
         "class": "absolute flex items-center justify-center top-0 right-0 bg-red-700 p-2 px-4 m-3 shadow-xl hover:bg-red-500"
-      }, _hoisted_7)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+      }, _hoisted_8)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */
@@ -793,7 +801,11 @@ var Materials = /*#__PURE__*/_createClass(function Materials(scene) {
   //building
   var building = new BABYLON.StandardMaterial("building", scene);
   building.diffuseColor = new BABYLON.Color3.FromHexString('#EFDC9A');
-  building.specularColor = new BABYLON.Color3(0, 0, 0); //ground
+  building.specularColor = new BABYLON.Color3(0, 0, 0); //green
+
+  var green = new BABYLON.StandardMaterial("green", scene);
+  green.diffuseColor = new BABYLON.Color3.FromHexString('#79FFAD');
+  green.specularColor = new BABYLON.Color3(0, 0, 0); //ground
 
   var ground = new BABYLON.StandardMaterial("ground", scene);
   ground.diffuseColor = new BABYLON.Color3(1, 1, 1);
@@ -962,9 +974,8 @@ var _default = /*#__PURE__*/function () {
                   var getmesh = _this.scene.getNodeByName(mesh.parentname);
 
                   var mymesh = getmesh.clone(mesh.name);
-                  mymesh.material = _this.scene.getMaterialByName(mesh.materialname);
-                  mymesh.mainmaterial = _this.scene.getMaterialByName(mesh.materialname);
                   mymesh.setAbsolutePosition(position._x, position._y, position._z);
+                  mymesh.hovered = mesh.hovered;
 
                   if (mesh.parentname == 'plant') {
                     mymesh.scaling.y = 1;
@@ -974,7 +985,15 @@ var _default = /*#__PURE__*/function () {
 
                   mymesh.actionManager = new BABYLON.ActionManager(_this.scene);
 
-                  _this.actions.hover(mymesh);
+                  if (mesh.hovered) {
+                    mymesh.material = _this.scene.getMaterialByName('green');
+                    mymesh.mainmaterial = _this.scene.getMaterialByName('green');
+
+                    _this.actions.hover(mymesh);
+                  } else {
+                    mymesh.material = _this.scene.getMaterialByName(mesh.materialname);
+                    mymesh.mainmaterial = _this.scene.getMaterialByName(mesh.materialname);
+                  }
                 });
 
               case 4:
@@ -999,7 +1018,7 @@ var _default = /*#__PURE__*/function () {
       this.scene.onPointerPick = function (event, pick) {
         var mesh = pick.pickedMesh;
 
-        if (mesh && mesh.source.name == "plant") {
+        if (mesh && mesh.hovered == true) {
           _this2.getImages(mesh.name);
         }
       };

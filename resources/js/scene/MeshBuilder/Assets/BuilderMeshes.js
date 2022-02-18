@@ -129,8 +129,8 @@ export default class {
    }
 
    gridCoords(pickInfo) {
-      let coorX = this.numRound(pickInfo.pickedPoint.x, 1)
-      let coorZ = this.numRound(pickInfo.pickedPoint.z, 1)
+      let coorX = this.numRound(pickInfo.pickedPoint.x, 0.5)
+      let coorZ = this.numRound(pickInfo.pickedPoint.z, 0.5)
       return new BABYLON.Vector3(coorX, 1, coorZ)
    }
 

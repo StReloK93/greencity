@@ -7,6 +7,11 @@ export default class Materials {
         building.diffuseColor = new BABYLON.Color3.FromHexString('#EFDC9A')
         building.specularColor = new BABYLON.Color3(0, 0, 0);
 
+        //green
+        const green = new BABYLON.StandardMaterial("green", scene);
+        green.diffuseColor = new BABYLON.Color3.FromHexString('#79FFAD')
+        green.specularColor = new BABYLON.Color3(0, 0, 0);
+
         //ground
         const ground = new BABYLON.StandardMaterial("ground", scene);
         ground.diffuseColor = new BABYLON.Color3(1, 1, 1);

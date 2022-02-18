@@ -27,9 +27,9 @@
 			</div>
 		</section>
 		<section class="absolute top-0 right-0 m-5 flex">
-			<router-link title="Ko'rish" class="custom-btn" :to="{ name: 'territory', params: { id: id }}" ><i class="gg-eye"></i></router-link>
-			<router-link title="Maydonlar" class="custom-btn ml-4" to="/territories"><i class="gg-clapper-board"></i></router-link>
-			<router-link title="Bosh sahifa" class="custom-btn ml-4" to="/" > Bosh sahifa <img src="/images/home.png" class="ml-3 w-5"></router-link>
+			<a title="Ko'rish" class="custom-btn" :href="'/territory/'+id" ><i class="gg-eye"></i></a>
+			<a title="Maydonlar" class="custom-btn ml-4" href="/territories"><i class="gg-clapper-board"></i></a>
+			<a title="Bosh sahifa" class="custom-btn ml-4" href="/" > Bosh sahifa <img src="/images/home.png" class="ml-3 w-5"></a>
 		</section>
 		<canvas ref="canvas" class="w-full h-full" :class="{'cursor-move': $store.state.drag}" />
 		<MeshBuilder :id="id" @newmesh="reloadMeshes" @close="builderToggle = false" v-if="builderToggle" />

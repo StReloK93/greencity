@@ -8,7 +8,7 @@
 		<input id="fileinp" type="file" multiple ref="fileInput" accept="image/png, image/gif, image/jpeg" @input="onchange" hidden />
 		<div v-if="images.length > 0" class="w-full px-1 whitespace-nowrap  overflow-hidden overflow-x-scroll my-2">
 			<main class="relative inline-block w-1/3" v-for="(image, i) in images" :key="i">
-				<img :src="image" @click="mainImage(image)" :class="{'pl-2': i != 0}" class="cursor-pointer hover:opacity-80 object-cover w-full h-20" />
+				<img :src="image.img" @click="mainImage(image.img)" :class="{'pl-2': i != 0}" class="cursor-pointer hover:opacity-80 object-cover w-full h-20" />
 				<button class="absolute bottom-0 right-0 p-1" @click="deleteImage(i)">
 					<img src="/images/trash-bin.png" class="w-4">
 				</button>
@@ -33,7 +33,7 @@ export default {
 	},
 	mounted() {
 		this.images = store.state.mesh.images
-		this.mainImage(this.images[this.images.length - 1])
+		this.mainImage(this.images[this.images.length - 1].img)
 	},
 	methods: {
 		onchange() {

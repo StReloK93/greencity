@@ -29,7 +29,6 @@ __webpack_require__.r(__webpack_exports__);
     edit: function edit() {
       var _this = this;
 
-      store.state.mesh.active.scaling.y = store.state.mesh.info.height;
       if (this.interval) clearTimeout(this.interval);
       this.interval = setTimeout(function () {
         if (store.state.mesh.active) {
@@ -37,17 +36,26 @@ __webpack_require__.r(__webpack_exports__);
             name: store.state.mesh.active.name,
             height: store.state.mesh.info.height,
             username: store.state.mesh.info.username,
-            plantTime: store.state.mesh.info.plantTime
+            plantTime: store.state.mesh.info.plantTime,
+            hovered: store.state.mesh.info.hovered
           });
         }
       }, 800);
     },
     change: function change() {
+      console.log(store.state.mesh.info.hovered);
+
+      if (store.state.mesh.info.hovered == true) {
+        store.state.mesh.info.height = 0.01;
+      }
+
+      store.state.mesh.active.scaling.y = store.state.mesh.info.height;
       this.engine.editMesh({
         name: store.state.mesh.active.name,
         height: store.state.mesh.info.height,
         username: store.state.mesh.info.username,
-        plantTime: store.state.mesh.info.plantTime
+        plantTime: store.state.mesh.info.plantTime,
+        hovered: store.state.mesh.info.hovered
       });
     }
   },
@@ -174,7 +182,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.images = store.state.mesh.images;
-    this.mainImage(this.images[this.images.length - 1]);
+    this.mainImage(this.images[this.images.length - 1].img);
   },
   methods: {
     onchange: function onchange() {
@@ -483,30 +491,43 @@ var _hoisted_10 = {
   key: 1
 };
 var _hoisted_11 = {
+  key: 0
+};
+var _hoisted_12 = {
   "for": "height",
   "class": "text-sm text-gray-400"
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Bino Balandligi = ");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Bino Balandligi = ");
 
-var _hoisted_13 = {
+var _hoisted_14 = {
   "class": "text-gray-500 font-medium"
 };
-var _hoisted_14 = {
+var _hoisted_15 = {
+  "class": "flex items-center mt-2"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "text-sm text-gray-400 ml-2"
+}, "Maydon", -1
+/* HOISTED */
+);
+
+var _hoisted_17 = {
   key: 2
 };
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "height",
   "class": "text-sm text-gray-400"
 }, "Ekilgan sana", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = {
+var _hoisted_19 = {
   key: 3
 };
-var _hoisted_17 = {
+var _hoisted_20 = {
   "class": "flex-grow"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -547,7 +568,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 544
       /* HYDRATE_EVENTS, NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.$store.state.mesh.info.username]])]), _ctx.$store.state.mesh.info.parentname != 'plant' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$store.state.mesh.info.height), 1
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.$store.state.mesh.info.username]])]), _ctx.$store.state.mesh.info.parentname != 'plant' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_10, [_ctx.$store.state.mesh.info.hovered == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$store.state.mesh.info.height), 1
       /* TEXT */
       )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         placeholder: "Bino Balandligi",
@@ -562,38 +583,47 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         onChange: _cache[4] || (_cache[4] = function () {
           return $options.change && $options.change.apply($options, arguments);
-        }),
-        onKeyup: _cache[5] || (_cache[5] = function () {
-          return $options.edit && $options.edit.apply($options, arguments);
         })
       }, null, 544
       /* HYDRATE_EVENTS, NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.$store.state.mesh.info.height]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$store.state.mesh.info.parentname == 'plant' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.$store.state.mesh.info.height]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "checkbox",
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+          return _ctx.$store.state.mesh.info.hovered = $event;
+        }),
+        "true-value": "1",
+        "false-value": "0",
+        onChange: _cache[6] || (_cache[6] = function () {
+          return $options.change && $options.change.apply($options, arguments);
+        })
+      }, null, 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, _ctx.$store.state.mesh.info.hovered]]), _hoisted_16])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$store.state.mesh.info.parentname == 'plant' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         placeholder: "Bino Balandligi",
         id: "height",
         "class": "border-b border-green-600 my-1 outline-none p-2 w-full",
         type: "date",
-        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
           return _ctx.$store.state.mesh.info.plantTime = $event;
         }),
-        onChange: _cache[7] || (_cache[7] = function () {
+        onChange: _cache[8] || (_cache[8] = function () {
           return $options.change && $options.change.apply($options, arguments);
         }),
-        onKeyup: _cache[8] || (_cache[8] = function () {
+        onKeyup: _cache[9] || (_cache[9] = function () {
           return $options.edit && $options.edit.apply($options, arguments);
         })
       }, null, 544
       /* HYDRATE_EVENTS, NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.$store.state.mesh.info.plantTime]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$store.state.mesh.info.parentname == 'plant' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_16, [_ctx.$store.state.mesh.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Uploader, {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.$store.state.mesh.info.plantTime]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$store.state.mesh.info.hovered == true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_19, [_ctx.$store.state.mesh.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Uploader, {
         key: 0
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */
 
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "custom-btn shadow border w-full justify-center m-0",
-    onClick: _cache[9] || (_cache[9] = function ($event) {
+    onClick: _cache[10] || (_cache[10] = function ($event) {
       return _ctx.$store.dispatch('logout');
     })
   }, "Chiqish")])]);
@@ -800,9 +830,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "relative inline-block w-1/3",
       key: i
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-      src: image,
+      src: image.img,
       onClick: function onClick($event) {
-        return $options.mainImage(image);
+        return $options.mainImage(image.img);
       },
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
         'pl-2': i != 0
@@ -882,31 +912,38 @@ var _hoisted_11 = [_hoisted_10];
 var _hoisted_12 = {
   "class": "absolute top-0 right-0 m-5 flex"
 };
+var _hoisted_13 = ["href"];
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "gg-eye"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_15 = [_hoisted_14];
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  title: "Maydonlar",
+  "class": "custom-btn ml-4",
+  href: "/territories"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "gg-clapper-board"
-}, null, -1
+})], -1
 /* HOISTED */
 );
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Bosh sahifa ");
-
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  title: "Bosh sahifa",
+  "class": "custom-btn ml-4",
+  href: "/"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Bosh sahifa "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "/images/home.png",
   "class": "ml-3 w-5"
-}, null, -1
+})], -1
 /* HOISTED */
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
-
   var _component_MeshBuilder = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MeshBuilder");
 
   var _component_InfoButtons = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InfoButtons");
@@ -989,47 +1026,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.openMeshBuilder && $options.openMeshBuilder.apply($options, arguments);
     }),
     "class": "m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl cursor-pointer hover:bg-gray-200"
-  }, _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  }, _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     title: "Ko'rish",
     "class": "custom-btn",
-    to: {
-      name: 'territory',
-      params: {
-        id: $props.id
-      }
-    }
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_13];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
+    href: '/territory/' + $props.id
+  }, _hoisted_15, 8
   /* PROPS */
-  , ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    title: "Maydonlar",
-    "class": "custom-btn ml-4",
-    to: "/territories"
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_14];
-    }),
-    _: 1
-    /* STABLE */
-
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    title: "Bosh sahifa",
-    "class": "custom-btn ml-4",
-    to: "/"
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_15, _hoisted_16];
-    }),
-    _: 1
-    /* STABLE */
-
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", {
+  , _hoisted_13), _hoisted_16, _hoisted_17]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", {
     ref: "canvas",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-full h-full", {
       'cursor-move': _ctx.$store.state.drag
@@ -1385,7 +1388,11 @@ var Materials = /*#__PURE__*/_createClass(function Materials(scene) {
   //building
   var building = new BABYLON.StandardMaterial("building", scene);
   building.diffuseColor = new BABYLON.Color3.FromHexString('#EFDC9A');
-  building.specularColor = new BABYLON.Color3(0, 0, 0); //ground
+  building.specularColor = new BABYLON.Color3(0, 0, 0); //green
+
+  var green = new BABYLON.StandardMaterial("green", scene);
+  green.diffuseColor = new BABYLON.Color3.FromHexString('#79FFAD');
+  green.specularColor = new BABYLON.Color3(0, 0, 0); //ground
 
   var ground = new BABYLON.StandardMaterial("ground", scene);
   ground.diffuseColor = new BABYLON.Color3(1, 1, 1);
@@ -1693,7 +1700,7 @@ var _default = /*#__PURE__*/function () {
                 data = _yield$axios$post.data;
                 store.state.mesh.info = data;
 
-                if (!(data.parentname == 'plant')) {
+                if (!(data.parentname != 'plant')) {
                   _context2.next = 14;
                   break;
                 }
@@ -1732,19 +1739,20 @@ var _default = /*#__PURE__*/function () {
     key: "editMesh",
     value: function () {
       var _editMesh = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(_ref) {
-        var name, height, username, plantTime;
+        var name, height, username, plantTime, hovered;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                name = _ref.name, height = _ref.height, username = _ref.username, plantTime = _ref.plantTime;
+                name = _ref.name, height = _ref.height, username = _ref.username, plantTime = _ref.plantTime, hovered = _ref.hovered;
                 _context3.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/editfinalprops', {
                   id: this.id,
                   name: name,
                   height: height,
                   username: username,
-                  plantTime: plantTime
+                  plantTime: plantTime,
+                  hovered: hovered
                 });
 
               case 3:
@@ -2362,8 +2370,8 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "gridCoords",
     value: function gridCoords(pickInfo) {
-      var coorX = this.numRound(pickInfo.pickedPoint.x, 1);
-      var coorZ = this.numRound(pickInfo.pickedPoint.z, 1);
+      var coorX = this.numRound(pickInfo.pickedPoint.x, 0.5);
+      var coorZ = this.numRound(pickInfo.pickedPoint.z, 0.5);
       return new BABYLON.Vector3(coorX, 1, coorZ);
     }
   }, {

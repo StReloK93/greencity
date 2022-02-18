@@ -68,14 +68,16 @@ class ImageController extends Controller
 
     
     public function getIMG($req){
-        $result = DB::table('images')->select('image')->where([
+        $result = DB::table('images')->where([
             ['mesh_name', $req['name']],
         ])->get();
 
         $images = [];
         foreach($result as $key => $image){
-            $images[$key] = $image->image;
+            $images[$key]['img'] = $image->image;
+            $images[$key]['created'] = Carbon::parse($image->created_at)->format('d-m-Y');
         }
+
         return $images;
     }
 }

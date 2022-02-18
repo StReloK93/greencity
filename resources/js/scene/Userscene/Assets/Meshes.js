@@ -41,10 +41,9 @@ export default class {
          const position = JSON.parse(mesh.position)
          const getmesh = this.scene.getNodeByName(mesh.parentname)
          const mymesh = getmesh.clone(mesh.name)
-         mymesh.material = this.scene.getMaterialByName(mesh.materialname)
-         mymesh.mainmaterial = this.scene.getMaterialByName(mesh.materialname)
          mymesh.setAbsolutePosition(position._x, position._y, position._z)
-
+         
+         mymesh.hovered = mesh.hovered
          if (mesh.parentname == 'plant') {
             mymesh.scaling.y = 1
          }
@@ -52,7 +51,15 @@ export default class {
             mymesh.scaling.y = mesh.height
          }
          mymesh.actionManager = new BABYLON.ActionManager(this.scene)
-         this.actions.hover(mymesh)
+         if(mesh.hovered){
+            mymesh.material = this.scene.getMaterialByName('green')
+            mymesh.mainmaterial = this.scene.getMaterialByName('green')
+            this.actions.hover(mymesh)
+         }
+         else{
+            mymesh.material = this.scene.getMaterialByName(mesh.materialname)
+            mymesh.mainmaterial = this.scene.getMaterialByName(mesh.materialname)
+         }
       });
 
    }
@@ -61,7 +68,7 @@ export default class {
    pickidMesh() {
       this.scene.onPointerPick = (event, pick) => {
          const mesh = pick.pickedMesh
-         if (mesh && mesh.source.name == "plant") {
+         if (mesh && mesh.hovered == true) {
             this.getImages(mesh.name)
          }
 

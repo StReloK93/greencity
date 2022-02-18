@@ -37,7 +37,7 @@ class FinalController extends Controller
 
     public function getOneFinal(Request $req){
 
-        $mesh = FinalMesh::select('username', 'height','parentname','plantTime', 'materialname')
+        $mesh = FinalMesh::select('username', 'height','parentname','plantTime', 'materialname','hovered')
         ->where([
             ['territory_id', $req['id']],
             ['name', $req['name']],
@@ -65,6 +65,7 @@ class FinalController extends Controller
             'username' => $data['username'],
             'height' => $data['height'],
             'plantTime' => $data['plantTime'],
+            'hovered' => $data['hovered'],
         ]);
     }
 

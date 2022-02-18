@@ -147,7 +147,7 @@ export default class {
       store.state.mesh.info = data
 
 
-      if(data.parentname == 'plant'){
+      if(data.parentname != 'plant'){
          const images = await axios.post('/api/getimages', {
             id: this.id,
             name: name,
@@ -160,13 +160,14 @@ export default class {
    //GetMesh End
 
 
-   async editMesh({ name, height, username , plantTime}) {
+   async editMesh({ name, height, username , plantTime,hovered}) {
       await axios.post('/api/editfinalprops', {
          id: this.id,
          name: name,
          height: height,
          username: username,
          plantTime: plantTime,
+         hovered: hovered
       })
    }
 

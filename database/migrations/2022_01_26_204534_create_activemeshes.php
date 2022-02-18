@@ -24,6 +24,7 @@ class CreateActivemeshes extends Migration
             $table->double('height', 15, 8)->default(1);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('plantTime')->nullable();
+            $table->boolean('hovered')->default(false);
         });
     }
 

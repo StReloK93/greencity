@@ -3,9 +3,12 @@
 		<main @click="$store.state.images = null" v-if="$store.state.images && $store.state.images.length > 0" class="fixed flex items-center top-0 left-0 bg-black bg-opacity-60 w-full h-full z-50 ">
 			<div class="px-20 py-8 bg-black bg-opacity-30 shadow w-full"  @click.stop="">
 				<Carusel class="w-full" :itemCount="3">
-					<main v-for="image in $store.state.images" :key="image" class="inline-block w-1/3 px-2">
+					<main v-for="image in $store.state.images" :key="image" class="inline-block relative w-1/3 px-2">
+						<span class="absolute bottom-0 right-2 p-2 bg-gray-200 font-medium text-gray-700">
+							{{image.created}}
+						</span>
 						<div class="bg-white h-96">
-							<img :src="image" class="object-cover w-full h-full border-2 border-white">
+							<img :src="image.img" class="object-cover w-full h-full border-2 border-gray-200">
 						</div>
 					</main>
 				</Carusel>
@@ -31,6 +34,9 @@ import Carusel from '../components/Carusel.vue'
 export default {
    components:{
       Carusel
-   }
+   },
+	mounted() {
+		console.log(this.$store.state.images)
+	},
 }
 </script>
