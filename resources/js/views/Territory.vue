@@ -1,10 +1,13 @@
 <template>
 	<ImageViewer/>
-	<main class="fixed top-0 left-16 m-4">
+	<main class="fixed flex top-0 left-16 m-4 items-center">
 		<button @click="$router.go(-1)" class="custom-btn pl-2" to="/" >
 			<i class="gg-chevron-left mr-3"></i>
 			Orqaga
 		</button>
+		<span v-if="territory" class="font-medium text-xl ml-10 text-gray-600">
+			{{territory.name}}
+		</span>
 	</main>
 	<Authentication/>
 	<canvas class="h-full w-full border-transparent" ref="BuilderCanvas"></canvas>
@@ -19,7 +22,7 @@ export default {
 	props: ["id"],
 	data() {
 		return {
-
+			territory: null,
 		};
 	},
 	async mounted() {
@@ -29,7 +32,8 @@ export default {
 			await this.getParents();
 			await this.getActive();
       })
-
+		const {data} = await axios.get(`/api/territories/get/${this.id}`)
+		this.territory = data
 	},
 	methods: {
 		async getParents() {

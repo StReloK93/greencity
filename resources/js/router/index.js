@@ -8,7 +8,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 	if (store.state.user) {
-		if (to.matched.some(route => route.meta.guard === 'guest')) next({ name: 'constructor' })
+		if (to.matched.some(route => route.meta.guard === 'guest')) next({ name: 'territories' })
 		else next();
 
 	} else {

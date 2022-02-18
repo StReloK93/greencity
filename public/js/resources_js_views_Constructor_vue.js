@@ -296,7 +296,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       builderToggle: false,
       customMeshes: [],
       engine: null,
-      onload: null
+      onload: null,
+      territory: null
     };
   },
   beforeCreate: function beforeCreate() {
@@ -333,16 +334,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     var _this2 = this;
 
-    window.canvas = this.$refs.canvas;
-    window.Engine = (0,_scene_Mainscene_Canvas__WEBPACK_IMPORTED_MODULE_2__["default"])();
-    _hotkeys__WEBPACK_IMPORTED_MODULE_1__["default"].loaderFile(scene);
-    Engine.Meshes.id = this.id;
-    scene.onDataLoadedObservable.add(function () {
-      _this2.onload = true;
-      var Native = Engine.Meshes["native"];
-      Native.getMeshes(_this2.id);
-    });
-    this.reloadMeshes();
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var _yield$axios$get2, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              window.canvas = _this2.$refs.canvas;
+              window.Engine = (0,_scene_Mainscene_Canvas__WEBPACK_IMPORTED_MODULE_2__["default"])();
+              _hotkeys__WEBPACK_IMPORTED_MODULE_1__["default"].loaderFile(scene);
+              Engine.Meshes.id = _this2.id;
+              scene.onDataLoadedObservable.add(function () {
+                _this2.onload = true;
+                var Native = Engine.Meshes["native"];
+                Native.getMeshes(_this2.id);
+              });
+              _context2.next = 7;
+              return axios.get("/api/territories/get/".concat(_this2.id));
+
+            case 7:
+              _yield$axios$get2 = _context2.sent;
+              data = _yield$axios$get2.data;
+              _this2.territory = data;
+
+              _this2.reloadMeshes();
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
   },
   methods: {
     addFruct: function addFruct(fruct, plant) {
@@ -361,20 +385,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     reloadMeshes: function reloadMeshes() {
       var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var _yield$axios$get2, data, Native;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var _yield$axios$get3, data, Native;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 _this3.customMeshes = [];
-                _context2.next = 3;
+                _context3.next = 3;
                 return axios.get("/api/getparents/".concat(_this3.id));
 
               case 3:
-                _yield$axios$get2 = _context2.sent;
-                data = _yield$axios$get2.data;
+                _yield$axios$get3 = _context3.sent;
+                data = _yield$axios$get3.data;
                 Native = Engine.Meshes["native"];
                 data.forEach(function (element) {
                   Native.createMesh(element);
@@ -387,28 +411,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     deleteParentMesh: function deleteParentMesh(name) {
       var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var _yield$axios$get3, data, gine;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var _yield$axios$get4, data, gine;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.next = 2;
+                _context4.next = 2;
                 return axios.get("/api/deleteParent/".concat(name));
 
               case 2:
-                _yield$axios$get3 = _context3.sent;
-                data = _yield$axios$get3.data;
+                _yield$axios$get4 = _context4.sent;
+                data = _yield$axios$get4.data;
                 gine = Engine.Meshes;
                 data.forEach(function (mesh) {
                   gine.deleteInScene(mesh.name);
@@ -418,10 +442,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     }
   },
@@ -909,19 +933,23 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 
 var _hoisted_11 = [_hoisted_10];
 var _hoisted_12 = {
-  "class": "absolute top-0 right-0 m-5 flex"
+  "class": "absolute top-0 right-0 m-5 flex items-center"
 };
-var _hoisted_13 = ["href"];
+var _hoisted_13 = {
+  key: 0,
+  "class": "font-medium text-xl mr-10 text-gray-600"
+};
+var _hoisted_14 = ["href"];
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "gg-eye"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_15 = [_hoisted_14];
+var _hoisted_16 = [_hoisted_15];
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   title: "Maydonlar",
   "class": "custom-btn ml-4",
   href: "/territories"
@@ -931,7 +959,7 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   title: "Bosh sahifa",
   "class": "custom-btn ml-4",
   href: "/"
@@ -1025,13 +1053,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.openMeshBuilder && $options.openMeshBuilder.apply($options, arguments);
     }),
     "class": "m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl cursor-pointer hover:bg-gray-200"
-  }, _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_12, [$data.territory ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.territory.name), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     title: "Ko'rish",
     "class": "custom-btn",
     href: '/territory/' + $props.id
-  }, _hoisted_15, 8
+  }, _hoisted_16, 8
   /* PROPS */
-  , _hoisted_13), _hoisted_16, _hoisted_17]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", {
+  , _hoisted_14), _hoisted_17, _hoisted_18]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", {
     ref: "canvas",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-full h-full", {
       'cursor-move': _ctx.$store.state.drag

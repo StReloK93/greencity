@@ -1,7 +1,7 @@
 <template>
    <Authentication />
    <main class="fixed top-0 left-16 m-2">
-      <router-link title="Bosh sahifa" class="custom-btn my-2 shadow-sm" to="/" > Bosh sahifa <img src="/images/home.png" class="ml-3 w-5"></router-link>
+      <a title="Bosh sahifa" class="custom-btn my-2 shadow-sm" href="/" > Bosh sahifa <img src="/images/home.png" class="ml-3 w-5"></a>
    </main>
 	<section class="w-full bg-gray-300 pt-24">
       <div class="px-16 py-2">
@@ -26,11 +26,16 @@
                      <span>Manzarali daraxt</span><span>{{territory.manzarali}}</span>
                   </div>
                   <main class="flex justify-between">
-                     <button @click="openDeleteForm(territory.id)" class="custom-btn bg-gray-600 hover:bg-red-700">
-                        <i class="gg-trash text-white"></i>
-                     </button>
+                     <main class="flex items-center">
+                        <button @click="openDeleteForm(territory.id)" class="custom-btn bg-gray-600 hover:bg-red-700">
+                           <i class="gg-trash text-white"></i>
+                        </button>
+                        <a :href="'/territory/'+territory.id" class="custom-btn ml-2 px-2 justify-center shadow-sm">
+                           <i class="gg-eye"></i>
+                        </a>
+                     </main>
                      <a :href="'/constructor/'+territory.id" class="custom-btn justify-center shadow-sm">
-                        Constructor
+                        Loyihalash
                         <i class="gg-chevron-right ml-3"></i>
                      </a>
                   </main>

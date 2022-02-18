@@ -10,6 +10,7 @@ export default createStore({
             activeMesh: null,
             territories: null,
             images: null,
+            logined: null,
             mesh: {
                 active: null,
                 info: null,
@@ -24,11 +25,17 @@ export default createStore({
         }
     },
     actions: {
-        async login({ dispatch }, data) {
+        async login({state, dispatch }, data) {
             await axios.get('/sanctum/csrf-cookie')
-            await axios.post('/api/login', data)
-            var result = await dispatch('getUser')
-            if(result.status == 200) router.push({ name: 'territories' })
+            var login = await axios.post('/api/login', data)
+            if(login.status == 299){
+                state.logined = login.data.message
+            }
+            else{
+                state.logined = null
+                var result = await dispatch('getUser')
+                if(result.status == 200) router.push({ name: 'territories' })
+            }
         },
         async register({ dispatch }, props) {
             const result = await axios.post('/api/register', props)

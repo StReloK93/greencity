@@ -117,12 +117,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["id"],
   data: function data() {
-    return {};
+    return {
+      territory: null
+    };
   },
   mounted: function mounted() {
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var _yield$axios$get, data;
+
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -150,7 +154,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }, _callee);
               })));
 
-            case 3:
+              _context2.next = 5;
+              return axios.get("/api/territories/get/".concat(_this.id));
+
+            case 5:
+              _yield$axios$get = _context2.sent;
+              data = _yield$axios$get.data;
+              _this.territory = data;
+
+            case 8:
             case "end":
               return _context2.stop();
           }
@@ -163,7 +175,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var _yield$axios$get, data, Native;
+        var _yield$axios$get2, data, Native;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
@@ -174,8 +186,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios.get("/api/getparents/".concat(_this2.id));
 
               case 3:
-                _yield$axios$get = _context3.sent;
-                data = _yield$axios$get.data;
+                _yield$axios$get2 = _context3.sent;
+                data = _yield$axios$get2.data;
                 Native = _this2.Engine.Meshes;
                 data.forEach(function (element) {
                   Native.createMesh(element);
@@ -510,7 +522,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "fixed top-0 left-16 m-4"
+  "class": "fixed flex top-0 left-16 m-4 items-center"
 };
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -523,6 +535,10 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 
 var _hoisted_4 = [_hoisted_2, _hoisted_3];
 var _hoisted_5 = {
+  key: 0,
+  "class": "font-medium text-xl ml-10 text-gray-600"
+};
+var _hoisted_6 = {
   "class": "h-full w-full border-transparent",
   ref: "BuilderCanvas"
 };
@@ -537,7 +553,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "class": "custom-btn pl-2",
     to: "/"
-  }, _hoisted_4)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Authentication), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", _hoisted_5, null, 512
+  }, _hoisted_4), $data.territory ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.territory.name), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Authentication), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", _hoisted_6, null, 512
   /* NEED_PATCH */
   )], 64
   /* STABLE_FRAGMENT */
@@ -1166,9 +1184,9 @@ var _default = /*#__PURE__*/function () {
       this.camera.lowerRadiusLimit = 25;
       this.camera.upperRadiusLimit = 240; // this.camera.lowerAlphaLimit = -Math.PI/2
       // this.camera.upperAlphaLimit = -Math.PI/2
-      // this.camera.lowerBetaLimit = 0
-      // this.camera.upperBetaLimit = 0
-      // upperRadiusLimit
+
+      this.camera.lowerBetaLimit = 0;
+      this.camera.upperBetaLimit = Math.PI / 2.5; // upperRadiusLimit
 
       this.camera.inputs.attached.keyboard.detachControl(); // this.camera.inputs.attached.mousewheel.detachControl();
 

@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     //Territories routes
+    Route::get('/territories/get/{id}', [TerritoryController::class, 'getTerritory']);
     Route::get('/territories/getforuser', [TerritoryController::class, 'getForUser']);
     Route::get('/territories/getone/{id}', [TerritoryController::class, 'getOneTerritory']);
     Route::post('/territories/create', [TerritoryController::class, 'create']);

@@ -37,8 +37,8 @@ export default class {
       // this.camera.lowerAlphaLimit = -Math.PI/2
       // this.camera.upperAlphaLimit = -Math.PI/2
 
-      // this.camera.lowerBetaLimit = 0
-      // this.camera.upperBetaLimit = 0
+      this.camera.lowerBetaLimit = 0
+      this.camera.upperBetaLimit = Math.PI/2.5
       
       // upperRadiusLimit
       this.camera.inputs.attached.keyboard.detachControl();

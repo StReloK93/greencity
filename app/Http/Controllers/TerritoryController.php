@@ -14,6 +14,10 @@ use Auth;
 use File;
 class TerritoryController extends Controller
 {
+    public function getTerritory($id){
+        return Territory::find($id);
+    }
+
     public function create(Request $request){
         return Territory::create([
             'user_id' => Auth::user()->id,

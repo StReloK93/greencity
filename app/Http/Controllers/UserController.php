@@ -18,8 +18,8 @@ class UserController extends Controller
 
         if (!$this->guard()->attempt($credentials)) {
             return response()->json([
-                'message' => 'The provided credentials are incorrect.'
-            ], 500);
+                'message' => 'Parol yoki login xato!'
+            ], 299);
         }
 
         $token = $this->guard()->user()->createToken('auth-token')->plainTextToken;

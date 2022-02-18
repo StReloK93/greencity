@@ -26,7 +26,10 @@
 					<img src="/images/plus.png" style="transform: scale(0.5)">
 			</div>
 		</section>
-		<section class="absolute top-0 right-0 m-5 flex">
+		<section class="absolute top-0 right-0 m-5 flex items-center">
+			<span v-if="territory" class="font-medium text-xl mr-10 text-gray-600">
+				{{territory.name}}
+			</span>
 			<a title="Ko'rish" class="custom-btn" :href="'/territory/'+id" ><i class="gg-eye"></i></a>
 			<a title="Maydonlar" class="custom-btn ml-4" href="/territories"><i class="gg-clapper-board"></i></a>
 			<a title="Bosh sahifa" class="custom-btn ml-4" href="/" > Bosh sahifa <img src="/images/home.png" class="ml-3 w-5"></a>
@@ -56,7 +59,8 @@ export default {
 			builderToggle: false,
 			customMeshes: [],
 			engine: null,
-			onload: null
+			onload: null,
+			territory: null
 		};
 	},
 	async beforeCreate() {
@@ -65,7 +69,7 @@ export default {
 			router.push({ name: 'territories' })
 		}
 	},
-	mounted() {
+	async mounted() {
 		window.canvas = this.$refs.canvas
 		window.Engine = CanvasEngine()
 		HotKeys.loaderFile(scene);
@@ -76,7 +80,8 @@ export default {
 			Native.getMeshes(this.id);
 		});
 		
-		
+		const {data} = await axios.get(`/api/territories/get/${this.id}`)
+		this.territory = data
 		this.reloadMeshes();
 	},
 	methods: {
