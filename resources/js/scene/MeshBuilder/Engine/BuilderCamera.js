@@ -1,5 +1,5 @@
 export default class {
-   camera = new BABYLON.ArcRotateCamera("camera", -Math.PI/2, 0, 40, new BABYLON.Vector3(0, 0, 0))
+   camera = new BABYLON.ArcRotateCamera("camera", -Math.PI/2, 0, 45, new BABYLON.Vector3(0, 0, 0))
    constructor(canvas) {
       this.createCamera(canvas)
       this.limits()
@@ -9,6 +9,8 @@ export default class {
       this.camera.attachControl(canvas, true)
       this.camera.mode = 1
       this.camera.onViewMatrixChangedObservable.add(()=>{
+         scene.activeCamera.radius = this.camera.radius * 1.04
+         scene.activeCamera.target = this.camera.target
          this.orthographic(canvas)
       })
 
@@ -29,8 +31,8 @@ export default class {
    limits(){
       this.camera.useBouncingBehavior = true;
 
-      this.camera.lowerRadiusLimit = 5 
-      this.camera.upperRadiusLimit = 50 
+      this.camera.lowerRadiusLimit = 36
+      this.camera.upperRadiusLimit = 100 
 
 
       this.camera.lowerAlphaLimit = -Math.PI/2

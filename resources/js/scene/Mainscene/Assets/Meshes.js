@@ -59,8 +59,9 @@ export default class {
       }
    }
 
-   newMesh(name, parent, event,id) {
-      this.id = id
+   newMesh(name, parent, event) {
+      this.shiftName = name
+      this.shiftParent = parent
       this.clearActiveMesh()
       scene.onPointerPick = null
 
@@ -94,33 +95,48 @@ export default class {
       if (simulate) scene.simulatePointerMove(scene.pick(event.clientX, event.clientY))
    }
 
-   drop(mesh, parent = null) {
-      scene.onPointerPick = (event) => {
+   drop(mesh, parent = null) {//
+
+      scene.onPointerPick = (event) => {//-
+
          if (store.state.mesh.active == null) return
+
+
          if (event.button == 0) {
+
             if (parent) {
+               
                mesh.visibility = 1
                mesh.actionManager = new BABYLON.ActionManager(scene)
                this.actions.hover(mesh)
                this.saveMeshProps(mesh, parent)
+
+               if(event.shiftKey){
+                  this.clear()
+                  this.newMesh(this.shiftName,this.shiftParent, event)
+                  return
+               }
             }
-            else {
-               this.editMeshProps(mesh)
-            }
+            else this.editMeshProps(mesh)
+
          }
          if (event.button == 2) {
             if (parent) mesh.dispose()
             else mesh.setAbsolutePosition(this.position)
          }
 
-         scene.onPointerMove = null
-         store.state.mesh.active = null
-         store.state.drag = null
-         this.pickForDrag()
-      }
+         this.clear()
+
+      }//-
+
+   }//
+
+   clear(){
+      scene.onPointerMove = null
+      store.state.mesh.active = null
+      store.state.drag = null
+      this.pickForDrag()
    }
-
-
 
    async saveMeshProps(mesh, parent) {
       const name = mesh.name
@@ -134,6 +150,12 @@ export default class {
          id: this.id
       })
    }
+
+
+
+
+
+
 
 
    //GetMesh

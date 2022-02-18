@@ -1,5 +1,5 @@
 <template>
-   <section class="h-full w-full absolute top-0 left-0 p-8 bg-black bg-opacity-60 ">
+   <section class="h-full w-full absolute top-0 left-0 p-8 bg-black bg-opacity-60 opacity-80 z-50">
       <form class="relative h-full shadow border-2 border-gray-500" @keypress.enter.prevent="" @submit.prevent="insertPoints">
          <canvas class="h-full w-full border-transparent" ref="BuilderCanvas"></canvas>
          <button @click="$emit('close')" class="absolute flex items-center justify-center top-0 right-0 bg-red-500 p-2 px-4 m-3  shadow-xl  hover:bg-red-700">
@@ -30,7 +30,7 @@ export default {
       async insertPoints(){
          const points = this.MeshBuilder.Meshes.getPoints()
          const {data} = await axios.get(`/api/getparents/${this.id}`)
-         console.log(data);
+
          const meshName = 'createdMesh'
          if(points.length > 2){
             await axios.post(`/api/createparent`, {points:points, name: meshName,clientname: this.clientname,id: this.id})

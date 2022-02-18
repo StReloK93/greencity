@@ -128,15 +128,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _yield$axios$get = _context.sent;
                 data = _yield$axios$get.data;
-                console.log(data);
                 meshName = 'createdMesh';
 
                 if (!(points.length > 2)) {
-                  _context.next = 12;
+                  _context.next = 11;
                   break;
                 }
 
-                _context.next = 10;
+                _context.next = 9;
                 return axios.post("/api/createparent", {
                   points: points,
                   name: meshName,
@@ -144,12 +143,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   id: _this.id
                 });
 
-              case 10:
+              case 9:
                 _this.$emit('newmesh');
 
                 _this.$emit('close');
 
-              case 12:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -349,12 +348,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addFruct: function addFruct(fruct, plant) {
       this.fructMenu = false;
       var meshClass = Engine.Meshes;
-      meshClass.newMesh(fruct, plant, event, this.id);
+      meshClass.newMesh(fruct, plant, event);
     },
     addBuilding: function addBuilding(build, house) {
       this.customMenu = false;
       var meshClass = Engine.Meshes;
-      meshClass.newMesh(build, house, event, this.id);
+      meshClass.newMesh(build, house, event);
     },
     openMeshBuilder: function openMeshBuilder() {
       this.builderToggle = !this.builderToggle;
@@ -691,7 +690,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "h-full w-full absolute top-0 left-0 p-8 bg-black bg-opacity-60"
+  "class": "h-full w-full absolute top-0 left-0 p-8 bg-black bg-opacity-60 opacity-80 z-50"
 };
 var _hoisted_2 = {
   "class": "h-full w-full border-transparent",
@@ -1096,6 +1095,9 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   name: "o'rik",
   color: '#FFAFAF'
+}, {
+  name: "gujum",
+  color: '#6BD0FF'
 }]);
 
 /***/ }),
@@ -1565,8 +1567,9 @@ var _default = /*#__PURE__*/function () {
     }
   }, {
     key: "newMesh",
-    value: function newMesh(name, parent, event, id) {
-      this.id = id;
+    value: function newMesh(name, parent, event) {
+      this.shiftName = name;
+      this.shiftParent = parent;
       this.clearActiveMesh();
       scene.onPointerPick = null;
       var getmesh = scene.getNodeByName(parent); //tanlash
@@ -1614,7 +1617,9 @@ var _default = /*#__PURE__*/function () {
 
       var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
+      //
       scene.onPointerPick = function (event) {
+        //-
         if (store.state.mesh.active == null) return;
 
         if (event.button == 0) {
@@ -1625,21 +1630,33 @@ var _default = /*#__PURE__*/function () {
             _this3.actions.hover(mesh);
 
             _this3.saveMeshProps(mesh, parent);
-          } else {
-            _this3.editMeshProps(mesh);
-          }
+
+            if (event.shiftKey) {
+              _this3.clear();
+
+              _this3.newMesh(_this3.shiftName, _this3.shiftParent, event);
+
+              return;
+            }
+          } else _this3.editMeshProps(mesh);
         }
 
         if (event.button == 2) {
           if (parent) mesh.dispose();else mesh.setAbsolutePosition(_this3.position);
         }
 
-        scene.onPointerMove = null;
-        store.state.mesh.active = null;
-        store.state.drag = null;
+        _this3.clear();
+      }; //-
 
-        _this3.pickForDrag();
-      };
+    } //
+
+  }, {
+    key: "clear",
+    value: function clear() {
+      scene.onPointerMove = null;
+      store.state.mesh.active = null;
+      store.state.drag = null;
+      this.pickForDrag();
     }
   }, {
     key: "saveMeshProps",
@@ -2461,7 +2478,7 @@ var _default = /*#__PURE__*/function () {
   function _default(canvas) {
     _classCallCheck(this, _default);
 
-    _defineProperty(this, "camera", new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, 0, 40, new BABYLON.Vector3(0, 0, 0)));
+    _defineProperty(this, "camera", new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, 0, 45, new BABYLON.Vector3(0, 0, 0)));
 
     this.createCamera(canvas);
     this.limits();
@@ -2475,6 +2492,9 @@ var _default = /*#__PURE__*/function () {
       this.camera.attachControl(canvas, true);
       this.camera.mode = 1;
       this.camera.onViewMatrixChangedObservable.add(function () {
+        scene.activeCamera.radius = _this.camera.radius * 1.04;
+        scene.activeCamera.target = _this.camera.target;
+
         _this.orthographic(canvas);
       }); //listener for resize orthographic camera
 
@@ -2495,8 +2515,8 @@ var _default = /*#__PURE__*/function () {
     key: "limits",
     value: function limits() {
       this.camera.useBouncingBehavior = true;
-      this.camera.lowerRadiusLimit = 5;
-      this.camera.upperRadiusLimit = 50;
+      this.camera.lowerRadiusLimit = 36;
+      this.camera.upperRadiusLimit = 100;
       this.camera.lowerAlphaLimit = -Math.PI / 2;
       this.camera.upperAlphaLimit = -Math.PI / 2;
       this.camera.lowerBetaLimit = 0;

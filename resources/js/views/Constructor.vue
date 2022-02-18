@@ -83,13 +83,13 @@ export default {
 		addFruct(fruct, plant) {
 			this.fructMenu = false;
 			const meshClass = Engine.Meshes;
-			meshClass.newMesh(fruct, plant, event, this.id);
+			meshClass.newMesh(fruct, plant, event);
 		},
 
 		addBuilding(build, house) {
 			this.customMenu = false;
 			const meshClass = Engine.Meshes;
-			meshClass.newMesh(build, house, event, this.id);
+			meshClass.newMesh(build, house, event);
 		},
 
 		openMeshBuilder() {
@@ -126,6 +126,3 @@ export default {
 	},
 };
 </script>
-
-
-[{"x":11.5,"y":1,"z":4},{"x":0.5,"y":1,"z":4},{"x":0.5,"y":1,"z":5},{"x":-2.5,"y":1,"z":5},{"x":-2.5,"y":1,"z":4},{"x":-13.5,"y":1,"z":4},{"x":-13.5,"y":1,"z":-2},{"x":-3.5,"y":1,"z":-2},{"x":-3.5,"y":1,"z":-4.5},{"x":1.5,"y":1,"z":-4.5},{"x":1.5,"y":1,"z":-2},{"x":11.5,"y":1,"z":-2}]

@@ -583,6 +583,9 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   name: "o'rik",
   color: '#FFAFAF'
+}, {
+  name: "gujum",
+  color: '#6BD0FF'
 }]);
 
 /***/ }),
