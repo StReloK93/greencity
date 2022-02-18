@@ -8,4 +8,5 @@ export default [
    {name: 'nok',        color: '#CF9D46'},
    {name: 'tut',        color: '#EEEDED'},
    {name: "o'rik",        color: '#FFAFAF'},
+   {name: "gujum",        color: '#6BD0FF'},
 ]
