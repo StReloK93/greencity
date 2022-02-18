@@ -997,7 +997,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [_hoisted_5, $data.customMenu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", {
     key: 0,
     onClick: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["stop"])),
-    "class": "menu absolute bg-gray-100 shadow-xl px-3 py-1 top-0 text-gray-500"
+    "class": "menu absolute bg-gray-100 shadow-xl px-3 py-1 top-0 text-gray-500 overflow-y-auto h-96"
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.customMeshes, function (custom, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: index,

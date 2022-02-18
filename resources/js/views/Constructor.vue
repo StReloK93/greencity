@@ -11,7 +11,7 @@
 			</div>
 			<div v-if="customMeshes.length > 0" @click="customMenu = !customMenu;fructMenu = false" :class="{'bg-gray-200': customMenu}" class="m-2 mb-5 w-14 bg-white p-4 rounded-full shadow-xl relative cursor-pointer hover:bg-gray-200">
 				<img src="/images/build.png">
-				<main @click.stop="" v-if="customMenu" class="menu absolute bg-gray-100 shadow-xl px-3 py-1 top-0 text-gray-500">
+				<main @click.stop="" v-if="customMenu" class="menu absolute bg-gray-100 shadow-xl px-3 py-1 top-0 text-gray-500 overflow-y-auto h-96">
 					<div v-for="(custom,index) in customMeshes" :key="index"  class="flex items-center capitalize justify-between my-2">
 						<aside @click="addBuilding('building',custom.name)" class="cursor-pointer bg-gray-200 hover:bg-gray-300  hover:text-red-50 flex-grow p-1 pl-2">
 							{{custom.clientname}}
@@ -126,3 +126,6 @@ export default {
 	},
 };
 </script>
+
+
+[{"x":11.5,"y":1,"z":4},{"x":0.5,"y":1,"z":4},{"x":0.5,"y":1,"z":5},{"x":-2.5,"y":1,"z":5},{"x":-2.5,"y":1,"z":4},{"x":-13.5,"y":1,"z":4},{"x":-13.5,"y":1,"z":-2},{"x":-3.5,"y":1,"z":-2},{"x":-3.5,"y":1,"z":-4.5},{"x":1.5,"y":1,"z":-4.5},{"x":1.5,"y":1,"z":-2},{"x":11.5,"y":1,"z":-2}]

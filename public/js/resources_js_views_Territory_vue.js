@@ -985,7 +985,7 @@ var _default = /*#__PURE__*/function () {
 
                   mymesh.actionManager = new BABYLON.ActionManager(_this.scene);
 
-                  if (mesh.hovered) {
+                  if (mesh.hovered == true) {
                     mymesh.material = _this.scene.getMaterialByName('green');
                     mymesh.mainmaterial = _this.scene.getMaterialByName('green');
 
