@@ -7,8 +7,8 @@ use App\Models\ParentMesh;
 use App\Models\Territory;
 use App\Models\FinalMesh;
 
+use App\Http\Controllers\Tree;
 use App\Models\Image;
-
 use App\Models\User;
 use Auth;
 use File;
@@ -65,11 +65,11 @@ class TerritoryController extends Controller
             $territory[$key]->manzarali = FinalMesh::where([
                 ['parentname' , 'plant'],
                 ['territory_id' , $value->id],
-            ])->whereIn('materialname', ['archa', 'qayragoch'])->count();
+            ])->whereIn('materialname', Tree::manzarali())->count();
             $territory[$key]->mevali = FinalMesh::where([
                 ['parentname' , 'plant'],
                 ['territory_id' , $value->id],
-            ])->whereNotIn('materialname', ['archa', 'qayragoch'])->count();
+            ])->whereNotIn('materialname', Tree::manzarali())->count();
         }
         return $territory;
     }

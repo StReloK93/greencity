@@ -121,20 +121,3 @@ export default {
 	},
 };
 </script>
-<style>
-/* полоса прокрутки (скроллбар) */
-::-webkit-scrollbar {
-    width: 6px; /* ширина для вертикального скролла */
-    height: 6px; /* высота для горизонтального скролла */
-    background-color: #aaa;
-}
-
-/* ползунок скроллбара */
-::-webkit-scrollbar-thumb {
-    background-color: #05ae23;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: #253861;
-}
-</style>

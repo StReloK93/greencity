@@ -4,7 +4,7 @@
       <a title="Bosh sahifa" class="custom-btn my-2 shadow-sm" href="/" > Bosh sahifa <img src="/images/home.png" class="ml-3 w-5"></a>
    </main>
 	<section class="w-full bg-gray-300 pt-24">
-      <div class="px-16 py-2">
+      <div class="px-16 py-2 h-full overflow-y-auto">
          <main v-if="territories.length > 0" class="flex flex-wrap">
             <aside v-for="(territory,index) in territories" :key="index" class="mb-3 w-1/4 px-2">
                <main class="p-5 shadow-inner bg-gray-100 text-gray-600 inline-block rounded w-full">

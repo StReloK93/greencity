@@ -214,7 +214,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = {
   ref: "information",
-  "class": "fixed flex bottom-4 left-4 right-4 h-26 p-2 shadow-inner bg-black bg-opacity-25"
+  "class": "fixed flex flex-col bottom-2 left-2 top-2 w-80 overflow-y-auto p-2 shadow-inner bg-black bg-opacity-25 text-sm"
 };
 var _hoisted_2 = ["href"];
 var _hoisted_3 = {
@@ -232,7 +232,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.$store.state.territories, function (territory) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
-      "class": "bg-green-500 mr-4 bg-opacity-60 shadow w-60 uppercase flex items-center justify-between font-medium hover:bg-green-600",
+      "class": "bg-green-500 w-full mb-4 bg-opacity-60 shadow uppercase flex items-center justify-between font-medium hover:bg-green-600",
       href: '/territory/' + territory.id,
       key: territory
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(territory.name), 1
@@ -263,7 +263,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = {
   key: 0,
-  "class": "fixed top-0 left-0 m-4 bg-black bg-opacity-50 px-4 py-4 text-gray-200 shadow-inner rounded w-64"
+  "class": "fixed top-20 right-2 mr-16 bg-black bg-opacity-25 px-4 py-4 text-gray-200 shadow-inner rounded w-64"
 };
 var _hoisted_2 = {
   "class": "flex justify-between items-center mb-4"
@@ -991,7 +991,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.text-holo[data-v-63cd6604]{\r\n   color: #a5e6ff;\n}\n.lift-enter-active[data-v-63cd6604], .lift-leave-active[data-v-63cd6604] {\r\n  transition: 0.3s;\r\n  opacity: 1;\r\n  transform: translateY(0);\n}\n.lift-enter-from[data-v-63cd6604],.lift-leave-to[data-v-63cd6604]  {\r\n  opacity: 0;\r\n  transform: translateY(100%);\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.text-holo[data-v-63cd6604]{\r\n   color: #a5e6ff;\n}\n.lift-enter-active[data-v-63cd6604], .lift-leave-active[data-v-63cd6604] {\r\n  transition: 0.3s;\r\n  opacity: 1;\r\n  transform: translateX(0);\n}\n.lift-enter-from[data-v-63cd6604],.lift-leave-to[data-v-63cd6604]  {\r\n  opacity: 0;\r\n  transform: translateX(-100%);\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

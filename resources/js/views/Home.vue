@@ -44,11 +44,11 @@ export default {
 .lift-enter-active, .lift-leave-active {
   transition: 0.3s;
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 .lift-enter-from ,.lift-leave-to  {
   opacity: 0;
-  transform: translateY(100%);
+  transform: translateX(-100%);
 }
 
 </style>

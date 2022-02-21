@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Tree;
 use Illuminate\Http\Request;
 use App\Models\FinalMesh;
 use App\Models\Image;
 use Carbon\Carbon;
-
 use File;
 
 class FinalController extends Controller
@@ -72,11 +72,11 @@ class FinalController extends Controller
     public function plantInfromation(){
         $mevali = FinalMesh::where([
             ['parentname' , 'plant'],
-        ])->whereNotIn('materialname', ['archa', 'qayragoch'])->count();
+        ])->whereNotIn('materialname', Tree::manzarali())->count();
 
         $manzarali = FinalMesh::where([
             ['parentname' , 'plant'],
-        ])->whereIn('materialname', ['archa', 'qayragoch'])->count();
+        ])->whereIn('materialname', Tree::manzarali())->count();
 
         $all = FinalMesh::where([
             ['parentname' , 'plant'],

@@ -533,7 +533,7 @@ var _hoisted_2 = {
   "class": "w-full bg-gray-300 pt-24"
 };
 var _hoisted_3 = {
-  "class": "px-16 py-2"
+  "class": "px-16 py-2 h-full overflow-y-auto"
 };
 var _hoisted_4 = {
   key: 0,

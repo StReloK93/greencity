@@ -92,4 +92,20 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
 	display: none;
 }
+
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+    width: 5px; /* ширина для вертикального скролла */
+    height: 5px; /* высота для горизонтального скролла */
+    background-color: #aaa;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+    background-color: #05ae23;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #253861;
+}
 </style>
