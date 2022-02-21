@@ -806,6 +806,80 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/scene/Addons/Grid.js":
+/*!*******************************************!*\
+  !*** ./resources/js/scene/Addons/Grid.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _default)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var _default = /*#__PURE__*/function () {
+  function _default(_ref) {
+    var _ref$lines = _ref.lines,
+        lines = _ref$lines === void 0 ? false : _ref$lines,
+        _ref$grid = _ref.grid,
+        grid = _ref$grid === void 0 ? false : _ref$grid;
+
+    _classCallCheck(this, _default);
+
+    if (lines) this.Lines();
+    if (grid) this.Grid();
+  }
+
+  _createClass(_default, [{
+    key: "Lines",
+    value: function Lines() {
+      var pointsX = [new BABYLON.Vector3(-300, 0, 0), new BABYLON.Vector3(300, 0, 0)];
+      var colorsX = [new BABYLON.Color4(0.5, 0, 0, 0.3), new BABYLON.Color4(0.5, 0, 0, 0.3)];
+      var linex = BABYLON.MeshBuilder.CreateLines("lineX", {
+        points: pointsX,
+        colors: colorsX
+      });
+      linex.isPickable = false;
+      linex.position.y = 0.002;
+      var pointsZ = [new BABYLON.Vector3(0, 0, -300), new BABYLON.Vector3(0, 0, 300)];
+      var colorZ = [new BABYLON.Color4(0, 0, 0.5, 0.3), new BABYLON.Color4(0, 0, 0.5, 0.3)];
+      var linez = BABYLON.MeshBuilder.CreateLines("lineZ", {
+        points: pointsZ,
+        colors: colorZ
+      });
+      linez.isPickable = false;
+      linez.position.y = 0.002;
+    }
+  }, {
+    key: "Grid",
+    value: function Grid() {
+      var groundMaterial = new BABYLON.GridMaterial("groundMaterial");
+      groundMaterial.majorUnitFrequency = 1;
+      groundMaterial.minorUnitVisibility = 0.1;
+      groundMaterial.gridRatio = 1;
+      groundMaterial.backFaceCulling = false;
+      groundMaterial.mainColor = new BABYLON.Color3(1, 1, 1);
+      groundMaterial.lineColor = new BABYLON.Color3(1.0, 1.0, 1.0);
+      groundMaterial.opacity = 0.3;
+      var ground = BABYLON.Mesh.CreateGround("GridMain", 20000, 20000, 2);
+      ground.position.y = 0.001;
+      ground.material = groundMaterial;
+      ground.isPickable = false;
+    }
+  }]);
+
+  return _default;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/scene/Addons/Materials.js":
 /*!************************************************!*\
   !*** ./resources/js/scene/Addons/Materials.js ***!
@@ -966,6 +1040,7 @@ var _default = /*#__PURE__*/function () {
       if (this.scene.getNodeByName(mesh.name)) return;
       var readypoints = [];
       var points = JSON.parse(mesh.points);
+      if (points[0].x < points[1].x || points[0].z < points[1].z) points = points.reverse();
       points.forEach(function (point) {
         readypoints.push(new BABYLON.Vector3(point.x, point.y, point.z));
       });
@@ -1111,6 +1186,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Assets_Meshes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Assets/Meshes */ "./resources/js/scene/Userscene/Assets/Meshes.js");
 /* harmony import */ var _engine_Camera__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine/Camera */ "./resources/js/scene/Userscene/engine/Camera.js");
 /* harmony import */ var _Addons_Materials__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Addons/Materials */ "./resources/js/scene/Addons/Materials.js");
+/* harmony import */ var _Addons_Grid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Addons/Grid */ "./resources/js/scene/Addons/Grid.js");
+
 
 
 
@@ -1121,6 +1198,10 @@ __webpack_require__.r(__webpack_exports__);
   var CameraClass = new _engine_Camera__WEBPACK_IMPORTED_MODULE_3__["default"](canvas);
   var MeshesClass = new _Assets_Meshes__WEBPACK_IMPORTED_MODULE_2__["default"](SceneClass.scene);
   var LightClass = new _engine_Light__WEBPACK_IMPORTED_MODULE_1__["default"]();
+  new _Addons_Grid__WEBPACK_IMPORTED_MODULE_5__["default"]({
+    lines: true,
+    grid: true
+  });
   new _Addons_Materials__WEBPACK_IMPORTED_MODULE_4__["default"](SceneClass.scene);
   return {
     Scene: SceneClass,

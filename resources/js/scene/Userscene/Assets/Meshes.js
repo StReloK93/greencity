@@ -18,7 +18,9 @@ export default class {
 
       const readypoints = []
 
-      const points = JSON.parse(mesh.points)
+      var points = JSON.parse(mesh.points)
+      if(points[0].x < points[1].x || points[0].z < points[1].z) points = points.reverse()
+      
       points.forEach(point => {
          readypoints.push(new BABYLON.Vector3(point.x, point.y, point.z))
       });

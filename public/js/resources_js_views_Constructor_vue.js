@@ -181,13 +181,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.images = store.state.mesh.images;
-    this.mainImage(this.images[this.images.length - 1].img);
+    if (this.images[this.images.length - 1]) this.mainImage(this.images[this.images.length - 1].img);
   },
   methods: {
     onchange: function onchange() {
       this.addfiles(this.$refs.fileInput.files);
       this.sendFilesToServer(this.files);
-      this.mainImage(this.images[this.images.length - 1]);
       this.$refs.fileInput.value = null;
     },
     addfiles: function addfiles(imagesArr) {
@@ -216,8 +215,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/api/upload", formdata).then(function (response) {
         _this.images = response.data;
         _this.files = [];
-
-        _this.mainImage(_this.images[_this.images.length - 1]);
+        if (_this.images[_this.images.length - 1]) _this.mainImage(_this.images[_this.images.length - 1].img);
       });
     },
     deleteInServer: function deleteInServer() {
@@ -227,9 +225,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteImage: function deleteImage(i) {
-      if (this.images[i] == this.$refs.imagePreview.getAttribute('src')) {
+      if (this.images[i].img == this.$refs.imagePreview.getAttribute('src')) {
         this.images.splice(i, 1);
-        this.mainImage(this.images[this.images.length - 1]);
+        if (this.images[this.images.length - 1]) this.mainImage(this.images[this.images.length - 1].img);else this.mainImage(undefined);
         this.deleteInServer();
         return;
       }
@@ -240,9 +238,6 @@ __webpack_require__.r(__webpack_exports__);
     mainImage: function mainImage(imageblob) {
       var _this2 = this;
 
-      if (imageblob == null) return;
-      console.log(this.$refs.imagePreview.getAttribute('src'), imageblob);
-      if (this.$refs.imagePreview.getAttribute('src') == imageblob) return;
       this.bool = false;
       setTimeout(function () {
         if (_this2.$refs.imagePreview) {

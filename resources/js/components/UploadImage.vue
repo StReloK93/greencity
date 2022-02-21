@@ -33,13 +33,12 @@ export default {
 	},
 	mounted() {
 		this.images = store.state.mesh.images
-		this.mainImage(this.images[this.images.length - 1].img)
+		if(this.images[this.images.length - 1]) this.mainImage(this.images[this.images.length - 1].img)
 	},
 	methods: {
 		onchange() {
 			this.addfiles(this.$refs.fileInput.files)
 			this.sendFilesToServer(this.files)
-			this.mainImage(this.images[this.images.length - 1])
 			this.$refs.fileInput.value = null
 		},
 		addfiles(imagesArr) {
@@ -64,7 +63,7 @@ export default {
 			axios.post("/api/upload", formdata).then((response) => {
 				this.images = response.data
 				this.files = []
-				this.mainImage(this.images[this.images.length - 1])
+				if(this.images[this.images.length - 1]) this.mainImage(this.images[this.images.length - 1].img)
 			});
 		},
 		deleteInServer(){
@@ -72,10 +71,10 @@ export default {
 		},
 
 		deleteImage(i) {
-			if(this.images[i] == this.$refs.imagePreview.getAttribute('src')){
+			if(this.images[i].img == this.$refs.imagePreview.getAttribute('src')){
 				this.images.splice(i, 1)
-
-				this.mainImage(this.images[this.images.length - 1])
+				if(this.images[this.images.length - 1]) this.mainImage(this.images[this.images.length - 1].img)
+				else this.mainImage(undefined)
 				this.deleteInServer()
 				return
 			}
@@ -83,9 +82,6 @@ export default {
 			this.deleteInServer()
 		},
 		mainImage(imageblob) {
-			if(imageblob == null) return
-			console.log(this.$refs.imagePreview.getAttribute('src') ,imageblob);
-			if(this.$refs.imagePreview.getAttribute('src') == imageblob) return
 			this.bool = false
 
 			setTimeout(() => {
