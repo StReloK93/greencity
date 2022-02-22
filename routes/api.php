@@ -28,7 +28,7 @@ Route::get('/plantInfromation', [FinalController::class, 'plantInfromation']);
 
 Route::post('/territories/getall', [TerritoryController::class, 'getTerritories']);
 Route::post('/getimages', [ImageController::class, 'getImages']);
-
+Route::get('/territories/get/{id}', [TerritoryController::class, 'getTerritory']);
 
 Route::middleware('auth:sanctum')->group(function () {
     //api/savepoint
@@ -55,13 +55,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     //Territories routes
-    Route::get('/territories/get/{id}', [TerritoryController::class, 'getTerritory']);
+
     Route::get('/territories/getforuser', [TerritoryController::class, 'getForUser']);
     Route::get('/territories/getone/{id}', [TerritoryController::class, 'getOneTerritory']);
     Route::post('/territories/create', [TerritoryController::class, 'create']);
     Route::post('/territories/update', [TerritoryController::class, 'update']);
     Route::get('/territories/delete/{id}', [TerritoryController::class, 'delete']);
-
 });
 
 
