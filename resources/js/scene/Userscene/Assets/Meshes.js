@@ -19,21 +19,24 @@ export default class {
       const readypoints = []
 
       var points = JSON.parse(mesh.points)
-      if(points[0].x < points[1].x || points[0].z > points[1].z) points = points.reverse()
-      
+   
       points.forEach(point => {
          readypoints.push(new BABYLON.Vector3(point.x, point.y, point.z))
       });
 
       let customMesh = BABYLON.MeshBuilder.ExtrudePolygon(mesh.name, { shape: readypoints, depth: 5, wrap: true }, this.scene)
       customMesh.scaling = new BABYLON.Vector3(1, 1, -1)
-      customMesh.material = this.scene.getMaterialByName('building')
-      customMesh.mainmaterial = this.scene.getMaterialByName('building')
-      customMesh.position.y = 0.01
 
+      customMesh.material = this.scene.getMaterialByName('building')
+      customMesh.material.sideOrientation = 2
+      customMesh.material.backFaceCulling = false
+      customMesh.mainmaterial = this.scene.getMaterialByName('building')
+
+      customMesh.position.y = 0.01
       customMesh.position.x = 40000
       customMesh.position.z = 40000
       customMesh.rotation.x = Math.PI
+      
    }
 
    async getMeshes(id) {
@@ -51,6 +54,7 @@ export default class {
          }
          else {
             mymesh.scaling.y = mesh.height
+            // mymesh.setPivotMatrix(BABYLON.Matrix.Translation(10, 1, 10), false);
          }
          mymesh.actionManager = new BABYLON.ActionManager(this.scene)
          if(mesh.hovered == true){

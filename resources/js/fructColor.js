@@ -9,7 +9,8 @@ export default [
    {name: 'tut',        color: '#EEEDED'},
    {name: "o'rik",        color: '#FFAFAF'},
    {name: "gujum",        color: '#6BD0FF'},
-   {name: "safna",        color: '#000000'},
+   {name: "sasna",        color: '#000000'},
    {name: "akatsiya",        color: '#fd0b1c'},
    {name: "yasin",        color: '#F3CE56'},
+   {name: "jiyda",        color: '#A43481'},
 ]
