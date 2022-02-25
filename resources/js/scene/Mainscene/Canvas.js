@@ -4,6 +4,8 @@ import Meshes from './Assets/Meshes'
 import Camera from './engine/Camera'
 import Grid from '../Addons/Grid'
 import Materials from '../Addons/Materials'
+
+
 export default function () {
    const SceneClass = new Scene()
    const CameraClass = new Camera()

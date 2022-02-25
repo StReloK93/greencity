@@ -1,5 +1,7 @@
 import Actions from '../../Addons/Actions'
 
+
+
 export default class {
    
    constructor() {
@@ -44,13 +46,13 @@ export default class {
          const mymesh = getmesh.clone(mesh.name)
          mymesh.material = scene.getMaterialByName(mesh.materialname)
          mymesh.mainmaterial = scene.getMaterialByName(mesh.materialname)
-         mymesh.setAbsolutePosition(position._x, position._y, position._z)
+
+         mymesh.setAbsolutePosition(isNumber(position._x), isNumber(position._y), isNumber(position._z))
          
          if (mesh.parentname == 'plant') {
             mymesh.scaling.y = 1
          }
          else {
-            
             mymesh.scaling.y = mesh.height
          }
          mymesh.actionManager = new BABYLON.ActionManager(scene)

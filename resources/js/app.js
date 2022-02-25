@@ -1,3 +1,10 @@
+window.isNumber = function(number){
+    if(number == 0){
+       number = 0.000001
+    }
+    return number
+ }
+
 window.axios = require('axios');
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.withCredentials = true;

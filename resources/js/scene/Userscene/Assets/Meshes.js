@@ -46,7 +46,7 @@ export default class {
          const position = JSON.parse(mesh.position)
          const getmesh = this.scene.getNodeByName(mesh.parentname)
          const mymesh = getmesh.clone(mesh.name)
-         mymesh.setAbsolutePosition(position._x, position._y, position._z)
+         mymesh.setAbsolutePosition(isNumber(position._x), isNumber(position._y), isNumber(position._z))
          
          mymesh.hovered = mesh.hovered
          if (mesh.parentname == 'plant') {

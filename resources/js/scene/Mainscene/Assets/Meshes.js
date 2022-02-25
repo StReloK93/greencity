@@ -96,7 +96,7 @@ export default class {
          if (pickInfo.pickedPoint) {
             let coorX = numRound(pickInfo.pickedPoint.x, 0.5)
             let coorZ = numRound(pickInfo.pickedPoint.z, 0.5)
-            mesh.setAbsolutePosition(coorX, mesh.position.y, coorZ)
+            mesh.setAbsolutePosition(+coorX.toFixed(2), 1, +coorZ.toFixed(2))
          }
       }
       if (simulate) {
@@ -113,8 +113,6 @@ export default class {
 
                let Xraz = Math.abs(pivotX - meshCenter.x)
                let Zraz = Math.abs(pivotZ - meshCenter.z)
-
-
 
                if(meshCenter.x > pivotX) Xraz = -Xraz
                if(meshCenter.z > pivotZ) Zraz = -Zraz
@@ -140,7 +138,6 @@ export default class {
                this.actions.hover(mesh)
                this.saveMeshProps(mesh, parent)
 
-               console.log(mesh);
                if(event.shiftKey){
                   this.clear()
                   this.newMesh(this.shiftName,this.shiftParent, event)
@@ -173,7 +170,6 @@ export default class {
       const name = mesh.name
       const material = mesh.material.name
       const position = mesh.absolutePosition
-      console.log(position);
       await axios.post('/api/createfinal', {
          name: name,
          position: position,
