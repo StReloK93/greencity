@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/database/seeders
 /storage/*.key
 /vendor
 /database/seeders

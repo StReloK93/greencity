@@ -1,16 +1,7 @@
-function numRound(num, precision) {
+function num(num, precision) {
    let number = Math.round(num / precision) * precision
    if (number == 0) number = 0.0001
    return number
-}
-
-function mediumPosition(mesh) {
-   const minCoords = mesh.getBoundingInfo().boundingBox.minimumWorld
-   const maxCoords = mesh.getBoundingInfo().boundingBox.maximumWorld
-
-   const xPos = (Math.round(minCoords.x) +  Math.round(maxCoords.x))/2
-   const zPos = (Math.round(minCoords.z) +  Math.round(maxCoords.z))/2
-   return new BABYLON.Vector3(xPos, mesh.position.y,zPos)
 }
 
 import Actions from '../../Addons/Actions'
@@ -34,7 +25,6 @@ export default class {
    pickForDrag() {
       scene.onPointerPick = (event, pick) => {
          const mesh = pick.pickedMesh
-
 
          if (event.button == 0 || event.button == 2) this.clearActiveMesh()
 
@@ -76,58 +66,34 @@ export default class {
       const getmesh = scene.getNodeByName(parent) //tanlash
       const mesh = getmesh.clone(name + Date.now()) //Kopiya qilish
       mesh.visibility = 0.5 // Muhim Emas
-      
-      let material = scene.getMaterialByName(name) //material qidirish
-      if (material) { //Material bolsa ulash
-         mesh.material = material
-         mesh.mainmaterial = material
-      }
-      store.state.mesh.active = mesh //Active ELement bor
 
+      let material = scene.getMaterialByName(name) //material qidirish
+      mesh.material = material
+      mesh.mainmaterial = material
+
+      store.state.mesh.active = mesh //Active ELement bor
       //Mishka sceneda yurganda
-      this.drag(mesh, true, event)
+      this.drag(mesh, true , event)
+      
       this.drop(mesh, parent)
    }
 
    drag(mesh, simulate = false, event) {
       store.state.drag = true //Cursor Drag
       //Mishka sceneda yurganda
-      scene.onPointerMove = (a, pickInfo) => {
-         if (pickInfo.pickedPoint) {
-            let coorX = numRound(pickInfo.pickedPoint.x, 0.5)
-            let coorZ = numRound(pickInfo.pickedPoint.z, 0.5)
-            mesh.setAbsolutePosition(+coorX.toFixed(2), 0.01, +coorZ.toFixed(2))
-         }
+      scene.onPointerMove = (ev, {pickedPoint}) => {
+         mesh.setAbsolutePosition(num(pickedPoint.x, 0.5), 0.01, num(pickedPoint.z, 0.5))
       }
-      if (simulate) {
-            const pick = scene.pick(event.clientX, event.clientY)
-            scene.simulatePointerMove(pick)
-
-
-            const pivotX = numRound(pick.pickedPoint.x, 0.5)
-            const pivotZ = numRound(pick.pickedPoint.z, 0.5)
-
-
-            setTimeout(()=>{
-               const meshCenter = mediumPosition(mesh) // meshni urtasi
-
-               let Xraz = Math.abs(pivotX - meshCenter.x)
-               let Zraz = Math.abs(pivotZ - meshCenter.z)
-
-               if(meshCenter.x > pivotX) Xraz = -Xraz
-               if(meshCenter.z > pivotZ) Zraz = -Zraz
-
-               const matrix =  BABYLON.Matrix.Translation(Xraz, meshCenter._y, Zraz)
-               mesh.setPivotMatrix(matrix, false);
-            },20)
-
-      }
-
+      
+      if (simulate) scene.simulatePointerMove(scene.pick(event.clientX, event.clientY))
+      
    }
 
    drop(mesh, parent = null) {//
-      scene.onPointerPick = (event) => {//-
+      scene.onPointerPick = (event,pickInfo) => {//-
          if (store.state.mesh.active == null) return
+         const point = pickInfo.pickedPoint
+
 
          if (event.button == 0) {
 
@@ -135,6 +101,9 @@ export default class {
                
                mesh.visibility = 1
                mesh.actionManager = new BABYLON.ActionManager(scene)
+               
+               if (point) mesh.setAbsolutePosition(point.x,0.01,point.z)
+
                this.actions.hover(mesh)
                this.saveMeshProps(mesh, parent)
 
@@ -145,8 +114,9 @@ export default class {
                }
             }
             else this.editMeshProps(mesh)
-
          }
+
+
 
          if (event.button == 2) {
             if (parent) mesh.dispose()
@@ -154,6 +124,7 @@ export default class {
          }
 
          this.clear()
+         this.pickForDrag()
 
       }//-
 
@@ -163,13 +134,12 @@ export default class {
       scene.onPointerMove = null
       store.state.mesh.active = null
       store.state.drag = null
-      this.pickForDrag()
    }
 
    async saveMeshProps(mesh, parent) {
       const name = mesh.name
       const material = mesh.material.name
-      const position = mesh.absolutePosition
+      const position = mesh.getAbsolutePosition()
       await axios.post('/api/createfinal', {
          name: name,
          position: position,
@@ -223,7 +193,7 @@ export default class {
 
    async editMeshProps(mesh) {
       const name = mesh.name
-      const position = mesh.absolutePosition
+      const position = mesh.getAbsolutePosition()
       await axios.post('/api/editfinalposition', {
          id: this.id,
          name: name,

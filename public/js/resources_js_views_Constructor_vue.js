@@ -1535,18 +1535,10 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-function numRound(num, precision) {
+function num(num, precision) {
   var number = Math.round(num / precision) * precision;
   if (number == 0) number = 0.0001;
   return number;
-}
-
-function mediumPosition(mesh) {
-  var minCoords = mesh.getBoundingInfo().boundingBox.minimumWorld;
-  var maxCoords = mesh.getBoundingInfo().boundingBox.maximumWorld;
-  var xPos = (Math.round(minCoords.x) + Math.round(maxCoords.x)) / 2;
-  var zPos = (Math.round(minCoords.z) + Math.round(maxCoords.z)) / 2;
-  return new BABYLON.Vector3(xPos, mesh.position.y, zPos);
 }
 
 
@@ -1622,12 +1614,8 @@ var _default = /*#__PURE__*/function () {
 
       var material = scene.getMaterialByName(name); //material qidirish
 
-      if (material) {
-        //Material bolsa ulash
-        mesh.material = material;
-        mesh.mainmaterial = material;
-      }
-
+      mesh.material = material;
+      mesh.mainmaterial = material;
       store.state.mesh.active = mesh; //Active ELement bor
       //Mishka sceneda yurganda
 
@@ -1642,30 +1630,12 @@ var _default = /*#__PURE__*/function () {
       store.state.drag = true; //Cursor Drag
       //Mishka sceneda yurganda
 
-      scene.onPointerMove = function (a, pickInfo) {
-        if (pickInfo.pickedPoint) {
-          var coorX = numRound(pickInfo.pickedPoint.x, 0.5);
-          var coorZ = numRound(pickInfo.pickedPoint.z, 0.5);
-          mesh.setAbsolutePosition(+coorX.toFixed(2), 0.01, +coorZ.toFixed(2));
-        }
+      scene.onPointerMove = function (ev, _ref) {
+        var pickedPoint = _ref.pickedPoint;
+        mesh.setAbsolutePosition(num(pickedPoint.x, 0.5), 0.01, num(pickedPoint.z, 0.5));
       };
 
-      if (simulate) {
-        var pick = scene.pick(event.clientX, event.clientY);
-        scene.simulatePointerMove(pick);
-        var pivotX = numRound(pick.pickedPoint.x, 0.5);
-        var pivotZ = numRound(pick.pickedPoint.z, 0.5);
-        setTimeout(function () {
-          var meshCenter = mediumPosition(mesh); // meshni urtasi
-
-          var Xraz = Math.abs(pivotX - meshCenter.x);
-          var Zraz = Math.abs(pivotZ - meshCenter.z);
-          if (meshCenter.x > pivotX) Xraz = -Xraz;
-          if (meshCenter.z > pivotZ) Zraz = -Zraz;
-          var matrix = BABYLON.Matrix.Translation(Xraz, meshCenter._y, Zraz);
-          mesh.setPivotMatrix(matrix, false);
-        }, 20);
-      }
+      if (simulate) scene.simulatePointerMove(scene.pick(event.clientX, event.clientY));
     }
   }, {
     key: "drop",
@@ -1675,14 +1645,16 @@ var _default = /*#__PURE__*/function () {
       var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
       //
-      scene.onPointerPick = function (event) {
+      scene.onPointerPick = function (event, pickInfo) {
         //-
         if (store.state.mesh.active == null) return;
+        var point = pickInfo.pickedPoint;
 
         if (event.button == 0) {
           if (parent) {
             mesh.visibility = 1;
             mesh.actionManager = new BABYLON.ActionManager(scene);
+            if (point) mesh.setAbsolutePosition(point.x, 0.01, point.z);
 
             _this3.actions.hover(mesh);
 
@@ -1703,6 +1675,8 @@ var _default = /*#__PURE__*/function () {
         }
 
         _this3.clear();
+
+        _this3.pickForDrag();
       }; //-
 
     } //
@@ -1713,7 +1687,6 @@ var _default = /*#__PURE__*/function () {
       scene.onPointerMove = null;
       store.state.mesh.active = null;
       store.state.drag = null;
-      this.pickForDrag();
     }
   }, {
     key: "saveMeshProps",
@@ -1726,7 +1699,7 @@ var _default = /*#__PURE__*/function () {
               case 0:
                 name = mesh.name;
                 material = mesh.material.name;
-                position = mesh.absolutePosition;
+                position = mesh.getAbsolutePosition();
                 _context.next = 5;
                 return axios.post('/api/createfinal', {
                   name: name,
@@ -1812,13 +1785,13 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "editMesh",
     value: function () {
-      var _editMesh = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(_ref) {
+      var _editMesh = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(_ref2) {
         var name, height, username, plantTime, hovered;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                name = _ref.name, height = _ref.height, username = _ref.username, plantTime = _ref.plantTime, hovered = _ref.hovered;
+                name = _ref2.name, height = _ref2.height, username = _ref2.username, plantTime = _ref2.plantTime, hovered = _ref2.hovered;
                 _context3.next = 3;
                 return axios.post('/api/editfinalprops', {
                   id: this.id,
@@ -1853,7 +1826,7 @@ var _default = /*#__PURE__*/function () {
             switch (_context4.prev = _context4.next) {
               case 0:
                 name = mesh.name;
-                position = mesh.absolutePosition;
+                position = mesh.getAbsolutePosition();
                 _context4.next = 4;
                 return axios.post('/api/editfinalposition', {
                   id: this.id,
@@ -2688,13 +2661,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _ConstructorPanel_vue_vue_type_template_id_58d19b95__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConstructorPanel.vue?vue&type=template&id=58d19b95 */ "./resources/js/components/ConstructorPanel.vue?vue&type=template&id=58d19b95");
 /* harmony import */ var _ConstructorPanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConstructorPanel.vue?vue&type=script&lang=js */ "./resources/js/components/ConstructorPanel.vue?vue&type=script&lang=js");
-/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_ConstructorPanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ConstructorPanel_vue_vue_type_template_id_58d19b95__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/ConstructorPanel.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_ConstructorPanel_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ConstructorPanel_vue_vue_type_template_id_58d19b95__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/ConstructorPanel.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2715,13 +2688,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _InfoButtonsConstructor_vue_vue_type_template_id_7bf693b2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InfoButtonsConstructor.vue?vue&type=template&id=7bf693b2 */ "./resources/js/components/InfoButtonsConstructor.vue?vue&type=template&id=7bf693b2");
 /* harmony import */ var _InfoButtonsConstructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InfoButtonsConstructor.vue?vue&type=script&lang=js */ "./resources/js/components/InfoButtonsConstructor.vue?vue&type=script&lang=js");
-/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_InfoButtonsConstructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_InfoButtonsConstructor_vue_vue_type_template_id_7bf693b2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/InfoButtonsConstructor.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_InfoButtonsConstructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_InfoButtonsConstructor_vue_vue_type_template_id_7bf693b2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/InfoButtonsConstructor.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2742,13 +2715,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _MeshBuilder_vue_vue_type_template_id_d2459e5a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MeshBuilder.vue?vue&type=template&id=d2459e5a */ "./resources/js/components/MeshBuilder.vue?vue&type=template&id=d2459e5a");
 /* harmony import */ var _MeshBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MeshBuilder.vue?vue&type=script&lang=js */ "./resources/js/components/MeshBuilder.vue?vue&type=script&lang=js");
-/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MeshBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MeshBuilder_vue_vue_type_template_id_d2459e5a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/MeshBuilder.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MeshBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MeshBuilder_vue_vue_type_template_id_d2459e5a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/MeshBuilder.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2769,13 +2742,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _UploadImage_vue_vue_type_template_id_46aa7c82__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UploadImage.vue?vue&type=template&id=46aa7c82 */ "./resources/js/components/UploadImage.vue?vue&type=template&id=46aa7c82");
 /* harmony import */ var _UploadImage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UploadImage.vue?vue&type=script&lang=js */ "./resources/js/components/UploadImage.vue?vue&type=script&lang=js");
-/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_UploadImage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UploadImage_vue_vue_type_template_id_46aa7c82__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/UploadImage.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_UploadImage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UploadImage_vue_vue_type_template_id_46aa7c82__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/UploadImage.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -2796,13 +2769,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Constructor_vue_vue_type_template_id_292f6aab__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constructor.vue?vue&type=template&id=292f6aab */ "./resources/js/views/Constructor.vue?vue&type=template&id=292f6aab");
 /* harmony import */ var _Constructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constructor.vue?vue&type=script&lang=js */ "./resources/js/views/Constructor.vue?vue&type=script&lang=js");
-/* harmony import */ var D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,D_media_openserver_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Constructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Constructor_vue_vue_type_template_id_292f6aab__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Constructor.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_greencity_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Constructor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Constructor_vue_vue_type_template_id_292f6aab__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/views/Constructor.vue"]])
 /* hot reload */
 if (false) {}
 
