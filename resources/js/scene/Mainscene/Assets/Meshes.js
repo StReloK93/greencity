@@ -96,7 +96,7 @@ export default class {
          if (pickInfo.pickedPoint) {
             let coorX = numRound(pickInfo.pickedPoint.x, 0.5)
             let coorZ = numRound(pickInfo.pickedPoint.z, 0.5)
-            mesh.setAbsolutePosition(+coorX.toFixed(2), 1, +coorZ.toFixed(2))
+            mesh.setAbsolutePosition(+coorX.toFixed(2), 0.01, +coorZ.toFixed(2))
          }
       }
       if (simulate) {
@@ -136,6 +136,7 @@ export default class {
                mesh.visibility = 1
                mesh.actionManager = new BABYLON.ActionManager(scene)
                this.actions.hover(mesh)
+               console.log(mesh.absolutePosition);
                this.saveMeshProps(mesh, parent)
 
                if(event.shiftKey){
