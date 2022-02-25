@@ -1125,7 +1125,7 @@ var _default = /*#__PURE__*/function () {
                   var getmesh = _this.scene.getNodeByName(mesh.parentname);
 
                   var mymesh = getmesh.clone(mesh.name);
-                  mymesh.setAbsolutePosition(isNumber(position._x), isNumber(position._y), isNumber(position._z));
+                  mymesh.setAbsolutePosition(isNumber(position._x), isNumber(0.01), isNumber(position._z));
                   mymesh.hovered = mesh.hovered;
 
                   if (mesh.parentname == 'plant') {

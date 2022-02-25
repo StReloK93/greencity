@@ -1686,8 +1686,6 @@ var _default = /*#__PURE__*/function () {
 
             _this3.actions.hover(mesh);
 
-            console.log(mesh.absolutePosition);
-
             _this3.saveMeshProps(mesh, parent);
 
             if (event.shiftKey) {

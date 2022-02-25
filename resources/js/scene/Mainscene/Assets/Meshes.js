@@ -136,7 +136,6 @@ export default class {
                mesh.visibility = 1
                mesh.actionManager = new BABYLON.ActionManager(scene)
                this.actions.hover(mesh)
-               console.log(mesh.absolutePosition);
                this.saveMeshProps(mesh, parent)
 
                if(event.shiftKey){
