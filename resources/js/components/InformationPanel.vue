@@ -28,13 +28,14 @@
 </template>
 <script>
 export default {
+   props: ['path'],
    data(){
       return {
          information: null
       }
    },
    async mounted() {
-     var {data} = await axios.get('/api/plantInfromation')
+     var {data} = await axios.get(this.path)
      this.information = data
    },
 }

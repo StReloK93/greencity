@@ -4,11 +4,19 @@ function numRound(num, precision) {
    return number
 }
 
+function mediumPosition(mesh) {
+   const minCoords = mesh.getBoundingInfo().boundingBox.minimumWorld
+   const maxCoords = mesh.getBoundingInfo().boundingBox.maximumWorld
+
+   const xPos = (Math.round(minCoords.x) +  Math.round(maxCoords.x))/2
+   const zPos = (Math.round(minCoords.z) +  Math.round(maxCoords.z))/2
+   return new BABYLON.Vector3(xPos, mesh.position.y,zPos)
+}
+
 import Actions from '../../Addons/Actions'
 
 import Native from './NativeMeshes'
 import Import from './ImportMeshes'
-import axios from 'axios';
 
 
 export default class {
@@ -68,7 +76,7 @@ export default class {
       const getmesh = scene.getNodeByName(parent) //tanlash
       const mesh = getmesh.clone(name + Date.now()) //Kopiya qilish
       mesh.visibility = 0.5 // Muhim Emas
-
+      
       let material = scene.getMaterialByName(name) //material qidirish
       if (material) { //Material bolsa ulash
          mesh.material = material
@@ -88,11 +96,37 @@ export default class {
          if (pickInfo.pickedPoint) {
             let coorX = numRound(pickInfo.pickedPoint.x, 0.5)
             let coorZ = numRound(pickInfo.pickedPoint.z, 0.5)
-
             mesh.setAbsolutePosition(coorX, mesh.position.y, coorZ)
          }
       }
-      if (simulate) scene.simulatePointerMove(scene.pick(event.clientX, event.clientY))
+      if (simulate) {
+            const pick = scene.pick(event.clientX, event.clientY)
+            scene.simulatePointerMove(pick)
+
+
+            const pivotX = numRound(pick.pickedPoint.x, 0.5)
+            const pivotZ = numRound(pick.pickedPoint.z, 0.5)
+
+
+            setTimeout(()=>{
+               const meshCenter = mediumPosition(mesh) // meshni urtasi
+               console.log(meshCenter, 'meshni ortasi');
+               console.log(pivotX,pivotZ, 'Bosilgan nuqta');
+
+               let Xraz = Math.abs(pivotX - meshCenter.x)
+               let Zraz = Math.abs(pivotZ - meshCenter.z)
+
+
+
+               if(meshCenter.x > pivotX) Xraz = -Xraz
+               if(meshCenter.z > pivotZ) Zraz = -Zraz
+
+               const matrix =  BABYLON.Matrix.Translation(Xraz, meshCenter._y, Zraz)
+               mesh.setPivotMatrix(matrix, false);
+            },20)
+
+      }
+
    }
 
    drop(mesh, parent = null) {//

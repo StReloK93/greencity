@@ -1,5 +1,6 @@
 <template>
-	<ImageViewer/>
+	<ImageViewer />
+	<InfoPanel :path="`/api/territories/get/${this.id}`" />
 	<main class="fixed flex top-0 left-16 m-4 items-center">
 		<button @click="$router.go(-1)" class="custom-btn pl-2" to="/" >
 			<i class="gg-chevron-left mr-3"></i>
@@ -18,6 +19,7 @@ import HotKeys from "../hotkeys";
 
 import Authentication from '../components/Authentication.vue'
 import ImageViewer from '../components/ImageViewer.vue';
+import InfoPanel from '../components/InformationPanel.vue';
 export default {
 	props: ["id"],
 	data() {
@@ -56,7 +58,8 @@ export default {
 	},
 	components:{
 		ImageViewer,
-		Authentication
+		Authentication,
+		InfoPanel
 	}
 };
 </script>

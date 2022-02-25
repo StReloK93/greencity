@@ -15,7 +15,24 @@ use File;
 class TerritoryController extends Controller
 {
     public function getTerritory($id){
-        return Territory::find($id);
+        $territory = Territory::find($id);
+
+        $territory->all = FinalMesh::where([
+            ['parentname' , 'plant'],
+            ['territory_id' , $territory->id],
+        ])->count();
+
+        $territory->manzarali = FinalMesh::where([
+            ['parentname' , 'plant'],
+            ['territory_id' , $territory->id],
+        ])->whereIn('materialname', Tree::manzarali())->count();
+
+        $territory->mevali = FinalMesh::where([
+            ['parentname' , 'plant'],
+            ['territory_id' , $territory->id],
+        ])->whereNotIn('materialname', Tree::manzarali())->count();
+
+        return $territory;
     }
 
     public function create(Request $request){

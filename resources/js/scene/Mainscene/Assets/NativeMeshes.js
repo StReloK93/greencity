@@ -45,11 +45,12 @@ export default class {
          mymesh.material = scene.getMaterialByName(mesh.materialname)
          mymesh.mainmaterial = scene.getMaterialByName(mesh.materialname)
          mymesh.setAbsolutePosition(position._x, position._y, position._z)
-
+         
          if (mesh.parentname == 'plant') {
             mymesh.scaling.y = 1
          }
          else {
+            
             mymesh.scaling.y = mesh.height
          }
          mymesh.actionManager = new BABYLON.ActionManager(scene)

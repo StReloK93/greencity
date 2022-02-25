@@ -1,5 +1,5 @@
 <template>
-	<InformationPanel />
+	<InformationPanel path="/api/plantInfromation" />
 	<Authentication />
 	<canvas class="h-full w-full border-transparent" ref="BuilderCanvas"></canvas>
 	<transition name="lift">

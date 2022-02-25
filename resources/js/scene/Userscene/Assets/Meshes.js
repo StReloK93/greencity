@@ -54,7 +54,6 @@ export default class {
          }
          else {
             mymesh.scaling.y = mesh.height
-            // mymesh.setPivotMatrix(BABYLON.Matrix.Translation(10, 1, 10), false);
          }
          mymesh.actionManager = new BABYLON.ActionManager(this.scene)
          if(mesh.hovered == true){
