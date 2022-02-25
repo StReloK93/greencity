@@ -110,8 +110,6 @@ export default class {
 
             setTimeout(()=>{
                const meshCenter = mediumPosition(mesh) // meshni urtasi
-               console.log(meshCenter, 'meshni ortasi');
-               console.log(pivotX,pivotZ, 'Bosilgan nuqta');
 
                let Xraz = Math.abs(pivotX - meshCenter.x)
                let Zraz = Math.abs(pivotZ - meshCenter.z)
@@ -130,11 +128,8 @@ export default class {
    }
 
    drop(mesh, parent = null) {//
-
       scene.onPointerPick = (event) => {//-
-
          if (store.state.mesh.active == null) return
-
 
          if (event.button == 0) {
 
@@ -145,6 +140,7 @@ export default class {
                this.actions.hover(mesh)
                this.saveMeshProps(mesh, parent)
 
+               console.log(mesh);
                if(event.shiftKey){
                   this.clear()
                   this.newMesh(this.shiftName,this.shiftParent, event)
@@ -154,6 +150,7 @@ export default class {
             else this.editMeshProps(mesh)
 
          }
+
          if (event.button == 2) {
             if (parent) mesh.dispose()
             else mesh.setAbsolutePosition(this.position)
@@ -176,6 +173,7 @@ export default class {
       const name = mesh.name
       const material = mesh.material.name
       const position = mesh.absolutePosition
+      console.log(position);
       await axios.post('/api/createfinal', {
          name: name,
          position: position,
