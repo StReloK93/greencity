@@ -6,7 +6,7 @@ export default class {
    constructor(scene) {
       this.scene = scene
       this.actions = new Actions(scene)
-
+      const box = BABYLON.MeshBuilder.CreateBox("cubicpoints", { height: 0.4, width: 0.4, size: 0.4 }, this.scene)
       this.createGround()
       this.onKeyboard()
       this.onDoubleClick()
@@ -107,6 +107,7 @@ export default class {
 
       const poly = BABYLON.MeshBuilder.CreateLines("line", { points: this.finishedPoints }, this.scene)
 
+      this.centerPoints = poly._boundingInfo.boundingBox.centerWorld
       poly.isPickable = false
    }
 

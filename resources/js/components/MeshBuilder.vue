@@ -29,8 +29,15 @@ export default {
    methods: {
       async insertPoints(){
          const points = this.MeshBuilder.Meshes.getPoints()
-         const {data} = await axios.get(`/api/getparents/${this.id}`)
+         const center = this.MeshBuilder.Meshes.centerPoints
 
+         points.forEach(point => {
+            if(center.x < 0) point.x += Math.abs(center.x)
+            if(center.z < 0) point.z += Math.abs(center.z)
+            if(center.x > 0) point.x -= Math.abs(center.x)
+            if(center.z > 0) point.z -= Math.abs(center.z)
+         });
+         
          const meshName = 'createdMesh'
          if(points.length > 2){
             await axios.post(`/api/createparent`, {points:points, name: meshName,clientname: this.clientname,id: this.id})
