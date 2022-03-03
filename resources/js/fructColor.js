@@ -13,4 +13,5 @@ export default [
    {name: "akatsiya",        color: '#fd0b1c'},
    {name: "yasin",        color: '#F3CE56'},
    {name: "jiyda",        color: '#A43481'},
+   {name: "yovvoyi terak",        color: '#729AB0'},
 ]
