@@ -25,6 +25,7 @@ Route::post('/register', [UserController::class, 'register']);
 Route::get('/getparents/{id}', [ParentController::class, 'getParents']);
 Route::get('/getallfinal/{id}', [FinalController::class, 'getAllFinal']);
 Route::get('/plantInfromation', [FinalController::class, 'plantInfromation']);
+Route::get('/territroy_count', [FinalController::class, 'territroy_count']);
 
 Route::post('/territories/getall', [TerritoryController::class, 'getTerritories']);
 Route::post('/getimages', [ImageController::class, 'getImages']);
@@ -62,8 +63,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/territories/update', [TerritoryController::class, 'update']);
     Route::get('/territories/delete/{id}', [TerritoryController::class, 'delete']);
 });
-
-
-
-
-

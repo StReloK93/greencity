@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Tree;
 use Illuminate\Http\Request;
 use App\Models\FinalMesh;
+use App\Models\User;
+use App\Models\Territory;
 use App\Models\Image;
 use Carbon\Carbon;
 use File;
@@ -69,24 +71,29 @@ class FinalController extends Controller
         ]);
     }
 
+    public function territroy_count(){
+        $users = User::all();
+
+        $terry = [];
+        foreach ($users as $key => $user) {
+            $terry[$user->name] = Territory::where('user_id', $user->id)->pluck('id')->toArray();
+        }
+
+        foreach ($terry as $key => $list) {
+            $terry[$key] = FinalMesh::where('parentname' , 'plant')->whereIn('territory_id', $list)->count();
+        }
+
+        return $terry;
+    }
+
+
     public function plantInfromation(){
-        $mevali = FinalMesh::where([
-            ['parentname' , 'plant'],
-        ])->whereNotIn('materialname', Tree::manzarali())->count();
+        $mevali = FinalMesh::where('parentname' , 'plant')->whereNotIn('materialname', Tree::manzarali())->count();
+        $manzarali = FinalMesh::where('parentname' , 'plant')->whereIn('materialname', Tree::manzarali())->count();
 
-        $manzarali = FinalMesh::where([
-            ['parentname' , 'plant'],
-        ])->whereIn('materialname', Tree::manzarali())->count();
+        $umumiy = FinalMesh::where('parentname' , 'plant')->count();
 
-        $all = FinalMesh::where([
-            ['parentname' , 'plant'],
-        ])->count();
-
-        return [
-            'mevali' => $mevali,
-            'manzarali' => $manzarali,
-            'all' => $all,
-        ];
+        return ['mevali' => $mevali,'manzarali' => $manzarali,'all' => $umumiy];
     }
 
     public function deleteOneFinal(Request $req){

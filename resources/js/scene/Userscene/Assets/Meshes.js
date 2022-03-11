@@ -44,7 +44,6 @@ export default class {
 
       meshes.data.forEach(mesh => {
          const position = JSON.parse(mesh.position)
-         console.log(mesh.parentname);
          const getmesh = this.scene.getNodeByName(mesh.parentname)
          var mymesh;
          if(getmesh) mymesh = getmesh.clone(mesh.name)

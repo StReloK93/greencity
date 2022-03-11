@@ -1,3 +1,4 @@
+import axios from 'axios'
 import Actions from '../../Addons/Actions'
 
 export default class {
@@ -67,10 +68,11 @@ export default class {
       }, ".glb")
    }
 
-   getActiveMeshes() {
+   async getActiveMeshes() {
       this.activeMeshes = this.scene.getNodeByName('active')._children
+      const {data} = await axios.get('/api/territroy_count')
       this.activeMeshes.forEach(mesh => {
-         this.meshSceneNames(mesh)
+         this.meshSceneNames(mesh,data[mesh.name])
          if(mesh._isMesh){
             mesh.actionManager = new BABYLON.ActionManager(this.scene)
             mesh.mainmaterial = mesh.material
@@ -83,13 +85,13 @@ export default class {
    }
 
 
-   meshSceneNames(mesh){
+   meshSceneNames(mesh,count){
       var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
       var rect1 = new BABYLON.GUI.Rectangle();
 
       rect1.adaptWidthToChildren = true;
-      rect1.height = "28px";
+      rect1.height = "35px";
       rect1.cornerRadius = 4;
       rect1.color = "white";
       rect1.thickness = 0;
@@ -105,8 +107,10 @@ export default class {
       else{
          label.width = "100px";
       }
-      label.text = mesh.name.toUpperCase();
-      label.fontSize = '13px'
+
+      if(count == null || count == undefined) count = 0
+      label.text = mesh.name.toUpperCase() + "\n" + count;
+      label.fontSize = '12px'
       rect1.addControl(label);
 
       var target = new BABYLON.GUI.Ellipse();
