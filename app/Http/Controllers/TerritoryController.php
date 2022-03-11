@@ -102,9 +102,15 @@ class TerritoryController extends Controller
     public function getTerritories(Request $request){
         $user = User::where('name', $request['name'] )->first();
         if(isset($user->id)){
-            return Territory::where([
-                'user_id' => $user->id,
-            ])->get();
+            $territories = Territory::where('user_id',$user->id)->get();
+
+            foreach ($territories as $key => $territory) {
+                $territory->plants = FinalMesh::where([
+                    ['parentname' , 'plant'],
+                    ['territory_id' , $territory->id],
+                ])->count();
+            }
+            return $territories;
         }
         else{
             return false;
